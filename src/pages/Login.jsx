@@ -1,9 +1,11 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 function Login() {
+    const navigate = useNavigate()
+    
     return (
         <>
-            <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4 sm:px-6 lg:px-8">
+            <main className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4 sm:px-6 lg:px-8">
                 <div className="relative ">
                     <div className="w-[320px] min-h-96 px-8 py-6 mt-4 text-left bg-white dark:bg-gray-800 dark:border-gray-700 rounded-xl shadow-lg">
                         <div className="flex flex-col justify-center items-center h-full select-none">
@@ -29,14 +31,14 @@ function Login() {
                             <label htmlFor="remember" className="text-xs text-gray-400">Remember me</label>
                         </div>
                         <div>
-                            <button className="py-1 px-8 bg-blue focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg cursor-pointer select-none">LOGIN</button>
+                            <Link to={'/overview/home'} className="inline-block py-1 px-8 bg-blue focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg cursor-pointer select-none">LOGIN</Link>
                         </div>
                         <div className="mt-4">
                             <p className="text-xs text-center text-gray-400">{`Don't`} have an account? <Link to="/signup" className="font-medium text-blue hover:underline">Sign up</Link></p>
                         </div>
                     </div>
                 </div>
-            </div>
+            </main>
         </>
     )
 }

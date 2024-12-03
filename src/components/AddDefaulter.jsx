@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom"
-
 function AddDefaulter() {
     return (
         <>
@@ -32,6 +30,14 @@ function AddDefaulter() {
                                     <label className="font-semibold text-xs text-gray-500 ">Address</label>
                                     <input className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="" />
                                 </div>
+                                <div className="flex flex-col gap-2">
+                                    <label className="font-semibold text-xs text-gray-500 ">City</label>
+                                    <input className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="" />
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <label className="font-semibold text-xs text-gray-500 ">State</label>
+                                    <input className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="" />
+                                </div>
                             </div>
                             <div>
                                 <div className="flex flex-col gap-2">
@@ -53,19 +59,14 @@ function AddDefaulter() {
                                 <div className="mb-5">
                                     <p className="font-semibold text-xs text-gray-500 mb-2">Upload Documents</p>
                                     <div className="space-y-3">
-                                        <label className="container-btn-file flex-grow">
+                                        <label className="container-btn-file text-sm flex-grow">
                                             <img src="/img/bank-statement.png" className="w-6 mr-1" alt="" />
                                             Upload Bank Statement
                                             <input className="file" name="text" type="file" />
                                         </label>
-                                        <label className="container-btn-file aadharBtn flex-grow">
+                                        <label className="container-btn-file text-sm aadharBtn flex-grow">
                                             <img src="/img/aadharCard.png" className="w-6 mr-1" alt="" />
-                                            Upload Aadhar Card
-                                            <input className="file" name="text" type="file" />
-                                        </label>
-                                        <label className="container-btn-file panBtn flex-grow">
-                                            <img src="/img/panCard.png" className="w-6 mr-1" alt="" />
-                                            Upload PAN Card
+                                            Upload Notice or other documents
                                             <input className="file" name="text" type="file" />
                                         </label>
                                     </div>

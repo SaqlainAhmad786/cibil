@@ -1,0 +1,130 @@
+.widget {
+    border-radius: 10px;
+    background-color: #f3f3f3;
+    display: inline-block;
+    padding: 24px;
+    /* margin: 40px 0; */
+    /* width: 25%; */
+    width: 360px;
+    min-width: 300px;
+    box-shadow: 0px 4px 5px -3px rgba(0, 0, 0, 0.05);
+}
+.widget header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.widget .widget_body {
+    /* margin: 4px 56px; */
+}
+h4 {
+    margin: 12px 0 24px;
+    color: #494b59;
+}
+.ellipsis {
+    display: flex;
+    align-items: center;
+    padding: 12px 4px 12px 12px;
+    cursor: pointer;
+}
+.ellipsis div {
+    border-radius: 50%;
+    height: 5px;
+    width: 5px;
+    margin-left: 4px;
+    background-color: #9fa1a6;
+}
+.ellipsis:hover div, .ellipsis:focus div {
+    background-color: #535763;
+}
+.graph {
+    width: 100%;
+    min-width: 200px;
+    position: relative;
+}
+.coloredDisplay_wrap {
+    clip-path: url(#bgClipping);
+    background-color: rgba(255, 255, 255, .5);
+    padding: 16px 16px 16px;
+}
+.coloredDisplay {
+    clip-path: url(#clipping);
+    line-height: 0px;
+    position: relative;
+}
+.coloredDisplay svg {
+    transform: rotate(-127deg);
+    transition: transform 0.6s ease;
+}
+.leftCurve {
+    fill: url(#Gradient1);
+}
+.rightCurve {
+    fill: url(#Gradient2);
+}
+.dial {
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, .5);
+    min-width: 50%;
+    min-height: calc(50% - 11px);
+    translate: 50% calc(50% + 16px);
+    position: absolute;
+    top: 0;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.03);
+}
+.dial:before {
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, .5);
+    width: 75%;
+    height: 75%;
+    translate: 16.5% 16.5%;
+    position: absolute;
+    content: '';
+    box-shadow: 0px 4px 5px -3px rgba(0, 0, 0, 0.05);
+}
+.dial:after {
+    border-radius: 50%;
+    background-color: #ebe7e2;
+    width: 40%;
+    height: 40%;
+    translate: 75% 75%;
+    position: absolute;
+    content: '';
+}
+.dial .dial_pointer {
+    position: absolute;
+    z-index: 10;
+    translate: 200% 4%;
+    transform: rotate(100deg);
+    transform-origin: 50% 46.5%;
+    height: 100%;
+    width: 20%;
+    transition: transform 0.6s ease;
+}
+.legend {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    color: #37394a;
+    font-size: 26px;
+    align-items: center;
+    position: relative;
+    top: -24px;
+}
+.legend_option .option_title {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #aaadb4;
+}
+.legend_option .option_title .option_mark {
+    border-radius: 50%;
+    height: 16px;
+    width: 16px;
+    margin-right: 8px;
+}
+.legend_option .option_value {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 4px;
+}
