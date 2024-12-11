@@ -58,8 +58,8 @@ function Overview() {
                             <li className="hover:translate-x-2 duration-200"><NavLink to={'/overview/help'} onClick={handleSideBar} className="text-md">
                                 <i className="fa-solid fa-question me-1 font-sm text-gray-100"></i>Help</NavLink>
                             </li>
-                            <li className="hover:translate-x-2 duration-200"><Link to={'/login'} className="text-md font-semibold">
-                                <i className="fa-solid fa-right-from-bracket me-1 font-sm text-gray-100"></i>Logout</Link>
+                            <li className="hover:translate-x-2 duration-200"><button className="text-md font-semibold">
+                                <i className="fa-solid fa-right-from-bracket me-1 font-sm text-gray-100"></i>Logout</button>
                             </li>
                         </ul>
                     </div>

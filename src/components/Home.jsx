@@ -1,7 +1,12 @@
+import { useEffect } from "react"
 import { Link } from "react-router-dom"
-import Widget, { Graph } from "./Widget"
 
 function Home() {
+
+    useEffect(() => {
+
+    }, [])
+
     return (
         <>
             <main>

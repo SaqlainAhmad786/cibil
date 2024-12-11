@@ -1,18 +1,18 @@
 import axios from "axios";
 
- function AddDefaulter() {
+function AddDefaulter() {
 
-       let handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    console.log('Form Data:', formData); // Log the form data
+    let handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        console.log('Form Data:', formData); // Log the form data
 
-    try {
-        const response = await axios.post('http://localhost:8000/addDefaulter', formData);
-        console.log('Response:', response.data);
-    } catch (error) {
-        console.error('Error:', error.response ? error.response.data : error.message);
-    }
+        try {
+            const response = await axios.post('http://localhost:8000/addDefaulter', formData);
+            console.log('Response:', response.data);
+        } catch (error) {
+            console.error('Error:', error.response ? error.response.data : error.message);
+        }
 
 
     }
@@ -89,7 +89,7 @@ import axios from "axios";
                                         </label>
                                     </div>
                                 </div>
-                              
+
                             </div>
                         </div>
                         <div>

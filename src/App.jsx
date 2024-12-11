@@ -9,6 +9,8 @@ import Profile from "./components/Profile"
 import Home from "./components/Home"
 import EditProfile from "./components/EditProfile"
 import MoneyBlockerFinder from "./components/MoneyBlockerFinder"
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute"
+import { AuthProvider } from "./contexts/authContext"
 
 function App() {
 
@@ -19,7 +21,7 @@ function App() {
           <Route index element={<Overview />} />
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
-          <Route path="overview" element={<Overview />}>
+          <Route path="overview" element={<ProtectedRoute><Overview /></ProtectedRoute>}>
             <Route index element={<Navigate to="home" />} />
             <Route path="home" element={<Home />} />
             <Route path="addDefaulter" element={<AddDefaulter />} />
