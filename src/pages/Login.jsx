@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom"
 import { toast, Toaster } from "sonner"
 import Loader from "../components/Loader/Loader"
 import axios from "axios"
-import { useAuth } from "../contexts/authContext"
 
 function Login() {
     const [loading, setLoading] = useState(false)
@@ -12,7 +11,6 @@ function Login() {
     const navigate = useNavigate()
     const location = useLocation();
     const hasRun = useRef(false);
-    const { login } = useAuth();
 
     const newUserSignedUp = location?.state?.signedUp;
     const newUserEmail = location?.state?.email;
@@ -56,19 +54,20 @@ function Login() {
                 console.log(res.data)
                 if (res.data.status) {
                     setLoading(false)
-                    login(res.data.token_key);
-                    navigate('/overview')
+                    // setUserData(res.data.userData)
+                    localStorage.setItem('token', res.data.token_key);
+                    navigate('/')
                 }
             })
         } catch (error) {
             setLoading(false)
             console.log(error.response.data.msg)
-            if (error.response.data.msg === "User Not Found") {
+            if (error.response.data.msg === "user not found") {
                 toast.error('User not found',
                     { description: 'Please Sign up to continue' },
                     { duration: 3000 })
                 return
-            } else if (error.response.data.msg === "Password Not match ") {
+            } else if (error.response.data.msg === "password not match") {
                 toast.error('Password does not match',
                     { description: 'Please check your password' },
                     { duration: 3000 })

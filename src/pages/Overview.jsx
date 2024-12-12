@@ -1,9 +1,20 @@
-import { Link, NavLink, Outlet } from "react-router-dom"
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom"
+import { useAuth } from "../contexts/authContext";
 
 function Overview() {
+    const { logout } = useAuth();
+    const navigate = useNavigate();
+
     function handleSideBar() {
         document.getElementById("my-drawer-2").checked = false
     }
+
+    function handleLogout() {
+        logout();
+        handleSideBar();
+        navigate('/login');
+    }
+    
     return (
         <>
             <main>
@@ -13,14 +24,17 @@ function Overview() {
                         <div className="lg:pt-5 md:pt-5 sm:pt-5 pt-3 mb-3">
                             <div className="customContainer py-2 flex items-center lg:justify-end justify-between">
                                 <div className="flex gap-4 items-center">
-                                    <Link to={'/'} className="lg:block hidden text-gray-600 text-md lg:order-1 order-2">
+                                    <Link to={'/overview/editProfile'} className="lg:block hidden text-gray-600 text-md lg:order-1 order-2">
                                         <i className="fa-solid fa-gear"></i>
                                     </Link>
-                                    <Link to={'/'} className="lg:block hidden text-gray-600 text-lg lg:order-1 order-2 border-r pr-3">
+                                    <Link to={'/overview/searchDefaulter'} className="lg:block hidden text-gray-600 text-lg lg:order-1 order-2 border-r pr-3">
                                         <i className="fa-solid fa-magnifying-glass"></i>
                                     </Link>
-                                    <Link to={'/overview/profile'} className="inline-block h-12 w-12 rounded-[100vh] overflow-hidden lg:order-2 order-1">
+                                    <Link to={'/overview/profile'} className="lg:block hidden h-12 w-12 rounded-[100vh] overflow-hidden lg:order-2 order-1">
                                         <img className="w-full h-full object-cover" src="https://www.paraglidingassociationofindia.org/wp-content/uploads/2022/02/passport-size.png" alt="" />
+                                    </Link>
+                                    <Link to={'/overview/profile'} className="lg:hidden block bg-white p-1 h-14 w-14 rounded-[100vh] overflow-hidden lg:order-2 order-1">
+                                        <img className="w-full h-full object-cover" src="/img/vyapar-logo.png" alt="" />
                                     </Link>
                                 </div>
                                 <label htmlFor="my-drawer-2" className="drawer-button lg:hidden w-[36px] cursor-pointer">
@@ -58,7 +72,7 @@ function Overview() {
                             <li className="hover:translate-x-2 duration-200"><NavLink to={'/overview/help'} onClick={handleSideBar} className="text-md">
                                 <i className="fa-solid fa-question me-1 font-sm text-gray-100"></i>Help</NavLink>
                             </li>
-                            <li className="hover:translate-x-2 duration-200"><button className="text-md font-semibold">
+                            <li className="hover:translate-x-2 duration-200"><button onClick={handleLogout} className="text-md font-semibold">
                                 <i className="fa-solid fa-right-from-bracket me-1 font-sm text-gray-100"></i>Logout</button>
                             </li>
                         </ul>

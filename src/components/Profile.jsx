@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom'
 import styles from './Profile.module.css'
+import { useAuth } from '../contexts/authContext';
 
 function Profile() {
+    const { userData } = useAuth();
+
     return (
         <>
             <section className="py-4">
