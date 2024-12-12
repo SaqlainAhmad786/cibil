@@ -1,31 +1,43 @@
+import axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [auth, setAuth] = useState('');
     const [userData, setUserData] = useState({});
+    const uid = localStorage.getItem('userId');
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setAuth(token);
+        if (uid) {
+            refreshUserData();
         }
-    }, []);
+    }, [uid]);
 
-    // const loggedIn = (token) => {
-    //     localStorage.setItem('token', token);
-    //     console.log(token)
-    //     setAuth(token);
-    // };
+    async function getUserData(uid) {
+        try {
+            await axios.post(`https://back-end-civil.onrender.com/userdataById/${uid}`).then(res => {
+                setUserData(res.data.userData);
+            })
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    }
+
+    const refreshUserData = async () => {
+        const uid = localStorage.getItem('userId');
+        if (uid) {
+            await getUserData(uid);
+        }
+    };
 
     const logout = () => {
         localStorage.removeItem('token');
-        setAuth('');
+        localStorage.removeItem('userId');
+        setUserData({});
     };
 
     return (
-        <AuthContext.Provider value={{ auth, setAuth, logout, userData, setUserData }}>
+        <AuthContext.Provider value={{ refreshUserData, logout, userData }}>
             {children}
         </AuthContext.Provider>
     );

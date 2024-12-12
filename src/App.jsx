@@ -9,8 +9,9 @@ import Profile from "./components/Profile"
 import Home from "./components/Home"
 import EditProfile from "./components/EditProfile"
 import MoneyBlockerFinder from "./components/MoneyBlockerFinder"
-import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import { AuthProvider } from "./contexts/authContext"
+import LoggedIn from "./components/LoggedIn/LoggedIn"
+import NotLoggedIn from "./components/NotLoggedIn/NotLoggedIn"
 
 function App() {
 
@@ -20,9 +21,9 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route index element={<Navigate to="overview" />} />
-            <Route path="login" element={<ProtectedRoute><Login /></ProtectedRoute>} />
-            <Route path="signup" element={<Signup />} />
-            <Route path="overview" element={<Overview />}>
+            <Route path="login" element={<LoggedIn Component={Login} />} />
+            <Route path="signup" element={<LoggedIn Component={Signup} />} />
+            <Route path="overview" element={<NotLoggedIn Component={Overview} />}>
               <Route index element={<Navigate to="home" />} />
               <Route path="home" element={<Home />} />
               <Route path="addDefaulter" element={<AddDefaulter />} />

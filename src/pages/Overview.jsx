@@ -14,7 +14,7 @@ function Overview() {
         handleSideBar();
         navigate('/login');
     }
-    
+
     return (
         <>
             <main>
@@ -34,7 +34,7 @@ function Overview() {
                                         <img className="w-full h-full object-cover" src="https://www.paraglidingassociationofindia.org/wp-content/uploads/2022/02/passport-size.png" alt="" />
                                     </Link>
                                     <Link to={'/overview/profile'} className="lg:hidden block bg-white p-1 h-14 w-14 rounded-[100vh] overflow-hidden lg:order-2 order-1">
-                                        <img className="w-full h-full object-cover" src="/img/vyapar-logo.png" alt="" />
+                                        <img className="w-full h-full object-cover" src="/img/logo-vector.svg" alt="" />
                                     </Link>
                                 </div>
                                 <label htmlFor="my-drawer-2" className="drawer-button lg:hidden w-[36px] cursor-pointer">

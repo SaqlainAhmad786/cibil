@@ -1,11 +1,8 @@
-import { useEffect } from "react"
 import { Link } from "react-router-dom"
+import { useAuth } from "../contexts/authContext"
 
 function Home() {
-
-    useEffect(() => {
-
-    }, [])
+    const { userData } = useAuth()
 
     return (
         <>
@@ -13,7 +10,7 @@ function Home() {
                 <section className="my-4">
                     <div className="customContainer bg-white p-5 rounded-lg mx-auto shadow-sm">
                         <h2 className="text-2xl font-bold">Welcome,</h2>
-                        <p>John Doe</p>
+                        <p>{userData?.user_name}</p>
                     </div>
                 </section>
                 <section className="my-4">

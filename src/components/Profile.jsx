@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/authContext';
 
 function Profile() {
     const { userData } = useAuth();
+    console.log(userData)
 
     return (
         <>
@@ -24,13 +25,13 @@ function Profile() {
                         </label>
                     </div>
                     <div className='space-y-2 mt-4'>
-                        <p><span className='font-medium text-gray-500'>Full Name:</span> John Doe</p>
-                        <p><span className='font-medium text-gray-500'>Mobile:</span> +91 9876543210</p>
-                        <p><span className='font-medium text-gray-500'>Email address:</span> hD6dI@example.com</p>
+                        <p><span className='font-medium text-gray-500'>Full Name:</span> {userData?.user_name}</p>
+                        <p><span className='font-medium text-gray-500'>Mobile:</span> +91 {userData?.mobile_no}</p>
+                        <p><span className='font-medium text-gray-500'>Email address:</span> {userData?.email}</p>
                         <hr />
-                        <p><span className='font-medium text-gray-500'>Firm Name:</span> John Doe</p>
-                        <p><span className='font-medium text-gray-500'>GST No.:</span> +91 9876543210</p>
-                        <p><span className='font-medium text-gray-500'>PAN Card No.:</span> hD6dI@example.com</p>
+                        <p><span className='font-medium text-gray-500'>Firm Name:</span> {userData?.firm_name}</p>
+                        <p><span className='font-medium text-gray-500'>GST No.:</span> +91 {userData?.gst_no}</p>
+                        <p><span className='font-medium text-gray-500'>PAN Card No.:</span> {userData?.pan_no}</p>
                     </div>
                     <div className='mt-4'>
                         <Link to={"/overview/editProfile"} className='bg-blue text-white p-2 rounded-lg font-medium text-sm'><i className="fa-solid fa-pen mr-1"></i>Edit Profile</Link>

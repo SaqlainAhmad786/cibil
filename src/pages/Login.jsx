@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom"
 import { toast, Toaster } from "sonner"
 import Loader from "../components/Loader/Loader"
 import axios from "axios"
+import { useAuth } from "../contexts/authContext"
 
 function Login() {
     const [loading, setLoading] = useState(false)
@@ -11,6 +12,7 @@ function Login() {
     const navigate = useNavigate()
     const location = useLocation();
     const hasRun = useRef(false);
+    const { refreshUserData } = useAuth();
 
     const newUserSignedUp = location?.state?.signedUp;
     const newUserEmail = location?.state?.email;
@@ -51,17 +53,16 @@ function Login() {
         }
         try {
             await axios.post('https://back-end-civil.onrender.com/login-user', data).then(res => {
-                console.log(res.data)
                 if (res.data.status) {
+                    localStorage.setItem('token', res.data.token_key)
+                    localStorage.setItem('userId', res.data.userData._id)
                     setLoading(false)
-                    // setUserData(res.data.userData)
-                    localStorage.setItem('token', res.data.token_key);
+                    refreshUserData()
                     navigate('/')
                 }
             })
         } catch (error) {
             setLoading(false)
-            console.log(error.response.data.msg)
             if (error.response.data.msg === "user not found") {
                 toast.error('User not found',
                     { description: 'Please Sign up to continue' },
