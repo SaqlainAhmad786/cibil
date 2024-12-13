@@ -1,20 +1,21 @@
 import axios from "axios";
-
 function AddDefaulter() {
 
-    let handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        console.log('Form Data:', formData); // Log the form data
+        // const data = Object.fromEntries(formData);
+        // const postData = { ...data, user_id: localStorage.getItem('userId') };
+        // console.log(postData)
+        formData.append('user_id', localStorage.getItem('userId'));
 
         try {
-            const response = await axios.post('http://localhost:8000/addDefaulter', formData);
-            console.log('Response:', response.data);
+            await axios.post(`${import.meta.env.VITE_BASE_URL}/addDefaulter`, formData).then(res => {
+                console.log(res.data)
+            })
         } catch (error) {
             console.error('Error:', error.response ? error.response.data : error.message);
         }
-
-
     }
 
     return (
@@ -30,45 +31,45 @@ function AddDefaulter() {
                             <div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Name</label>
-                                    <input className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="John Doe" name="userName" />
+                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="John Doe" name="userName" />
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Mobile</label>
-                                    <input className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="9876543210" name="mobileNo" />
+                                    <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="9876543210" name="mobileNo" />
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">PAN Card No.</label>
-                                    <input className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="" name="pan_card" />
+                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="" name="pan_card" />
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Aadhar Card No.</label>
-                                    <input className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="" name="addharcard" />
+                                    <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="" name="addharcard" />
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Address</label>
-                                    <input className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="" name="address" />
+                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="" name="address" />
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">City</label>
-                                    <input className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="" name="cityName" />
+                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="" name="cityName" />
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">State</label>
-                                    <input className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="" name="stateName" />
+                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="" name="stateName" />
                                 </div>
                             </div>
                             <div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Firm Name</label>
-                                    <input className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="Company" name="firmName" />
+                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="Company" name="firmName" />
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">GST No.</label>
-                                    <input className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="" name="gstNo" />
+                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="" name="gstNo" />
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Pending Amount</label>
-                                    <input className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="₹" name="pendingAmount" />
+                                    <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none dark:border-gray-300 dark:bg-gray-100" placeholder="₹" name="pendingAmount" />
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Remark</label>

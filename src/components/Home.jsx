@@ -8,7 +8,7 @@ function Home() {
         <>
             <main>
                 <section className="my-4">
-                    <div className="customContainer bg-white p-5 rounded-lg mx-auto shadow-sm">
+                    <div className="customContainer bg-gradient-to-r from-blue to-transparent text-white p-5 rounded-lg mx-auto">
                         <h2 className="text-2xl font-bold">Welcome,</h2>
                         <p>{userData?.user_name}</p>
                     </div>

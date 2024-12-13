@@ -1,7 +1,7 @@
-import axios from "axios"
 import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { toast, Toaster } from "sonner"
+import axios from "axios"
 import Loader from "../components/Loader/Loader"
 
 function Signup() {
@@ -36,10 +36,15 @@ function Signup() {
         setLoading(true)
         const formData = new FormData(e.target)
         const data = Object.fromEntries(formData)
-        console.log(data)
         if (data.mobile_no.length !== 10) {
             setLoading(false)
             toast.error('Please enter a valid mobile number!', { duration: 3000 })
+            return
+        }
+
+        if (data.password.length < 8) {
+            setLoading(false)
+            toast.error('Password must be at least 8 characters long!', { duration: 3000 })
             return
         }
 
@@ -50,7 +55,7 @@ function Signup() {
         }
 
         try {
-            await axios.post('https://back-end-civil.onrender.com/register', data).then(res => {
+            await axios.post(`${import.meta.env.VITE_BASE_URL}/register`, data).then(res => {
                 console.log(res.data)
                 if (res.data.status) {
                     setLoading(false)

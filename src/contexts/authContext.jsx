@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
 
     async function getUserData(uid) {
         try {
-            await axios.post(`https://back-end-civil.onrender.com/userdataById/${uid}`).then(res => {
+            await axios.post(`${import.meta.env.VITE_BASE_URL}/userdataById/${uid}`).then(res => {
                 setUserData(res.data.userData);
             })
         } catch (error) {

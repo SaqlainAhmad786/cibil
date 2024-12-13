@@ -16,6 +16,7 @@ function Login() {
 
     const newUserSignedUp = location?.state?.signedUp;
     const newUserEmail = location?.state?.email;
+    const newPassword = location?.state?.passwordChanged;
 
     useEffect(() => {
         document.title = "Login | Vyapar Score"
@@ -29,9 +30,15 @@ function Login() {
 
         if (newUserEmail) {
             setEmailValue(newUserEmail)
+            navigate(location.pathname, { state: null })
+        }
+
+        if (newPassword) {
+            toast.success('Password Changed Successfully!', { description: 'Please Log in to continue' }, { richColors: true }, { duration: 3000 })
+            navigate(location.pathname, { state: null })
         }
         hasRun.current = true;
-    }, [newUserSignedUp, location.pathname, navigate])
+    }, [newUserSignedUp, newPassword, location.pathname, navigate , newUserEmail])
 
     const handleMouseDown = () => {
         setShowPassword(true);
@@ -52,7 +59,7 @@ function Login() {
             return
         }
         try {
-            await axios.post('https://back-end-civil.onrender.com/login-user', data).then(res => {
+            await axios.post(`${import.meta.env.VITE_BASE_URL}/login-user`, data).then(res => {
                 if (res.data.status) {
                     localStorage.setItem('token', res.data.token_key)
                     localStorage.setItem('userId', res.data.userData._id)
@@ -79,7 +86,7 @@ function Login() {
 
     return (
         <>
-            <main className="min-h-screen flex items-center justify-center bg-gray-900 px-4 sm:px-6 lg:px-8">
+            <main className="h-[100dvh] flex items-center justify-center bg-gray-900 px-4 sm:px-6 lg:px-8">
                 <Toaster position="top-center" />
                 <div className="relative ">
                     <div className="w-[320px] min-h-96 px-8 py-6 mt-4 text-left bg-gray-800 rounded-xl shadow-lg">
@@ -110,12 +117,13 @@ function Login() {
                                 <label htmlFor="remember" className="text-xs text-gray-400">Remember me</label>
                             </div>
                             <div>
-                                <button type="submit" className="py-[7px] px-8 bg-blue focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 flex justify-center text-center text-base font-semibold shadow-md focus:outline-none rounded-lg cursor-pointer select-none">
+                                <button type="submit" className="py-2 bg-blue focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 flex justify-center text-center text-base font-semibold shadow-md focus:outline-none rounded-lg cursor-pointer select-none">
                                     {loading ? <Loader /> : 'LOGIN'}
                                 </button>
                             </div>
                         </form>
-                        <div className="mt-4">
+                        <div className="mt-3">
+                            <p className="text-xs mb-1 text-center text-gray-400"><Link to="/forgetPassword" className="font-medium text-blue hover:underline">Forget Password?</Link></p>
                             <p className="text-xs text-center text-gray-400">{`Don't`} have an account? <Link to="/signup" className="font-medium text-blue hover:underline">Sign up</Link></p>
                         </div>
                     </div>

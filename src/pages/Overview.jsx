@@ -33,7 +33,7 @@ function Overview() {
                                     <Link to={'/overview/profile'} className="lg:block hidden h-12 w-12 rounded-[100vh] overflow-hidden lg:order-2 order-1">
                                         <img className="w-full h-full object-cover" src="https://www.paraglidingassociationofindia.org/wp-content/uploads/2022/02/passport-size.png" alt="" />
                                     </Link>
-                                    <Link to={'/overview/profile'} className="lg:hidden block bg-white p-1 h-14 w-14 rounded-[100vh] overflow-hidden lg:order-2 order-1">
+                                    <Link to={'/'} className="lg:hidden block bg-white p-1 h-14 w-14 rounded-[100vh] overflow-hidden lg:order-2 order-1">
                                         <img className="w-full h-full object-cover" src="/img/logo-vector.svg" alt="" />
                                     </Link>
                                 </div>

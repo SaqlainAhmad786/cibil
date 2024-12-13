@@ -30,7 +30,7 @@ function MoneyBlockerFinder() {
                         </div>
                     </div>
                 </div>
-                <div className="customContainer h-[300px] flex items-center justify-center bg-white p-5 rounded-lg mx-auto shadow-sm mt-5">
+                <div className="customContainer h-[300px] flex items-center justify-center bg-white p-5 rounded-lg mx-auto shadow-sm my-5">
                     <p className="text-sm">No data found</p>
                 </div>
             </main>

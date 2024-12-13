@@ -9,9 +9,10 @@ import Profile from "./components/Profile"
 import Home from "./components/Home"
 import EditProfile from "./components/EditProfile"
 import MoneyBlockerFinder from "./components/MoneyBlockerFinder"
-import { AuthProvider } from "./contexts/authContext"
 import LoggedIn from "./components/LoggedIn/LoggedIn"
 import NotLoggedIn from "./components/NotLoggedIn/NotLoggedIn"
+import ForgetPassword from "./pages/ForgetPassword"
+import { AuthProvider } from "./contexts/authContext"
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
             <Route index element={<Navigate to="overview" />} />
             <Route path="login" element={<LoggedIn Component={Login} />} />
             <Route path="signup" element={<LoggedIn Component={Signup} />} />
+            <Route path="forgetPassword" element={<LoggedIn Component={ForgetPassword} />} />
             <Route path="overview" element={<NotLoggedIn Component={Overview} />}>
               <Route index element={<Navigate to="home" />} />
               <Route path="home" element={<Home />} />
