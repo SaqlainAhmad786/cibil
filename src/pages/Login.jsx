@@ -79,7 +79,7 @@ function Login() {
         <>
             <main className="h-[100dvh] flex items-center justify-center bg-[url('/img/login-cover.svg')] bg-cover bg-center px-4 sm:px-6 lg:px-8">
                 <Toaster position="top-center" />
-                <div className="w-[320px] min-h-96 px-8 py-6 text-left bg-gray-200 bg-opacity-30 backdrop-blur-sm rounded-xl shadow-lg">
+                <div className="w-[320px] min-h-96 px-8 py-6 text-left bg-gray-600 border border-gray-600 bg-opacity-50 backdrop-blur-md rounded-xl shadow-lg">
                     <form onSubmit={handleSubmit}>
                         <div className="flex flex-col h-full select-none">
                             <div className="mb-3">
@@ -90,13 +90,13 @@ function Login() {
                             </div>
                             <div className="w-full flex flex-col gap-2">
                                 <label className="font-semibold text-xs text-white tracking-wide">Email</label>
-                                <input className="border rounded-lg px-3 py-2 mb-5 text-white text-sm w-full outline-none border-gray-300 bg-gray-200 bg-opacity-40 placeholder:text-gray-200" placeholder="example@mail.com" type="email" name="email" value={emailValue} onChange={(e) => setEmailValue(e.target.value)} />
+                                <input className="border rounded-lg px-3 py-2 mb-5 text-white text-sm w-full outline-none border-gray-500 bg-gray-500 bg-opacity-40 placeholder:text-gray-400" placeholder="example@mail.com" type="email" name="email" value={emailValue} onChange={(e) => setEmailValue(e.target.value)} />
                             </div>
                         </div>
                         <div className="w-full flex flex-col gap-2">
                             <label className="font-semibold text-xs text-white tracking-wide">Password</label>
-                            <div className="flex justify-between items-center border-gray-300 bg-gray-200 bg-opacity-40 border rounded-lg px-3 py-2 mb-3">
-                                <input type={showPassword ? "text" : "password"} className="bg-transparent text-white text-sm w-full outline-none placeholder:text-gray-200" placeholder="••••••••" name="password" />
+                            <div className="flex justify-between items-center border-gray-500 bg-gray-500 bg-opacity-40 border rounded-lg px-3 py-2 mb-3">
+                                <input type={showPassword ? "text" : "password"} className="bg-transparent text-white text-sm w-full outline-none placeholder:text-gray-400" placeholder="••••••••" name="password" />
                                 <button type="button" className="text-gray-400 text-sm" onClick={() => setShowPassword(!showPassword)}>
                                     {showPassword ? <i className="fa-regular fa-eye-slash text-white"></i> : <i className="fa-regular fa-eye text-white"></i>}
                                 </button>
@@ -104,7 +104,7 @@ function Login() {
                         </div>
                         <div className="flex items-center gap-2 mb-2">
                             <input type="checkbox" name="remember" id="remember" />
-                            <label htmlFor="remember" className="text-xs text-gray-100">Remember me</label>
+                            <label htmlFor="remember" className="text-xs text-gray-200">Remember me</label>
                         </div>
                         <div>
                             <button type="submit" className="py-2 text-sm bg-blueClr focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 flex justify-center text-center font-semibold shadow-md focus:outline-none rounded-lg cursor-pointer select-none">
@@ -116,9 +116,9 @@ function Login() {
                             </button>
                         </div>
                     </form>
-                    <div className="mt-3">
+                    <div className="mt-4">
                         <p className="text-xs mb-1 text-center text-gray-400"><Link to="/forgetPassword" className="font-semibold text-white hover:underline">Forget Password?</Link></p>
-                        <p className="text-xs text-center text-gray-100">{`Don't`} have an account? <Link to="/signup" className="font-semibold text-white hover:underline">Sign up</Link></p>
+                        <p className="text-xs text-center text-gray-100 font-extralight">{`Don't`} have an account? <Link to="/signup" className="font-semibold text-white hover:underline">Sign up</Link></p>
                     </div>
                 </div>
             </main>
