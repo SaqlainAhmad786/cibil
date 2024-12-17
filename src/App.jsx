@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
+import { AuthProvider } from "./contexts/authContext"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import Overview from "./pages/Overview"
@@ -12,7 +13,6 @@ import MoneyBlockerFinder from "./components/MoneyBlockerFinder"
 import LoggedIn from "./components/LoggedIn/LoggedIn"
 import NotLoggedIn from "./components/NotLoggedIn/NotLoggedIn"
 import ForgetPassword from "./pages/ForgetPassword"
-import { AuthProvider } from "./contexts/authContext"
 
 function App() {
 

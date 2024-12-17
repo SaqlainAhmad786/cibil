@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { toast, Toaster } from "sonner"
-import Loader from "../components/Loader/Loader"
-import axios from "axios"
 import { useAuth } from "../contexts/authContext"
+import axios from "axios"
+import 'ldrs/mirage'
 
 function Login() {
     const [loading, setLoading] = useState(false)
@@ -38,15 +38,7 @@ function Login() {
             navigate(location.pathname, { state: null })
         }
         hasRun.current = true;
-    }, [newUserSignedUp, newPassword, location.pathname, navigate , newUserEmail])
-
-    const handleMouseDown = () => {
-        setShowPassword(true);
-    };
-
-    const handleMouseUp = () => {
-        setShowPassword(false);
-    };
+    }, [newUserSignedUp, newPassword, location.pathname, navigate, newUserEmail])
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -93,9 +85,9 @@ function Login() {
                         <form onSubmit={handleSubmit}>
                             <div className="flex flex-col justify-center items-center h-full select-none">
                                 <div className="flex flex-col items-center justify-center gap-2 mb-8">
-                                    <a href="" target="_blank">
+                                    <div>
                                         <img src="/img/vyapar-logo.png" className="w-16" />
-                                    </a>
+                                    </div>
                                     <p className="m-0 text-[16px] font-semibold text-white">Login to your Account</p>
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
@@ -107,7 +99,7 @@ function Login() {
                                 <label className="font-semibold text-xs text-gray-400 ">Password</label>
                                 <div className="flex justify-between items-center border-gray-500 bg-gray-900 border rounded-lg px-3 py-2 mb-3">
                                     <input type={showPassword ? "text" : "password"} className="bg-transparent text-white text-sm w-full outline-none" placeholder="••••••••" name="password" />
-                                    <button type="button" className="text-gray-400 text-sm" onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
+                                    <button type="button" className="text-gray-400 text-sm" onClick={() => setShowPassword(!showPassword)}>
                                         {showPassword ? <i className="fa-regular fa-eye-slash"></i> : <i className="fa-regular fa-eye"></i>}
                                     </button>
                                 </div>
@@ -117,8 +109,12 @@ function Login() {
                                 <label htmlFor="remember" className="text-xs text-gray-400">Remember me</label>
                             </div>
                             <div>
-                                <button type="submit" className="py-2 bg-blue focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 flex justify-center text-center text-base font-semibold shadow-md focus:outline-none rounded-lg cursor-pointer select-none">
-                                    {loading ? <Loader /> : 'LOGIN'}
+                                <button type="submit" className="py-2 text-sm bg-blue focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 flex justify-center text-center font-semibold shadow-md focus:outline-none rounded-lg cursor-pointer select-none">
+                                    {loading ? <l-mirage
+                                        size="80"
+                                        speed="4"
+                                        color="white"
+                                    ></l-mirage> : 'LOGIN'}
                                 </button>
                             </div>
                         </form>

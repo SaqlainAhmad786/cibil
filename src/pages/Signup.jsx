@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { toast, Toaster } from "sonner"
 import axios from "axios"
-import Loader from "../components/Loader/Loader"
+import 'ldrs/mirage'
 
 function Signup() {
     const [loading, setLoading] = useState(false)
@@ -136,8 +136,12 @@ function Signup() {
                                     <label htmlFor="terms" className="font-light text-gray-300">I accept the <a className="font-medium text-primary-600 hover:underline text-primary-500" href="#">Terms and Conditions</a></label>
                                 </div>
                             </div>
-                            <button type="submit" className="flex justify-center w-full text-white bg-blue hover:bg-primary-700 focus:outline-none font-medium rounded-lg px-5 py-2 text-center hover:bg-primary-700">
-                                {loading ? <Loader /> : 'SIGN UP'}
+                            <button type="submit" className="flex justify-center w-full text-sm text-white bg-blue hover:bg-primary-700 focus:outline-none font-semibold rounded-lg px-5 py-2 text-center hover:bg-primary-700">
+                                {loading ? <l-mirage
+                                    size="80"
+                                    speed="4"
+                                    color="white"
+                                ></l-mirage> : 'SIGN UP'}
                             </button>
                             <p className="text-xs font-light text-gray-400 mt-3">
                                 Already have an account? <Link to="/login" className="font-medium text-blue hover:underline">Login </Link>

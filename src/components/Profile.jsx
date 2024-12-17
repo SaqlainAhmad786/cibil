@@ -1,10 +1,16 @@
 import { Link } from 'react-router-dom'
 import styles from './Profile.module.css'
 import { useAuth } from '../contexts/authContext';
+import ProfileUpload from './ProfileUpload/ProfileUpload';
+import { useRef } from 'react';
 
 function Profile() {
     const { userData } = useAuth();
-    console.log(userData)
+    const fileInputRef = useRef(null);
+
+    const handleClick = () => {
+        fileInputRef.current.click();
+    };
 
     return (
         <>
@@ -17,13 +23,14 @@ function Profile() {
                                 src='/img/default-avatar.jpg'
                             />
                         </div>
-                        <label htmlFor='profile' className={styles.browse}>
+                        <button htmlFor='profile' className={styles.browse} onClick={handleClick}>
                             <div className={styles.browseFileImg}>
                                 <i className="fa-solid fa-pen"></i>
                             </div>
-                            <input type="file" className='hidden' name="" id="profile" />
-                        </label>
+                            {/* <input type="file" className='hidden' name="" /> */}
+                        </button>
                     </div>
+                    <ProfileUpload fileInputRef={fileInputRef} />
                     <div className='space-y-2 mt-4'>
                         <p><span className='font-medium text-gray-500'>Full Name:</span> {userData?.user_name}</p>
                         <p><span className='font-medium text-gray-500'>Mobile:</span> +91 {userData?.mobile_no}</p>
