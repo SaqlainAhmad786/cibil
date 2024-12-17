@@ -41,7 +41,7 @@ function Profile() {
                         <p><span className='font-medium text-gray-500'>PAN Card No.:</span> {userData?.pan_no}</p>
                     </div>
                     <div className='mt-4'>
-                        <Link to={"/overview/editProfile"} className='bg-blue text-white p-2 rounded-lg font-medium text-sm'><i className="fa-solid fa-pen mr-1"></i>Edit Profile</Link>
+                        <Link to={"/overview/editProfile"} className='bg-blueClr text-white p-2 rounded-lg font-medium text-sm'><i className="fa-solid fa-pen mr-1"></i>Edit Profile</Link>
                     </div>
                 </div>
                 <div className="customContainer bg-white p-5 rounded-lg mx-auto mt-5 shadow-sm">

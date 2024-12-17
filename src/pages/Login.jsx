@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom"
 import { toast, Toaster } from "sonner"
 import { useAuth } from "../contexts/authContext"
 import axios from "axios"
-import 'ldrs/mirage'
 
 function Login() {
     const [loading, setLoading] = useState(false)
@@ -80,35 +79,35 @@ function Login() {
         <>
             <main className="h-[100dvh] flex items-center justify-center bg-[url('/img/login-cover.svg')] bg-cover bg-center px-4 sm:px-6 lg:px-8">
                 <Toaster position="top-center" />
-                <div className="w-[320px] min-h-96 px-8 py-6 text-left bg-gray-200 bg-opacity-40 backdrop-blur-sm rounded-xl shadow-lg">
+                <div className="w-[320px] min-h-96 px-8 py-6 text-left bg-gray-200 bg-opacity-30 backdrop-blur-sm rounded-xl shadow-lg">
                     <form onSubmit={handleSubmit}>
-                        <div className="flex flex-col justify-center items-center h-full select-none">
-                            <div className="flex flex-col items-center justify-center gap-2 mb-6">
-                                <div>
+                        <div className="flex flex-col h-full select-none">
+                            <div className="mb-3">
+                                <div className="mb-1 flex justify-end">
                                     <img src="/img/vyapar-logo.png" className="w-16" />
                                 </div>
-                                <p className="m-0 text-[16px] font-semibold text-white">Login to your Account</p>
+                                {/* <p className="m-0 text-[16px] font-semibold text-white">Login to your Account</p> */}
                             </div>
                             <div className="w-full flex flex-col gap-2">
-                                <label className="font-semibold text-xs text-gray-400 ">Email</label>
-                                <input className="border rounded-lg px-3 py-2 mb-5 text-white text-sm w-full outline-none border-gray-500 bg-gray-900" placeholder="example@mail.com" type="email" name="email" value={emailValue} onChange={(e) => setEmailValue(e.target.value)} />
+                                <label className="font-semibold text-xs text-white tracking-wide">Email</label>
+                                <input className="border rounded-lg px-3 py-2 mb-5 text-white text-sm w-full outline-none border-gray-300 bg-gray-200 bg-opacity-40 placeholder:text-gray-200" placeholder="example@mail.com" type="email" name="email" value={emailValue} onChange={(e) => setEmailValue(e.target.value)} />
                             </div>
                         </div>
                         <div className="w-full flex flex-col gap-2">
-                            <label className="font-semibold text-xs text-gray-400 ">Password</label>
-                            <div className="flex justify-between items-center border-gray-500 bg-gray-900 border rounded-lg px-3 py-2 mb-3">
-                                <input type={showPassword ? "text" : "password"} className="bg-transparent text-white text-sm w-full outline-none" placeholder="••••••••" name="password" />
+                            <label className="font-semibold text-xs text-white tracking-wide">Password</label>
+                            <div className="flex justify-between items-center border-gray-300 bg-gray-200 bg-opacity-40 border rounded-lg px-3 py-2 mb-3">
+                                <input type={showPassword ? "text" : "password"} className="bg-transparent text-white text-sm w-full outline-none placeholder:text-gray-200" placeholder="••••••••" name="password" />
                                 <button type="button" className="text-gray-400 text-sm" onClick={() => setShowPassword(!showPassword)}>
-                                    {showPassword ? <i className="fa-regular fa-eye-slash"></i> : <i className="fa-regular fa-eye"></i>}
+                                    {showPassword ? <i className="fa-regular fa-eye-slash text-white"></i> : <i className="fa-regular fa-eye text-white"></i>}
                                 </button>
                             </div>
                         </div>
                         <div className="flex items-center gap-2 mb-2">
                             <input type="checkbox" name="remember" id="remember" />
-                            <label htmlFor="remember" className="text-xs text-gray-400">Remember me</label>
+                            <label htmlFor="remember" className="text-xs text-gray-100">Remember me</label>
                         </div>
                         <div>
-                            <button type="submit" className="py-2 text-sm bg-blue focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 flex justify-center text-center font-semibold shadow-md focus:outline-none rounded-lg cursor-pointer select-none">
+                            <button type="submit" className="py-2 text-sm bg-blueClr focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 flex justify-center text-center font-semibold shadow-md focus:outline-none rounded-lg cursor-pointer select-none">
                                 {loading ? <l-mirage
                                     size="80"
                                     speed="4"
@@ -118,8 +117,8 @@ function Login() {
                         </div>
                     </form>
                     <div className="mt-3">
-                        <p className="text-xs mb-1 text-center text-gray-400"><Link to="/forgetPassword" className="font-medium text-blue hover:underline">Forget Password?</Link></p>
-                        <p className="text-xs text-center text-gray-400">{`Don't`} have an account? <Link to="/signup" className="font-medium text-blue hover:underline">Sign up</Link></p>
+                        <p className="text-xs mb-1 text-center text-gray-400"><Link to="/forgetPassword" className="font-semibold text-white hover:underline">Forget Password?</Link></p>
+                        <p className="text-xs text-center text-gray-100">{`Don't`} have an account? <Link to="/signup" className="font-semibold text-white hover:underline">Sign up</Link></p>
                     </div>
                 </div>
             </main>

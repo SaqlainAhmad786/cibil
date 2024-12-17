@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom"
 import { toast, Toaster } from "sonner";
-import 'ldrs/mirage'
 
 function OtpInputs({ handleOtpForm, email, loading }) {
     const inputs = useRef([]);
@@ -101,13 +100,13 @@ function OtpInputs({ handleOtpForm, email, loading }) {
                         <p className="text-xs text-gray-400">Please enter the 4-digits one time password (OTP) that we sent to your registered email address</p>
                     </div>
                     <div className="my-2">
-                        <p className={`text-sm ${isButtonDisabled ? 'cursor-not-allowed pointer-events-none' : 'text-blue cursor-pointer'
+                        <p className={`text-sm ${isButtonDisabled ? 'cursor-not-allowed pointer-events-none' : 'text-blueClr cursor-pointer'
                             } text-white py-1 rounded-lg font-medium`}
                             onClick={handleResendOTP}
-                            disabled={isButtonDisabled}>Resend OTP <span className="text-blue">{formatTime(timeLeft)}</span></p>
+                            disabled={isButtonDisabled}>Resend OTP <span className="text-blueClr">{formatTime(timeLeft)}</span></p>
                     </div>
                     <div>
-                        <button type="submit" className="py-2 bg-blue focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 flex justify-center text-center text-sm font-semibold shadow-md focus:outline-none rounded-lg cursor-pointer select-none">
+                        <button type="submit" className="py-2 bg-blueClr focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 flex justify-center text-center text-sm font-semibold shadow-md focus:outline-none rounded-lg cursor-pointer select-none">
                             {loading ? <l-mirage
                                 size="80"
                                 speed="4"
@@ -116,7 +115,7 @@ function OtpInputs({ handleOtpForm, email, loading }) {
                         </button>
                     </div>
                 </form>
-                <p className="mt-4 text-xs text-center text-gray-400">Back to <Link to="/login" className="text-blue font-medium">Login!</Link></p>
+                <p className="mt-4 text-xs text-center text-gray-400">Back to <Link to="/login" className="text-blueClr font-medium">Login!</Link></p>
             </div>
         </>
     )
@@ -145,7 +144,7 @@ function SetPassword({ handlePasswordForm, loading }) {
                         </div>
                     </div>
                     <div>
-                        <button type="submit" className="py-2 bg-blue focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 flex justify-center text-center text-sm font-semibold shadow-md focus:outline-none rounded-lg cursor-pointer select-none">
+                        <button type="submit" className="py-2 bg-blueClr focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 flex justify-center text-center text-sm font-semibold shadow-md focus:outline-none rounded-lg cursor-pointer select-none">
                             {loading ? <l-mirage
                                 size="80"
                                 speed="4"
@@ -154,7 +153,7 @@ function SetPassword({ handlePasswordForm, loading }) {
                         </button>
                     </div>
                 </form>
-                <p className="mt-4 text-xs text-center text-gray-400">Back to <Link to="/login" className="text-blue font-medium">Login!</Link></p>
+                <p className="mt-4 text-xs text-center text-gray-400">Back to <Link to="/login" className="text-blueClr font-medium">Login!</Link></p>
             </div>
         </>
     )
@@ -293,7 +292,7 @@ function ForgetPassword() {
                             </div>
                         </div>
                         <div>
-                            <button type="submit" className="py-2 bg-blue focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 flex justify-center text-center text-sm font-semibold shadow-md focus:outline-none rounded-lg cursor-pointer select-none">
+                            <button type="submit" className="py-2 bg-blueClr focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 flex justify-center text-center text-sm font-semibold shadow-md focus:outline-none rounded-lg cursor-pointer select-none">
                                 {loading ? <l-mirage
                                     size="80"
                                     speed="4"
@@ -302,7 +301,7 @@ function ForgetPassword() {
                             </button>
                         </div>
                     </form>
-                    <p className="mt-4 text-xs text-center text-gray-400">Back to <Link to="/login" className="text-blue font-medium">Login!</Link></p>
+                    <p className="mt-4 text-xs text-center text-gray-400">Back to <Link to="/login" className="text-blueClr font-medium">Login!</Link></p>
                 </div>
                 }
                 {showOtp && <OtpInputs handleOtpForm={handleOtpForm} email={email} loading={loading} />}

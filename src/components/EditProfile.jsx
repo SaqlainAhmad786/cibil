@@ -65,7 +65,7 @@ function EditProfile() {
                         </div>
                     </div>
                     <div className='mt-4'>
-                        <button className='bg-blue text-white p-2 px-5 rounded-lg font-semibold text-sm'>SUBMIT</button>
+                        <button className='bg-blueClr text-white p-2 px-5 rounded-lg font-semibold text-sm'>SUBMIT</button>
                     </div>
                 </form>
             </section>
