@@ -78,50 +78,48 @@ function Login() {
 
     return (
         <>
-            <main className="h-[100dvh] flex items-center justify-center bg-gray-900 px-4 sm:px-6 lg:px-8">
+            <main className="h-[100dvh] flex items-center justify-center bg-[url('/img/login-cover.svg')] bg-cover bg-center px-4 sm:px-6 lg:px-8">
                 <Toaster position="top-center" />
-                <div className="relative ">
-                    <div className="w-[320px] min-h-96 px-8 py-6 mt-4 text-left bg-gray-800 rounded-xl shadow-lg">
-                        <form onSubmit={handleSubmit}>
-                            <div className="flex flex-col justify-center items-center h-full select-none">
-                                <div className="flex flex-col items-center justify-center gap-2 mb-8">
-                                    <div>
-                                        <img src="/img/vyapar-logo.png" className="w-16" />
-                                    </div>
-                                    <p className="m-0 text-[16px] font-semibold text-white">Login to your Account</p>
+                <div className="w-[320px] min-h-96 px-8 py-6 text-left bg-gray-200 bg-opacity-40 backdrop-blur-sm rounded-xl shadow-lg">
+                    <form onSubmit={handleSubmit}>
+                        <div className="flex flex-col justify-center items-center h-full select-none">
+                            <div className="flex flex-col items-center justify-center gap-2 mb-6">
+                                <div>
+                                    <img src="/img/vyapar-logo.png" className="w-16" />
                                 </div>
-                                <div className="w-full flex flex-col gap-2">
-                                    <label className="font-semibold text-xs text-gray-400 ">Email</label>
-                                    <input className="border rounded-lg px-3 py-2 mb-5 text-white text-sm w-full outline-none border-gray-500 bg-gray-900" placeholder="example@mail.com" type="email" name="email" value={emailValue} onChange={(e) => setEmailValue(e.target.value)} />
-                                </div>
+                                <p className="m-0 text-[16px] font-semibold text-white">Login to your Account</p>
                             </div>
                             <div className="w-full flex flex-col gap-2">
-                                <label className="font-semibold text-xs text-gray-400 ">Password</label>
-                                <div className="flex justify-between items-center border-gray-500 bg-gray-900 border rounded-lg px-3 py-2 mb-3">
-                                    <input type={showPassword ? "text" : "password"} className="bg-transparent text-white text-sm w-full outline-none" placeholder="••••••••" name="password" />
-                                    <button type="button" className="text-gray-400 text-sm" onClick={() => setShowPassword(!showPassword)}>
-                                        {showPassword ? <i className="fa-regular fa-eye-slash"></i> : <i className="fa-regular fa-eye"></i>}
-                                    </button>
-                                </div>
+                                <label className="font-semibold text-xs text-gray-400 ">Email</label>
+                                <input className="border rounded-lg px-3 py-2 mb-5 text-white text-sm w-full outline-none border-gray-500 bg-gray-900" placeholder="example@mail.com" type="email" name="email" value={emailValue} onChange={(e) => setEmailValue(e.target.value)} />
                             </div>
-                            <div className="flex items-center gap-2 mb-2">
-                                <input type="checkbox" name="remember" id="remember" />
-                                <label htmlFor="remember" className="text-xs text-gray-400">Remember me</label>
-                            </div>
-                            <div>
-                                <button type="submit" className="py-2 text-sm bg-blue focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 flex justify-center text-center font-semibold shadow-md focus:outline-none rounded-lg cursor-pointer select-none">
-                                    {loading ? <l-mirage
-                                        size="80"
-                                        speed="4"
-                                        color="white"
-                                    ></l-mirage> : 'LOGIN'}
+                        </div>
+                        <div className="w-full flex flex-col gap-2">
+                            <label className="font-semibold text-xs text-gray-400 ">Password</label>
+                            <div className="flex justify-between items-center border-gray-500 bg-gray-900 border rounded-lg px-3 py-2 mb-3">
+                                <input type={showPassword ? "text" : "password"} className="bg-transparent text-white text-sm w-full outline-none" placeholder="••••••••" name="password" />
+                                <button type="button" className="text-gray-400 text-sm" onClick={() => setShowPassword(!showPassword)}>
+                                    {showPassword ? <i className="fa-regular fa-eye-slash"></i> : <i className="fa-regular fa-eye"></i>}
                                 </button>
                             </div>
-                        </form>
-                        <div className="mt-3">
-                            <p className="text-xs mb-1 text-center text-gray-400"><Link to="/forgetPassword" className="font-medium text-blue hover:underline">Forget Password?</Link></p>
-                            <p className="text-xs text-center text-gray-400">{`Don't`} have an account? <Link to="/signup" className="font-medium text-blue hover:underline">Sign up</Link></p>
                         </div>
+                        <div className="flex items-center gap-2 mb-2">
+                            <input type="checkbox" name="remember" id="remember" />
+                            <label htmlFor="remember" className="text-xs text-gray-400">Remember me</label>
+                        </div>
+                        <div>
+                            <button type="submit" className="py-2 text-sm bg-blue focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 flex justify-center text-center font-semibold shadow-md focus:outline-none rounded-lg cursor-pointer select-none">
+                                {loading ? <l-mirage
+                                    size="80"
+                                    speed="4"
+                                    color="white"
+                                ></l-mirage> : 'LOGIN'}
+                            </button>
+                        </div>
+                    </form>
+                    <div className="mt-3">
+                        <p className="text-xs mb-1 text-center text-gray-400"><Link to="/forgetPassword" className="font-medium text-blue hover:underline">Forget Password?</Link></p>
+                        <p className="text-xs text-center text-gray-400">{`Don't`} have an account? <Link to="/signup" className="font-medium text-blue hover:underline">Sign up</Link></p>
                     </div>
                 </div>
             </main>
