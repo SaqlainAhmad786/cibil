@@ -69,7 +69,7 @@ function Signup() {
         <>
             <main className="bg-[url('/img/login-cover.svg')] bg-cover bg-center grid place-items-center lg:h-screen md:h-screen h-full">
                 <Toaster position="top-center" />
-                <div className="lg:w-[50%] md:w-[75%] sm:w-[85%] w-[95%] mx-auto my-5 bg-gray-600 border border-gray-600 bg-opacity-50 backdrop-blur-md p-6 rounded-xl">
+                <div className="lg:w-[50%] md:w-[75%] sm:w-[85%] w-[95%] mx-auto my-5 bg-gray-800 border border-gray-700 bg-opacity-70 backdrop-blur-lg p-6 rounded-xl">
                     <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl text-white">
                         <img className="w-16 h-16 mr-2 object-contain" src="/img/vyapar-logo.png" alt="logo" />
                         Create an account
@@ -79,19 +79,19 @@ function Signup() {
                             <div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">Full Name</label>
-                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-500 bg-gray-500 bg-opacity-40 placeholder:text-gray-400" placeholder="John Doe" name="user_name" />
+                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="John Doe" name="user_name" />
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">Mobile</label>
-                                    <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-500 bg-gray-500 bg-opacity-40 placeholder:text-gray-400" placeholder="9876543210" name="mobile_no" value={number} onChange={handleNumber} maxLength="10" />
+                                    <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="9876543210" name="mobile_no" value={number} onChange={handleNumber} maxLength="10" />
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">Email</label>
-                                    <input type="email" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-500 bg-gray-500 bg-opacity-40 placeholder:text-gray-400" placeholder="example@mail.com" name="email" />
+                                    <input type="email" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="example@mail.com" name="email" />
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">Password</label>
-                                    <div className="flex items-center w-full mb-4 border border-gray-500 bg-gray-500 bg-opacity-40 placeholder:text-gray-400 rounded-lg px-3 py-2">
+                                    <div className="flex items-center w-full mb-4 border border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400 rounded-lg px-3 py-2">
                                         <input type={showPassword ? "text" : "password"} className="bg-transparent text-white text-sm outline-none flex-1" placeholder="••••••••" name="password" />
                                         <button type="button" className="text-white tracking-wide text-sm" onClick={() => setShowPassword(!showPassword)}>
                                             {showPassword ? <i className="fa-regular fa-eye-slash"></i> : <i className="fa-regular fa-eye"></i>}
@@ -100,21 +100,21 @@ function Signup() {
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">Confirm Password</label>
-                                    <input type="password" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-500 bg-gray-500 bg-opacity-40 placeholder:text-gray-400" placeholder="••••••••" onChange={(e) => setConfirmPassword(e.target.value)} />
+                                    <input type="password" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="••••••••" onChange={(e) => setConfirmPassword(e.target.value)} />
                                 </div>
                             </div>
                             <div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">Firm Name</label>
-                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-500 bg-gray-500 bg-opacity-40 placeholder:text-gray-400" placeholder="Organization" name="firm_name" />
+                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="Organization" name="firm_name" />
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">GST No.</label>
-                                    <input className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-500 bg-gray-500 bg-opacity-40 placeholder:text-gray-400" placeholder="" name="gst_no" />
+                                    <input className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="" name="gst_no" />
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">PAN Card No.</label>
-                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-500 bg-gray-500 bg-opacity-40 placeholder:text-gray-400" placeholder="" name="pan_no" />
+                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="" name="pan_no" />
                                 </div>
                             </div>
                         </div>
@@ -135,7 +135,7 @@ function Signup() {
                                 ></l-mirage> : 'SIGN UP'}
                             </button>
                             <p className="text-xs font-extralight text-white tracking-wide mt-3">
-                                Already have an account? <Link to="/login" className="font-semibold text-white hover:underline">Login </Link>
+                                Already have an account? <Link to="/login" className="font-semibold text-blueClr hover:underline">Login </Link>
                                 here!
                             </p>
                         </div>

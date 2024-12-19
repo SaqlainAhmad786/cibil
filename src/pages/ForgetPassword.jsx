@@ -79,7 +79,7 @@ function OtpInputs({ handleOtpForm, email, loading }) {
 
     return (
         <>
-            <div className="w-[320px] px-8 py-6 mt-4 bg-gray-800 rounded-xl shadow-lg">
+            <div className="w-[320px] px-8 py-6 mt-4 bg-gray-800 border border-gray-700 bg-opacity-70 backdrop-blur-lg rounded-xl shadow-lg">
                 <form onSubmit={handleOtpForm}>
                     <div className="h-full mb-2">
                         <p className="mb-4 text-[16px] font-semibold text-white">Enter OTP received on your email</p>
@@ -93,7 +93,7 @@ function OtpInputs({ handleOtpForm, email, loading }) {
                                     maxLength="1"
                                     onChange={(e) => handleInputChange(e, index)}
                                     onKeyDown={(e) => handleKeyDown(e, index)}
-                                    className="border rounded-lg mx-2 px-3 py-2 text-white text-sm outline-none border-gray-500 bg-gray-900"
+                                    className="border rounded-lg mx-2 px-3 py-2 text-white text-sm outline-none border-gray-600 bg-gray-600 bg-opacity-40"
                                 />
                             ))}
                         </div>
@@ -115,7 +115,7 @@ function OtpInputs({ handleOtpForm, email, loading }) {
                         </button>
                     </div>
                 </form>
-                <p className="mt-4 text-xs text-center text-gray-400">Back to <Link to="/login" className="text-blueClr font-medium">Login!</Link></p>
+                <p className="mt-4 text-xs text-center text-gray-400">Back to <Link to="/login" className="text-blueClr font-semibold">Login!</Link></p>
             </div>
         </>
     )
@@ -126,13 +126,13 @@ function SetPassword({ handlePasswordForm, loading }) {
 
     return (
         <>
-            <div className="w-[320px] px-8 py-6 mt-4 bg-gray-800 rounded-xl shadow-lg">
+            <div className="w-[320px] px-8 py-6 mt-4 bg-gray-800 border border-gray-700 bg-opacity-70 backdrop-blur-lg rounded-xl shadow-lg">
                 <form onSubmit={handlePasswordForm}>
                     <div className="h-full mb-3">
                         <p className="mb-1 text-[16px] font-semibold text-white">Set your New Password</p>
                         <p className="mb-4 text-xs text-gray-400">Please enter your new password and confirm it</p>
                         <p className="font-semibold text-xs text-gray-400 mb-2">New Password</p>
-                        <div className="flex justify-between items-center border-gray-500 bg-gray-900 border rounded-lg px-3 py-2 mb-3">
+                        <div className="flex justify-between items-center border-gray-600 bg-gray-600 bg-opacity-40 border rounded-lg px-3 py-2 mb-3">
                             <input type={showPassword ? "text" : "password"} className="bg-transparent text-white text-sm w-full outline-none" placeholder="••••••••" name="password1" />
                             <button type="button" className="text-gray-400 text-sm" onClick={() => setShowPassword(!showPassword)}>
                                 {showPassword ? <i className="fa-regular fa-eye-slash"></i> : <i className="fa-regular fa-eye"></i>}
@@ -140,7 +140,7 @@ function SetPassword({ handlePasswordForm, loading }) {
                         </div>
                         <div className="w-full flex flex-col gap-2">
                             <label className="font-semibold text-xs text-gray-400">Confirm New Password</label>
-                            <input className="border rounded-lg px-3 py-2 text-white text-sm w-full outline-none border-gray-500 bg-gray-900" placeholder="••••••••" type="password" name="password2" />
+                            <input className="border rounded-lg px-3 py-2 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40" placeholder="••••••••" type="password" name="password2" />
                         </div>
                     </div>
                     <div>
@@ -153,7 +153,7 @@ function SetPassword({ handlePasswordForm, loading }) {
                         </button>
                     </div>
                 </form>
-                <p className="mt-4 text-xs text-center text-gray-400">Back to <Link to="/login" className="text-blueClr font-medium">Login!</Link></p>
+                <p className="mt-4 text-xs text-center text-gray-400">Back to <Link to="/login" className="text-blueClr font-semibold">Login!</Link></p>
             </div>
         </>
     )
@@ -277,9 +277,9 @@ function ForgetPassword() {
 
     return (
         <>
-            <main className="h-[100dvh] flex items-center justify-center bg-gray-900 px-4 sm:px-6 lg:px-8">
+            <main className="h-[100dvh] bg-[url('/img/login-cover.svg')] bg-cover bg-center flex items-center justify-center px-4 sm:px-6 lg:px-8">
                 <Toaster position="top-center" />
-                {showEmail && <div className="w-[320px] px-8 py-6 mt-4 bg-gray-800 rounded-xl shadow-lg">
+                {showEmail && <div className="w-[320px] px-8 py-6 mt-4 bg-gray-800 border border-gray-700 bg-opacity-70 backdrop-blur-lg rounded-xl shadow-lg">
                     <form onSubmit={handleEmailForm}>
                         <div className="h-full">
                             <p className="mb-1 text-[16px] font-semibold text-white">Forgot Password?</p>
@@ -288,7 +288,7 @@ function ForgetPassword() {
                             </p>
                             <div className="w-full flex flex-col gap-2 mb-3">
                                 <label className="font-semibold text-xs text-gray-400 ">Email</label>
-                                <input className="border rounded-lg px-3 py-2 text-white text-sm w-full outline-none border-gray-500 bg-gray-900" placeholder="example@mail.com" type="email" name="email" />
+                                <input className="border rounded-lg px-3 py-2 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40" placeholder="example@mail.com" type="email" name="email" />
                             </div>
                         </div>
                         <div>
@@ -301,7 +301,7 @@ function ForgetPassword() {
                             </button>
                         </div>
                     </form>
-                    <p className="mt-4 text-xs text-center text-gray-400">Back to <Link to="/login" className="text-blueClr font-medium">Login!</Link></p>
+                    <p className="mt-4 text-xs text-center text-gray-400">Back to <Link to="/login" className="text-blueClr font-semibold">Login!</Link></p>
                 </div>
                 }
                 {showOtp && <OtpInputs handleOtpForm={handleOtpForm} email={email} loading={loading} />}

@@ -8,9 +8,9 @@ function Login() {
     const [loading, setLoading] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
     const [emailValue, setEmailValue] = useState('')
-    const navigate = useNavigate()
     const location = useLocation();
     const hasRun = useRef(false);
+    const navigate = useNavigate()
     const { refreshUserData } = useAuth();
 
     const newUserSignedUp = location?.state?.signedUp;
@@ -79,23 +79,23 @@ function Login() {
         <>
             <main className="h-[100dvh] flex items-center justify-center bg-[url('/img/login-cover.svg')] bg-cover bg-center px-4 sm:px-6 lg:px-8">
                 <Toaster position="top-center" />
-                <div className="w-[320px] min-h-96 px-8 py-6 text-left bg-gray-600 border border-gray-600 bg-opacity-50 backdrop-blur-md rounded-xl shadow-lg">
+                <div className="w-[320px] min-h-96 px-8 py-6 text-left bg-gray-800 border border-gray-700 bg-opacity-70 backdrop-blur-lg rounded-xl shadow-lg">
                     <form onSubmit={handleSubmit}>
                         <div className="flex flex-col h-full select-none">
                             <div className="mb-3">
-                                <div className="mb-1 flex justify-end">
+                                <div className="mb-2 flex justify-center">
                                     <img src="/img/vyapar-logo.png" className="w-16" />
                                 </div>
-                                {/* <p className="m-0 text-[16px] font-semibold text-white">Login to your Account</p> */}
+                                {/* <p className="m-0 text-[16px] font-semibold text-white">LOGIN</p> */}
                             </div>
                             <div className="w-full flex flex-col gap-2">
                                 <label className="font-semibold text-xs text-white tracking-wide">Email</label>
-                                <input className="border rounded-lg px-3 py-2 mb-5 text-white text-sm w-full outline-none border-gray-500 bg-gray-500 bg-opacity-40 placeholder:text-gray-400" placeholder="example@mail.com" type="email" name="email" value={emailValue} onChange={(e) => setEmailValue(e.target.value)} />
+                                <input className="border rounded-lg px-3 py-2 mb-5 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="example@mail.com" type="email" name="email" value={emailValue} onChange={(e) => setEmailValue(e.target.value)} />
                             </div>
                         </div>
                         <div className="w-full flex flex-col gap-2">
                             <label className="font-semibold text-xs text-white tracking-wide">Password</label>
-                            <div className="flex justify-between items-center border-gray-500 bg-gray-500 bg-opacity-40 border rounded-lg px-3 py-2 mb-3">
+                            <div className="flex justify-between items-center border-gray-600 bg-gray-600 bg-opacity-40 border rounded-lg px-3 py-2 mb-3">
                                 <input type={showPassword ? "text" : "password"} className="bg-transparent text-white text-sm w-full outline-none placeholder:text-gray-400" placeholder="••••••••" name="password" />
                                 <button type="button" className="text-gray-400 text-sm" onClick={() => setShowPassword(!showPassword)}>
                                     {showPassword ? <i className="fa-regular fa-eye-slash text-white"></i> : <i className="fa-regular fa-eye text-white"></i>}
@@ -117,8 +117,8 @@ function Login() {
                         </div>
                     </form>
                     <div className="mt-4">
-                        <p className="text-xs mb-1 text-center text-gray-400"><Link to="/forgetPassword" className="font-semibold text-white hover:underline">Forget Password?</Link></p>
-                        <p className="text-xs text-center text-gray-100 font-extralight">{`Don't`} have an account? <Link to="/signup" className="font-semibold text-white hover:underline">Sign up</Link></p>
+                        <p className="text-xs mb-1 text-center text-gray-400"><Link to="/forgetPassword" className="font-semibold text-gray-300 hover:underline">Forget Password?</Link></p>
+                        <p className="text-xs text-center text-gray-100 font-extralight">{`Don't`} have an account? <Link to="/signup" className="font-semibold text-blueClr hover:underline">Sign up</Link></p>
                     </div>
                 </div>
             </main>

@@ -5,11 +5,13 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [userData, setUserData] = useState({});
+    const [defaultersList, setDefaultersList] = useState([]);
     const uid = localStorage.getItem('userId');
 
     useEffect(() => {
         if (uid) {
             refreshUserData();
+            getDefaultersList();
         }
     }, [uid]);
 
@@ -17,6 +19,17 @@ export const AuthProvider = ({ children }) => {
         try {
             await axios.post(`${import.meta.env.VITE_BASE_URL}/userdataById/${uid}`).then(res => {
                 setUserData(res.data.userData);
+            })
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    }
+
+    async function getDefaultersList() {
+        try {
+            await axios.get(`${import.meta.env.VITE_BASE_URL}/defaluterlist`).then(res => {
+                console.log()
+                setDefaultersList(res.data.list);
             })
         } catch (error) {
             console.error('Error fetching user data:', error);
@@ -37,7 +50,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ refreshUserData, logout, userData }}>
+        <AuthContext.Provider value={{ refreshUserData, logout, userData, defaultersList }}>
             {children}
         </AuthContext.Provider>
     );
