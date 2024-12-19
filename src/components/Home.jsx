@@ -1,12 +1,38 @@
 import { Link } from "react-router-dom"
 import { useAuth } from "../contexts/authContext"
+import { useState } from "react";
+import Loader from "./Loader/Loader";
 
 function Home() {
-    const { userData, defaultersList } = useAuth()
+    const { userData, defaultersList, defaultersLoading } = useAuth()
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 6;
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = defaultersList.slice().reverse().slice(indexOfFirstItem, indexOfLastItem);
+
+    const totalPages = Math.ceil(defaultersList.length / itemsPerPage);
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage((prevPage) => prevPage + 1);
+            setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
+        }
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage((prevPage) => prevPage - 1);
+            setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
+        }
+    };
 
     return (
         <>
             <main>
+                {defaultersLoading && <Loader />}
                 <section className="my-4">
                     <div className="customContainer bg-gradient-to-r from-blueClr to-transparent text-white p-5 rounded-lg mx-auto">
                         <h2 className="text-2xl font-bold">Welcome,</h2>
@@ -43,42 +69,41 @@ function Home() {
                     </div> */}
                     <div className="customContainer bg-white lg:p-5 md:p-5 p-3 rounded-lg mx-auto shadow-sm">
                         <p className="text-lg font-semibold mb-3 col-span-2">Recently added Defaulters</p>
-                        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
-                            {defaultersList.map((item, index) => {
-                                console.log(item)
-
+                        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3">
+                            {currentItems.map((item) => {
                                 return (
-                                    <>
-                                        <Link className="bg-gradient-to-br hover:bg-gradient-to-bl from-white to-blue-50 inline-block border rounded-lg p-3 shadow-md hover:scale-105 hover:shadow-xl duration-200">
-                                            <div className="flex justify-between items-center border-b pb-1">
-                                                <div>
-                                                    <p className="text-xl font-semibold">{item.defaulter_name}</p>
-                                                    <p className="text-xs font-semibold text-gray-500">{item.firm_name}</p>
-                                                </div>
-                                                <div>
-                                                    <img src="/img/fraud.png" className="h-16 w-16" alt="" />
-                                                </div>
-                                            </div>
-                                            <div className="flex flex-col gap-2 py-2 mb-3 border-b" >
-                                                <div className="flex items-center gap-2">
-                                                    <p className="text-xs text-blueClr font-semibold border rounded-full p-1 py-2">GST</p>
-                                                    <p className="font-medium text-sm text-gray-700">{item.gst_no}</p>
-                                                </div>
-                                                <div className="flex items-center gap-2">
-                                                    <i className="fa-solid fa-phone text-blueClr border p-2 rounded-full"></i>
-                                                    <p className="font-medium text-sm text-gray-700">+91 {item.mobile_No}</p>
-                                                </div>
-                                                <div className="flex items-center gap-2">
-                                                    <p className="text-sm    text-blueClr font-semibold border rounded-full px-[9px] py-[6px]">-₹</p>
-                                                    <p className="font-medium text-sm text-gray-700">₹ {item.pending_amount}</p>
-                                                </div>
+                                    <Link to={`/overview/defaulter/${item._id}`} className="bg-gradient-to-br hover:bg-gradient-to-bl from-white to-blue-50 inline-block border rounded-lg p-3 shadow-md hover:scale-105 hover:shadow-xl duration-200" key={item._id}>
+                                        <div className="flex justify-between items-center border-b pb-1">
+                                            <div>
+                                                <p className="text-xl font-semibold">{item.defaulter_name}</p>
+                                                <p className="text-xs font-semibold text-gray-500">{item.firm_name}</p>
                                             </div>
                                             <div>
-                                                <p className="text-xs text-gray-700 text-center mb-2">Posted by: John Doe on 01/01/2023</p>
-                                                <button className="block text-center w-full rounded-md py-2 font-semibold text-sm text-blueClr border border-blueClr hover:bg-blueClr hover:text-white duration-200">View Details <i className="fa-solid fa-arrow-right"></i></button>
+                                                <img src="/img/fraud.png" className="h-16 w-16" alt="" />
                                             </div>
-                                        </Link>
-                                    </>
+                                        </div>
+                                        <div className="flex flex-col gap-2 py-3 mb-2 border-b" >
+                                            <div className="flex items-center gap-2">
+                                                <p className="text-xs text-blueClr font-semibold border rounded-full p-1 py-2">GST</p>
+                                                <p className="font-medium text-sm text-gray-700 capitalize">{item.gst_no}</p>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <i className="fa-solid fa-phone text-blueClr border p-2 rounded-full"></i>
+                                                <p className="font-medium text-sm text-gray-700">+91 {item.mobile_No}</p>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <p className="text-sm text-blueClr font-semibold border rounded-full px-[9px] py-[6px]">-₹</p>
+                                                <p className="font-medium text-sm text-gray-700">₹ {item.pending_amount}</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p className="text-[10px] text-gray-700">
+                                                <span className="font-medium">Posted by: </span>
+                                                <span className="capitalize">{item.added_by} </span>
+                                                <span>on {new Date(item.added_on).toLocaleDateString('en-IN')}</span>
+                                            </p>
+                                        </div>
+                                    </Link>
                                 );
                             })}
 
@@ -99,12 +124,14 @@ function Home() {
                             </Link> */}
                         </div>
                         <div className="mt-5 flex gap-2 justify-end items-center text-xs">
-                            <span className="block font-medium">Page 1 of 1</span>
+                            <span className="block font-medium">Page {currentPage} of {totalPages}</span>
                             <div className="space-x-1">
-                                <button title="previous" type="button" className="inline-flex items-center justify-center w-8 h-8 py-0 border rounded-md shadow hover:bg-blueClr hover:text-white duration-200">
+                                <button title="previous" type="button" onClick={handlePreviousPage}
+                                    disabled={currentPage === 1} className="inline-flex items-center justify-center w-8 h-8 py-0 border rounded-md shadow hover:bg-blueClr hover:text-white duration-200 disabled:bg-gray-300">
                                     <i className="fa-solid fa-angle-left"></i>
                                 </button>
-                                <button title="next" type="button" className="inline-flex items-center justify-center w-8 h-8 py-0 border rounded-md shadow hover:bg-blueClr hover:text-white duration-200">
+                                <button title="next" type="button" onClick={handleNextPage}
+                                    disabled={currentPage === totalPages} className="inline-flex items-center justify-center w-8 h-8 py-0 border rounded-md shadow hover:bg-blueClr hover:text-white duration-200 disabled:bg-gray-300">
                                     <i className="fa-solid fa-angle-right"></i>
                                 </button>
                             </div>

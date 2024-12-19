@@ -14,10 +14,10 @@ function Profile() {
 
     return (
         <>
-            <section className="py-4">
+            <section className="my-4">
                 <div className="customContainer bg-white p-5 rounded-lg mx-auto shadow-sm">
                     <div className="w-32 h-32 relative rounded-full ">
-                        <div className="grid place-items-center aspect-square h-32 border-4 border-blue rounded-[100vh] overflow-hidden">
+                        <div className="grid place-items-center aspect-square h-32 border-4 border-blueClr rounded-[100vh] overflow-hidden">
                             <img
                                 className="object-cover h-full w-full"
                                 src='/img/default-avatar.jpg'

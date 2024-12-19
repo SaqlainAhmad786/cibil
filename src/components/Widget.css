@@ -14,9 +14,9 @@
     align-items: center;
     justify-content: space-between;
 }
-.widget .widget_body {
-    /* margin: 4px 56px; */
-}
+/* .widget .widget_body {
+    margin: 4px 56px;
+} */
 h4 {
     margin: 12px 0 24px;
     color: #494b59;

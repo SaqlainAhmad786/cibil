@@ -13,6 +13,7 @@ import MoneyBlockerFinder from "./components/MoneyBlockerFinder"
 import LoggedIn from "./components/LoggedIn/LoggedIn"
 import NotLoggedIn from "./components/NotLoggedIn/NotLoggedIn"
 import ForgetPassword from "./pages/ForgetPassword"
+import Defaulter from "./components/Defaulter/Defaulter"
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
               <Route index element={<Navigate to="home" />} />
               <Route path="home" element={<Home />} />
               <Route path="addDefaulter" element={<AddDefaulter />} />
+              <Route path="defaulter/:id" element={<Defaulter />} />
               <Route path="subscribe" element={<Subscribe />} />
               <Route path="profile" element={<Profile />} />
               <Route path="editProfile" element={<EditProfile />} />
