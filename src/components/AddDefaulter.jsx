@@ -1,15 +1,19 @@
 import axios from "axios";
-import { toast } from "sonner";
+import { toast, Toaster } from "sonner";
 function AddDefaulter() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const formData = new FormData(e.target);
+        const form = e.target;
+        const formData = new FormData(form);
         formData.append('user_id', localStorage.getItem('userId'));
 
         try {
             await axios.post(`${import.meta.env.VITE_BASE_URL}/addDefaulter`, formData).then(res => {
-                toast.success("Defaulter added successfully", { duration: 3000 });
+                if (res.data.status) {
+                    toast.success("Defaulter added successfully", { duration: 3000 });
+                    form.reset()
+                }
             })
         } catch (error) {
             console.error('Error:', error.response ? error.response.data : error.message);
@@ -19,6 +23,7 @@ function AddDefaulter() {
     return (
         <>
             <section className="customContainer bg-white p-5 rounded-lg mb-5 shadow-sm">
+                <Toaster position="top-right" />
                 <div className="rounded-xl">
                     <img src="/img/fraud.png" alt="" className="w-24" />
                     <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-800 md:text-2xl">

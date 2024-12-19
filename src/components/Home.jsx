@@ -45,12 +45,8 @@ function Home() {
                         <p className="text-lg font-semibold mb-3 col-span-2">Recently added Defaulters</p>
                         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
                             {defaultersList.map((item, index) => {
-                                // console.log(item)
-                                if (index == 0) return (
-                                    <>
-                                        <p>No Defaulters data</p>
-                                    </>
-                                )
+                                console.log(item)
+
                                 return (
                                     <>
                                         <Link className="bg-gradient-to-br hover:bg-gradient-to-bl from-white to-blue-50 inline-block border rounded-lg p-3 shadow-md hover:scale-105 hover:shadow-xl duration-200">
@@ -74,7 +70,7 @@ function Home() {
                                                 </div>
                                                 <div className="flex items-center gap-2">
                                                     <p className="text-sm    text-blueClr font-semibold border rounded-full px-[9px] py-[6px]">-₹</p>
-                                                    <p className="font-medium text-sm text-gray-700">₹ 1,00,000</p>
+                                                    <p className="font-medium text-sm text-gray-700">₹ {item.pending_amount}</p>
                                                 </div>
                                             </div>
                                             <div>
