@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useCallback, useState } from "react";
 import Cropper from "react-easy-crop";
 
@@ -39,6 +40,7 @@ function ProfileUpload({ fileInputRef }) {
     const [zoom, setZoom] = useState(1); // Zoom level
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null); // Stores crop coordinates
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const uid = localStorage.getItem('userId');
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -46,6 +48,7 @@ function ProfileUpload({ fileInputRef }) {
             const reader = new FileReader();
             reader.onload = () => {
                 setImage(reader.result);
+                event.target.value = null;
                 setIsDialogOpen(true);
             };
             reader.readAsDataURL(file);
@@ -59,8 +62,21 @@ function ProfileUpload({ fileInputRef }) {
     const handleSave = async () => {
         try {
             const croppedImage = await getCroppedImg(image, croppedAreaPixels);
-            console.log(croppedImage);
-            setIsDialogOpen(false);
+
+            const blob = await fetch(croppedImage).then((res) => res.blob());
+            const file = new File([blob], 'image.jpg', { type: blob.type });
+
+            const formData = new FormData();
+            formData.append('userImg', file);
+
+            await axios.post(`${import.meta.env.VITE_BASE_URL}/useruplodimg/${uid}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            }).then(res => {
+                console.log(res.data)
+                setIsDialogOpen(false);
+            });
         } catch (e) {
             console.error('Error cropping the image:', e);
         }

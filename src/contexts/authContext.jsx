@@ -1,11 +1,12 @@
-import axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
+import axios from 'axios';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [userData, setUserData] = useState({});
     const [defaultersList, setDefaultersList] = useState([]);
+    const [userDefaultersList, setUserDefaultersList] = useState([]);
     const [userLoading, setUserLoading] = useState(false);
     const [defaultersLoading, setDefaultersLoading] = useState(false);
     const uid = localStorage.getItem('userId');
@@ -14,6 +15,7 @@ export const AuthProvider = ({ children }) => {
         if (uid) {
             refreshUserData();
             getDefaultersList();
+            getUserDefaultersList();
         }
     }, [uid]);
 
@@ -43,6 +45,16 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    async function getUserDefaultersList() {
+        try {
+            await axios.post(`${import.meta.env.VITE_BASE_URL}/listOfDefaulterById`, { user_id: uid }).then(res => {
+                setUserDefaultersList(res.data.data);
+            })
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    }
+
     const refreshUserData = async () => {
         const uid = localStorage.getItem('userId');
         if (uid) {
@@ -50,14 +62,47 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const indianStates = [
+        { code: 'AP', name: 'Andhra Pradesh' },
+        { code: 'AR', name: 'Arunachal Pradesh' },
+        { code: 'AS', name: 'Assam' },
+        { code: 'BR', name: 'Bihar' },
+        { code: 'CT', name: 'Chhattisgarh' },
+        { code: 'GA', name: 'Goa' },
+        { code: 'GJ', name: 'Gujarat' },
+        { code: 'HR', name: 'Haryana' },
+        { code: 'HP', name: 'Himachal Pradesh' },
+        { code: 'JH', name: 'Jharkhand' },
+        { code: 'KA', name: 'Karnataka' },
+        { code: 'KL', name: 'Kerala' },
+        { code: 'MP', name: 'Madhya Pradesh' },
+        { code: 'MH', name: 'Maharashtra' },
+        { code: 'MN', name: 'Manipur' },
+        { code: 'ML', name: 'Meghalaya' },
+        { code: 'MZ', name: 'Mizoram' },
+        { code: 'NL', name: 'Nagaland' },
+        { code: 'OR', name: 'Odisha' },
+        { code: 'PB', name: 'Punjab' },
+        { code: 'RJ', name: 'Rajasthan' },
+        { code: 'SK', name: 'Sikkim' },
+        { code: 'TN', name: 'Tamil Nadu' },
+        { code: 'TG', name: 'Telangana' },
+        { code: 'TR', name: 'Tripura' },
+        { code: 'UP', name: 'Uttar Pradesh' },
+        { code: 'UT', name: 'Uttarakhand' },
+        { code: 'WB', name: 'West Bengal' }
+    ];
+
     const logout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
         setUserData({});
+        setDefaultersList([]);
+        setUserDefaultersList([]);
     };
 
     return (
-        <AuthContext.Provider value={{ refreshUserData, logout, userData, defaultersList, userLoading, defaultersLoading }}>
+        <AuthContext.Provider value={{ refreshUserData, logout, userData, defaultersList, userDefaultersList, userLoading, defaultersLoading, indianStates }}>
             {children}
         </AuthContext.Provider>
     );
