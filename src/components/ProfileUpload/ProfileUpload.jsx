@@ -62,25 +62,25 @@ function ProfileUpload({ fileInputRef }) {
     const handleSave = async () => {
         try {
             const croppedImage = await getCroppedImg(image, croppedAreaPixels);
+            console.log(croppedImage)
 
             const blob = await fetch(croppedImage).then((res) => res.blob());
             const file = new File([blob], 'image.jpg', { type: blob.type });
 
             const formData = new FormData();
             formData.append('userImg', file);
+            console.log(formData)
 
-            await axios.post(`${import.meta.env.VITE_BASE_URL}/useruplodimg/${uid}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                }
-            }).then(res => {
+            await axios.post(`${import.meta.env.VITE_BASE_URL}/useruplodimg/${uid}`, formData).then(res => {
                 console.log(res.data)
                 setIsDialogOpen(false);
             });
         } catch (e) {
-            console.error('Error cropping the image:', e);
+            setIsDialogOpen(false);
+            console.error('Error:', e);
         }
     };
+
 
     return (
         <div>

@@ -2,16 +2,24 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { toast, Toaster } from "sonner"
 import axios from "axios"
+import { City, State } from "country-state-city"
 
 function Signup() {
     const [loading, setLoading] = useState(false)
     const [number, setNumber] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
     const [confirmPassword, setConfirmPassword] = useState('')
+    const [states, setStates] = useState([])
+    const [cities, setCities] = useState([]);
     const navigate = useNavigate()
 
     useEffect(() => {
         document.title = "Signup | Vyapar Score"
+        const fetchStates = () => {
+            const statesList = State.getStatesOfCountry("IN")
+            setStates(statesList);
+        };
+        fetchStates()
     }, [])
 
 
@@ -65,11 +73,21 @@ function Signup() {
         }
     }
 
+    const handleStateChange = (event) => {
+        const stateCode = event.target.value;
+        fetchCities(stateCode);
+    };
+
+    const fetchCities = (stateCode) => {
+        const citiesList = City.getCitiesOfState("IN", stateCode);
+        setCities(citiesList);
+    };
+
     return (
         <>
-            <main className="bg-[url('/img/login-cover.svg')] bg-cover bg-center grid place-items-center lg:h-screen md:h-screen h-full">
+            <main className="bg-[url('/img/login-cover.svg')] bg-cover bg-center grid place-items-center h-full">
                 <Toaster position="top-center" />
-                <div className="lg:w-[50%] md:w-[75%] sm:w-[85%] w-[95%] mx-auto my-5 bg-gray-800 border border-gray-700 bg-opacity-70 backdrop-blur-lg p-6 rounded-xl">
+                <div className="lg:w-[50%] md:w-[75%] sm:w-[85%] w-[95%] mx-auto my-5 bg-gray-800 border border-gray-700 bg-opacity-70 backdrop-blur-lg lg:p-6 md:p-5 p-4 rounded-xl">
                     <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl text-white">
                         <img className="w-16 h-16 mr-2 object-contain" src="/img/vyapar-logo.png" alt="logo" />
                         Create an account
@@ -104,6 +122,29 @@ function Signup() {
                                 </div>
                             </div>
                             <div>
+                                <div className="w-full flex flex-col gap-2">
+                                    <label className="font-semibold text-xs text-white tracking-wide ">Country</label>
+                                    <select className="border rounded-lg px-3 py-2 mb-4 text-white text-sm outline-none border-gray-600 bg-gray-600 bg-opacity-40 w-full" name="country" disabled>
+                                        <option value={"india"}>India</option>
+                                    </select>
+                                </div>
+                                <div className="w-full flex flex-col gap-2">
+                                    <label className="font-semibold text-xs text-white tracking-wide ">State</label>
+                                    <select className="border rounded-lg px-3 py-2 mb-4 text-white text-sm outline-none border-gray-600 bg-gray-600 bg-opacity-40 w-full" name="state" onChange={(e) => handleStateChange(e)}>
+                                        <option hidden>Select State</option>
+                                        {states.map((state, index) => <option value={state.isoCode} key={index}>{state.name}</option>)}
+                                    </select>
+                                </div>
+                                <div className="w-full flex flex-col gap-2">
+                                    <label className="font-semibold text-xs text-white tracking-wide ">City/District</label>
+                                    <select className="border rounded-lg px-3 py-2 mb-4 text-white text-sm outline-none border-gray-600 bg-gray-600 bg-opacity-40 w-full" name="city">
+                                        <option hidden>Select City</option>
+                                        {cities.length === 0
+                                            ? <option disabled>Select State first</option>
+                                            : cities.map((city, index) => <option value={city.isoCode} key={index}>{city.name}</option>)
+                                        }
+                                    </select>
+                                </div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">Firm Name</label>
                                     <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="Organization" name="firm_name" />

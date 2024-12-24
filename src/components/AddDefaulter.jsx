@@ -6,6 +6,7 @@ import { City, State } from "country-state-city";
 function AddDefaulter() {
     const [states, setStates] = useState([])
     const [cities, setCities] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchStates = () => {
@@ -17,6 +18,7 @@ function AddDefaulter() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         const form = e.target;
         const formData = new FormData(form);
         formData.append('user_id', localStorage.getItem('userId'));
@@ -26,10 +28,12 @@ function AddDefaulter() {
                 if (res.data.status) {
                     toast.success("Defaulter added successfully", { duration: 3000 });
                     form.reset()
+                    setLoading(false);
                 }
             })
         } catch (error) {
             console.error('Error:', error.response ? error.response.data : error.message);
+            setLoading(false);
         }
     };
 
@@ -41,6 +45,7 @@ function AddDefaulter() {
     const fetchCities = (stateCode) => {
         const citiesList = City.getCitiesOfState("IN", stateCode);
         setCities(citiesList);
+        console.log(citiesList)
     };
 
     return (
@@ -48,7 +53,7 @@ function AddDefaulter() {
             <section className="customContainer bg-white p-5 rounded-lg mb-5 shadow-sm">
                 <Toaster position="top-right" />
                 <div className="rounded-xl">
-                    <img src="/img/fraud.png" alt="" className="w-24" />
+                    <img src="/img/fraud.png" alt="" className="w-20" />
                     <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-800 md:text-2xl">
                         Report a Defaulter
                     </h1>
@@ -88,7 +93,7 @@ function AddDefaulter() {
                                         <label className="font-semibold text-xs text-gray-500 ">State</label>
                                         <select className="border rounded-lg px-3 py-2 mb-4 text-black text-sm outline-none border-gray-300 bg-gray-100 w-full" name="state" onChange={(e) => handleStateChange(e)}>
                                             <option hidden>Select State</option>
-                                            {states.map((state, index) => <option value={state.isoCode} key={index}>{state.name}</option>)}
+                                            {states.map((state, index) => <option value={state.name} key={index}>{state.name}</option>)}
                                         </select>
                                     </div>
                                     <div className="flex flex-col gap-2">
@@ -97,7 +102,7 @@ function AddDefaulter() {
                                             <option hidden>Select City</option>
                                             {cities.length === 0
                                                 ? <option disabled>Select State first</option>
-                                                : cities.map((city, index) => <option value={city.isoCode} key={index}>{city.name}</option>)
+                                                : cities.map((city, index) => <option value={city.name} key={index}>{city.name}</option>)
                                             }
                                         </select>
                                     </div>
@@ -138,7 +143,11 @@ function AddDefaulter() {
                             </div>
                         </div>
                         <div>
-                            <button type="submit" className="w-full text-white bg-blueClr hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center hover:bg-primary-700 focus:ring-primary-800">SUBMIT</button>
+                            <button type="submit" className="w-full flex justify-center items-center text-white bg-blueClr hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center hover:bg-primary-700 focus:ring-primary-800">
+                                {loading
+                                    ? <l-mirage size="86" speed="4" color="white"></l-mirage>
+                                    : "POST"}
+                            </button>
                         </div>
                     </form>
                 </div>

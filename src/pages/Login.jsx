@@ -82,11 +82,8 @@ function Login() {
                 <div className="w-[320px] min-h-96 px-8 py-6 text-left bg-gray-800 border border-gray-700 bg-opacity-70 backdrop-blur-lg rounded-xl shadow-lg">
                     <form onSubmit={handleSubmit}>
                         <div className="flex flex-col h-full select-none">
-                            <div className="mb-3">
-                                <div className="mb-2 flex justify-center">
-                                    <img src="/img/vyapar-logo.png" className="w-16" />
-                                </div>
-                                {/* <p className="m-0 text-[16px] font-semibold text-white">LOGIN</p> */}
+                            <div className="mb-5 flex justify-center">
+                                <img src="/img/vyapar-logo.png" className="w-20" />
                             </div>
                             <div className="w-full flex flex-col gap-2">
                                 <label className="font-semibold text-xs text-white tracking-wide">Email</label>
