@@ -6,7 +6,7 @@ import ProfileUpload from './ProfileUpload/ProfileUpload';
 import Loader from './Loader/Loader';
 
 function Profile() {
-    const { userData, userLoading, userDefaultersList } = useAuth();
+    const { userData, userLoading, userDefaultersList, staticPath } = useAuth();
     const fileInputRef = useRef(null)
 
     const handleClick = () => {
@@ -23,7 +23,9 @@ function Profile() {
                             <div className="grid place-items-center aspect-square h-32 border-4 border-blueClr rounded-[100vh] overflow-hidden">
                                 <img
                                     className="object-cover h-full w-full"
-                                    src='/img/default-avatar.jpg'
+                                    src={`${staticPath}${userData?.user_img}`}
+                                    alt="profile"
+                                    onError={(e) => (e.target.src = '/img/default-avatar.jpg')}
                                 />
                             </div>
                             <button htmlFor='profile' className={styles.browse} onClick={handleClick}>

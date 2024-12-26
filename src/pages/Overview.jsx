@@ -2,7 +2,7 @@ import { Link, NavLink, Outlet, useNavigate } from "react-router-dom"
 import { useAuth } from "../contexts/authContext";
 
 function Overview() {
-    const { logout } = useAuth();
+    const { logout, userData, staticPath } = useAuth();
     const navigate = useNavigate();
 
     function handleSideBar() {
@@ -30,8 +30,8 @@ function Overview() {
                                     <Link to={'/overview/searchDefaulter'} className="lg:block hidden text-gray-600 text-lg lg:order-1 order-2 border-r pr-3">
                                         <i className="fa-solid fa-magnifying-glass"></i>
                                     </Link>
-                                    <Link to={'/overview/profile'} className="lg:block hidden h-12 w-12 rounded-[100vh] overflow-hidden lg:order-2 order-1">
-                                        <img className="w-full h-full object-cover" src="/" onError={(e) => e.target.src = "/img/default-avatar.jpg"} alt="" />
+                                    <Link to={'/overview/profile'} className="lg:block hidden h-12 w-12 rounded-[100vh] overflow-hidden lg:order-2 order-1 border-2 border-blueClr">
+                                        <img className="w-full h-full object-cover" src={`${staticPath}${userData?.user_img}`} onError={(e) => e.target.src = "/img/default-avatar.jpg"} alt="" />
                                     </Link>
                                     <Link to={'/'} className="lg:hidden block bg-white p-1 h-14 w-14 rounded-[100vh] overflow-hidden lg:order-2 order-1">
                                         <img className="w-full h-full object-cover" src="/img/logo-vector.svg" alt="" />

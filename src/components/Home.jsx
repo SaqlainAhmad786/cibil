@@ -99,7 +99,7 @@ function Home() {
                                         <div>
                                             <p className="text-[10px] text-gray-700">
                                                 <span className="font-medium">Posted by: </span>
-                                                <span className="capitalize">{item.added_by} </span>
+                                                <span className="capitalize">{item.firm_name} </span>
                                                 <span>on {new Date(item.added_on).toLocaleDateString('en-IN')}</span>
                                             </p>
                                         </div>

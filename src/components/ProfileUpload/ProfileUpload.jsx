@@ -1,6 +1,8 @@
-import axios from "axios";
 import { useCallback, useState } from "react";
+import axios from "axios";
 import Cropper from "react-easy-crop";
+import { toast, Toaster } from "sonner";
+import { useAuth } from "../../contexts/authContext";
 
 async function getCroppedImg(imageSrc, crop) {
     const image = new Image();
@@ -35,11 +37,13 @@ async function getCroppedImg(imageSrc, crop) {
 
 
 function ProfileUpload({ fileInputRef }) {
+    const { refreshUserData } = useAuth();
     const [image, setImage] = useState(null); // Stores uploaded image
     const [crop, setCrop] = useState({ x: 0, y: 0 }); // Crop position
     const [zoom, setZoom] = useState(1); // Zoom level
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null); // Stores crop coordinates
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
     const uid = localStorage.getItem('userId');
 
     const handleFileChange = (event) => {
@@ -62,21 +66,26 @@ function ProfileUpload({ fileInputRef }) {
     const handleSave = async () => {
         try {
             const croppedImage = await getCroppedImg(image, croppedAreaPixels);
-            console.log(croppedImage)
 
             const blob = await fetch(croppedImage).then((res) => res.blob());
             const file = new File([blob], 'image.jpg', { type: blob.type });
 
             const formData = new FormData();
             formData.append('userImg', file);
-            console.log(formData)
 
-            await axios.post(`${import.meta.env.VITE_BASE_URL}/useruplodimg/${uid}`, formData).then(res => {
-                console.log(res.data)
-                setIsDialogOpen(false);
+            await axios.post(`${import.meta.env.VITE_BASE_URL}/useruplodimg/${uid}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
+                setLoading(true);
+                if (res.data.status) {
+                    setIsDialogOpen(false);
+                    toast.success("Profile picture uploaded successfully", { duration: 3000 });
+                    setLoading(false);
+                    refreshUserData()
+                }
             });
         } catch (e) {
+            setLoading(false);
             setIsDialogOpen(false);
+            toast.error("Something went wrong", { description: "Please try again" }, { duration: 3000 });
             console.error('Error:', e);
         }
     };
@@ -84,6 +93,7 @@ function ProfileUpload({ fileInputRef }) {
 
     return (
         <div>
+            <Toaster position="top-right" />
             <input type="file" accept="image/*" className="hidden" ref={fileInputRef} onChange={handleFileChange} />
             {isDialogOpen && (
                 <div className="cropDialogCont">
@@ -98,7 +108,7 @@ function ProfileUpload({ fileInputRef }) {
                             onCropComplete={onCropComplete}
                         />
                         <div className="controls">
-                            <button onClick={handleSave}>Save</button>
+                            <button onClick={handleSave}>{loading ? 'Uploading...' : 'Save'}</button>
                             <button onClick={() => setIsDialogOpen(false)}>Cancel</button>
                         </div>
                     </div>
