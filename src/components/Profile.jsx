@@ -26,6 +26,7 @@ function Profile() {
                                     src={`${staticPath}${userData?.user_img}`}
                                     alt="profile"
                                     onError={(e) => (e.target.src = '/img/default-avatar.jpg')}
+                                    loading='lazy'
                                 />
                             </div>
                             <button htmlFor='profile' className={styles.browse} onClick={handleClick}>
@@ -54,6 +55,10 @@ function Profile() {
                             <span>{userData?.firm_name}</span>
                         </div>
                         <div className='flex flex-col'>
+                            <span className='font-semibold text-xs text-gray-400'>Business type:</span>
+                            <span>Manufacturer</span>
+                        </div>
+                        <div className='flex flex-col'>
                             <span className='font-semibold text-xs text-gray-400'>GST no.:</span>
                             <span>{userData?.gst_no}</span>
                         </div>
@@ -62,7 +67,7 @@ function Profile() {
                             <span>{userData?.pan_no}</span>
                         </div>
                     </div>
-                    <div className='mt-4 text-center'>
+                    <div className='mt-5 text-center'>
                         <Link to={"/overview/editProfile"} className='bg-blueClr text-white py-2 px-4 rounded-lg font-semibold text-sm'><i className="fa-solid fa-pen mr-1"></i>Edit Profile</Link>
                     </div>
                 </div>

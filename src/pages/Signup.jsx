@@ -120,6 +120,15 @@ function Signup() {
                                     <label className="font-semibold text-xs text-white tracking-wide ">Confirm Password</label>
                                     <input type="password" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="••••••••" onChange={(e) => setConfirmPassword(e.target.value)} />
                                 </div>
+                                <div className="w-full flex flex-col gap-2">
+                                    <label className="font-semibold text-xs text-white tracking-wide ">Business Type</label>
+                                    <select className="border rounded-lg px-3 py-2 mb-4 text-white text-sm outline-none border-gray-600 bg-gray-600 bg-opacity-40 w-full" name="business_type">
+                                        <option hidden>Select Business Type</option>
+                                        <option value={"manufacturer"}>Manufacturer</option>
+                                        <option value={"distributor"}>Distributor / Wholesaler</option>
+                                        <option value={"retailer"}>Retailer</option>
+                                    </select>
+                                </div>
                             </div>
                             <div>
                                 <div className="w-full flex flex-col gap-2">

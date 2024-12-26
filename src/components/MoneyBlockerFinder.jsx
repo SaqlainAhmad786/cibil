@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../contexts/authContext";
 import { Link } from "react-router-dom";
+import { Search } from "lucide-react";
 
 function MoneyBlockerFinder() {
     const { defaultersList } = useAuth();
@@ -62,7 +63,7 @@ function MoneyBlockerFinder() {
                             <input type="text" className="border rounded-lg px-3 py-2 text-sm w-full outline-none dark:border-gray-200 dark:bg-gray-100" placeholder="22AAAAA0000A1Z5" name="gst" value={searchValues.gst} onChange={handleChange} />
                         </div>
                         <div className="col-span-2">
-                            <button type="submit" className="h-full w-full border-2 border-blueClr text-blueClr font-bold py-2 px-4 rounded-md hover:bg-blueClr hover:text-white duration-200"><i className="fa-solid fa-magnifying-glass"></i> Search</button>
+                            <button type="submit" className="flex justify-center items-center gap-1 w-full border-2 border-blueClr text-blueClr font-bold py-2 px-4 rounded-md hover:bg-blueClr hover:text-white duration-200"><Search className="h-5 w-5" /> Search</button>
                         </div>
                     </form>
                 </div>
@@ -83,7 +84,7 @@ function MoneyBlockerFinder() {
                                     <div className="flex flex-col gap-2 py-3 mb-2 border-b" >
                                         <div className="flex items-center gap-2">
                                             <p className="text-xs text-blueClr font-semibold border rounded-full p-1 py-2">GST</p>
-                                            <p className="font-medium text-sm text-gray-700 capitalize">{item.gst_no}</p>
+                                            <p className="font-medium text-sm text-gray-700 uppercase">{item.gst_no}</p>
                                         </div>
                                         <div className="flex items-center gap-2">
                                             <i className="fa-solid fa-phone text-blueClr border p-2 rounded-full"></i>
@@ -91,13 +92,13 @@ function MoneyBlockerFinder() {
                                         </div>
                                         <div className="flex items-center gap-2">
                                             <p className="text-sm text-blueClr font-semibold border rounded-full px-[9px] py-[6px]">-₹</p>
-                                            <p className="font-medium text-sm text-gray-700">₹ {item.pending_amount}</p>
+                                            <p className="font-medium text-sm text-gray-700">₹ {new Intl.NumberFormat('en-IN').format(item.pending_amount)}</p>
                                         </div>
                                     </div>
                                     <div>
                                         <p className="text-[10px] text-gray-700">
                                             <span className="font-medium">Posted by: </span>
-                                            <span className="capitalize">{item.added_by} </span>
+                                            <span className="capitalize">{item.firm_name} </span>
                                             <span>on {new Date(item.added_on).toLocaleDateString('en-IN')}</span>
                                         </p>
                                     </div>

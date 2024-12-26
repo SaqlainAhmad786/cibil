@@ -1,6 +1,6 @@
-import axios from "axios";
-import { toast, Toaster } from "sonner"
 import { useEffect, useState } from "react";
+import { toast, Toaster } from "sonner"
+import axios from "axios";
 import { City, State } from "country-state-city";
 
 function AddDefaulter() {
@@ -125,19 +125,14 @@ function AddDefaulter() {
                                     <label className="font-semibold text-xs text-gray-500 ">Remark</label>
                                     <textarea rows={5} className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="Message" name="remark" />
                                 </div>
-                                <div className="mb-5">
-                                    <p className="font-semibold text-xs text-gray-500 mb-2">Upload Documents</p>
-                                    <div className="space-y-3">
-                                        <label className="container-btn-file text-sm flex-grow">
-                                            <img src="/img/bank-statement.png" className="w-6 mr-1" alt="" />
-                                            Upload Bank Statement
-                                            <input className="file" name="bankStatement" type="file" />
-                                        </label>
-                                        <label className="container-btn-file text-sm aadharBtn flex-grow">
-                                            <img src="/img/aadharCard.png" className="w-6 mr-1" alt="" />
-                                            Upload Notice or other documents
-                                            <input className="file" name="otherDocs" type="file" />
-                                        </label>
+                                <div className="mb-5 space-y-2">
+                                    <div className="grid w-full items-center gap-1.5">
+                                        <label className="text-xs text-gray-500 font-semibold peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Upload Bank Statement</label>
+                                        <input name="bankStatement" type="file" className="flex h-10 w-full rounded-md border border-gray-300 border-input bg-gray-100 px-3 py-2 text-sm text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium" />
+                                    </div>
+                                    <div className="grid w-full items-center gap-1.5">
+                                        <label className="text-xs text-gray-500 font-semibold peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Upload Notice or other documents <span className="font-normal">(optional)</span></label>
+                                        <input name="otherDocs" type="file" className="flex h-10 w-full rounded-md border border-gray-300 border-input bg-gray-100 px-3 py-2 text-sm text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium" />
                                     </div>
                                 </div>
                             </div>
