@@ -40,10 +40,10 @@ function Home() {
                     </div>
                 </section>
                 <section className="my-4">
-                    <div className="customContainer bg-white lg:p-5 md:p-5 p-3 rounded-lg mx-auto shadow-sm">
+                    <div className="customContainer min-h-[500px] relative bg-white lg:p-5 md:p-5 p-3 rounded-lg mx-auto shadow-sm">
                         <p className="text-lg font-semibold col-span-2">Recently added Defaulters</p>
                         <p className="text-xs text-gray-500 font-medium mb-3 col-span-2">The list is already sorted based on your nearest location.</p>
-                        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3">
+                        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mb-12">
                             {currentItems.map((item) => {
                                 return (
                                     <Link to={`/overview/defaulter/${item._id}`} className="bg-gradient-to-br hover:bg-gradient-to-bl from-white to-blue-50 inline-block border rounded-lg p-3 shadow-md hover:scale-105 hover:shadow-xl duration-200" key={item._id}>
@@ -81,7 +81,7 @@ function Home() {
                                 );
                             })}
                         </div>
-                        <div className="mt-5 flex gap-2 justify-end items-center text-xs">
+                        <div className="absolute bottom-4 right-4 mt-5 flex gap-2 justify-end items-center text-xs">
                             <span className="block font-medium">Page {currentPage} of {totalPages}</span>
                             <div className="space-x-1">
                                 <button title="previous" type="button" onClick={handlePreviousPage}

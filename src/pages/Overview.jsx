@@ -47,7 +47,7 @@ function Overview() {
                         </div>
                         <Outlet />
                     </div>
-                    <div className="drawer-side h-fit">
+                    <div className="drawer-side h-fit z-50">
                         <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
                         <ul className="menu py-4 px-2 w-80 z-20 space-y-1 bg-gray-800 h-[100dvh] lg:h-[100dvh] min-h-[90dvh] text-gray-100">
                             <li>

@@ -25,7 +25,7 @@ function Profile() {
                                     className="object-cover h-full w-full"
                                     src={`${staticPath}${userData?.user_img}`}
                                     alt="profile"
-                                    // onError={(e) => (e.target.src = '/img/default-avatar.jpg')}
+                                    onError={(e) => (e.target.src = '/img/default-avatar.jpg')}
                                     loading='lazy'
                                 />
                             </div>

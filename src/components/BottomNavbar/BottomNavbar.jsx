@@ -41,7 +41,7 @@ function BottomNavbar() {
 
     return (
         <>
-            <div className={`customContainer lg:hidden md:hidden sm:hidden block fixed bottom-2 left-[50%] translate-x-[-50%] z-5 transition-transform duration-300 ${isVisible ? 'translate-y-0' : 'translate-y-[100%]'}`}>
+            <div className={`customContainer z-10 lg:hidden md:hidden sm:hidden block fixed bottom-2 left-[50%] translate-x-[-50%] z-5 transition-transform duration-300 ${isVisible ? 'translate-y-0' : 'translate-y-[100%]'}`}>
                 <div className="border border-gray-300 bg-white py-3 flex items-center justify-between shadow-xl rounded-md bottomNavbar">
                     <NavLink to="/overview/home" className="relative px-4 cursor-pointer">
                         <House />

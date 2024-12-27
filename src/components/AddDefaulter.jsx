@@ -7,6 +7,8 @@ function AddDefaulter() {
     const [states, setStates] = useState([])
     const [cities, setCities] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [mobNumber, setMobNumber] = useState(false);
+    const [aadharNumber, setAadharNumber] = useState(false);
 
     useEffect(() => {
         const fetchStates = () => {
@@ -15,6 +17,19 @@ function AddDefaulter() {
         };
         fetchStates()
     }, [])
+
+    const handleMobNumber = (e) => {
+        const input = e.target.value;
+        if (/^\d{0,10}$/.test(input)) {
+            setMobNumber(input);
+        }
+    };
+    const handleAadharNumber = (e) => {
+        const input = e.target.value;
+        if (/^\d{0,12}$/.test(input)) {
+            setAadharNumber(input);
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -27,6 +42,7 @@ function AddDefaulter() {
             await axios.post(`${import.meta.env.VITE_BASE_URL}/addDefaulter`, formData).then(res => {
                 if (res.data.status) {
                     toast.success("Defaulter added successfully", { duration: 3000 });
+                    console.log(formData)
                     form.reset()
                     setLoading(false);
                 }
@@ -67,7 +83,7 @@ function AddDefaulter() {
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Mobile</label>
-                                    <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="9876543210" name="mobile_No" />
+                                    <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="9876543210" name="mobile_No" value={mobNumber} onChange={handleMobNumber} maxLength="10" />
                                 </div>
                                 <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 lg:gap-3 md:gap-3 gap-0">
                                     <div className="flex flex-col gap-2">
@@ -76,7 +92,7 @@ function AddDefaulter() {
                                     </div>
                                     <div className="flex flex-col gap-2">
                                         <label className="font-semibold text-xs text-gray-500 ">Aadhar Card No.</label>
-                                        <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="" name="aadhar_card" />
+                                        <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="" name="aadhar_card" value={aadharNumber} onChange={handleAadharNumber} />
                                     </div>
                                 </div>
                                 <div className="flex flex-col gap-2">
@@ -85,8 +101,8 @@ function AddDefaulter() {
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Country</label>
-                                    <select className="border rounded-lg px-3 py-2 mb-4 text-black text-sm outline-none border-gray-300 bg-gray-100 w-full" name="country" disabled>
-                                        <option value={"india"}>India</option>
+                                    <select className="border rounded-lg px-3 py-2 mb-4 text-black text-sm outline-none border-gray-300 bg-gray-100 w-full" name="country">
+                                        <option value={"India"} selected>India</option>
                                     </select>
                                 </div>
                                 <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 lg:gap-3 md:gap-3 gap-0">
