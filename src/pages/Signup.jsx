@@ -55,7 +55,6 @@ function Signup() {
 
         try {
             await axios.post(`${import.meta.env.VITE_BASE_URL}/register`, data).then(res => {
-                console.log(res.data)
                 if (res.data.status) {
                     setLoading(false)
                     navigate('/login', { state: { signedUp: 1, email: data.email } })
@@ -74,7 +73,9 @@ function Signup() {
     }
 
     const handleStateChange = (event) => {
-        const stateCode = event.target.value;
+        const stateName = event.target.value;
+        const stateData = states.find((state) => state.name === stateName);
+        const stateCode = stateData.isoCode;
         fetchCities(stateCode);
     };
 
@@ -133,15 +134,15 @@ function Signup() {
                             <div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">Country</label>
-                                    <select className="border rounded-lg px-3 py-2 mb-4 text-white text-sm outline-none border-gray-600 bg-gray-600 bg-opacity-40 w-full" name="country" disabled>
-                                        <option value={"india"}>India</option>
+                                    <select className="border rounded-lg px-3 py-2 mb-4 text-white text-sm outline-none border-gray-600 bg-gray-600 bg-opacity-40 w-full" name="country">
+                                        <option value={"India"} selected>India</option>
                                     </select>
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">State</label>
                                     <select className="border rounded-lg px-3 py-2 mb-4 text-white text-sm outline-none border-gray-600 bg-gray-600 bg-opacity-40 w-full" name="state" onChange={(e) => handleStateChange(e)}>
                                         <option hidden>Select State</option>
-                                        {states.map((state, index) => <option value={state.isoCode} key={index}>{state.name}</option>)}
+                                        {states.map((state, index) => <option value={state.name} key={index}>{state.name}</option>)}
                                     </select>
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
@@ -150,9 +151,13 @@ function Signup() {
                                         <option hidden>Select City</option>
                                         {cities.length === 0
                                             ? <option disabled>Select State first</option>
-                                            : cities.map((city, index) => <option value={city.isoCode} key={index}>{city.name}</option>)
+                                            : cities.map((city, index) => <option value={city.name} key={index}>{city.name}</option>)
                                         }
                                     </select>
+                                </div>
+                                <div className="w-full flex flex-col gap-2">
+                                    <label className="font-semibold text-xs text-white tracking-wide ">Address</label>
+                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="Enter street address" name="address" />
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">Firm Name</label>

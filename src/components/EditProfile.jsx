@@ -16,6 +16,8 @@ function EditProfile() {
         user_name: '',
         mobile_no: '',
         address: '',
+        state: '',
+        city: '',
         firm_name: '',
         gst_no: '',
         pan_no: '',
@@ -28,6 +30,8 @@ function EditProfile() {
             user_name: userData.user_name,
             mobile_no: userData.mobile_no,
             address: userData.address,
+            state: userData.state,
+            city: userData.city,
             firm_name: userData.firm_name,
             gst_no: userData.gst_no,
             pan_no: userData.pan_no,
@@ -36,6 +40,8 @@ function EditProfile() {
             user_name: userData.user_name,
             mobile_no: userData.mobile_no,
             address: userData.address,
+            state: userData.state,
+            city: userData.city,
             firm_name: userData.firm_name,
             gst_no: userData.gst_no,
             pan_no: userData.pan_no,
@@ -45,6 +51,9 @@ function EditProfile() {
             setStates(statesList);
         };
         fetchStates()
+        const stateData = states.find((state) => state.name === userData.state);
+        const stateCode = stateData?.isoCode;
+        fetchCities(stateCode);
     }, [userData]);
 
     const handleInputChange = (e) => {
@@ -79,7 +88,9 @@ function EditProfile() {
     };
 
     const handleStateChange = (event) => {
-        const stateCode = event.target.value;
+        const stateName = event.target.value;
+        const stateData = states.find((state) => state.name === stateName);
+        const stateCode = stateData.isoCode;
         fetchCities(stateCode);
     };
 
@@ -111,22 +122,24 @@ function EditProfile() {
                         </div>
                         <div className="w-full flex flex-col gap-2">
                             <label className="font-semibold text-xs text-gray-500 ">Address</label>
-                            <input type="text" className="border rounded-lg px-3 py-2 text-sm w-full outline-none border-gray-200 bg-gray-100" name="mobile_no" onChange={e => handleInputChange(e)} value={formData.address} />
+                            <input type="text" className="border rounded-lg px-3 py-2 text-sm w-full outline-none border-gray-200 bg-gray-100" name="address" onChange={(e) => handleInputChange(e)} value={formData.address} />
                         </div>
                         <div className="w-full flex flex-col gap-2">
                             <label className="font-semibold text-xs text-gray-500 ">State</label>
-                            <select className="border rounded-lg px-3 py-2 text-black text-sm outline-none border-gray-200 bg-gray-100 w-full" name="state" onChange={(e) => handleStateChange(e)}>
+                            <select className="border rounded-lg px-3 py-2 text-black text-sm outline-none border-gray-200 bg-gray-100 w-full" name="state" onChange={(e) => {
+                                handleStateChange(e);
+                                handleInputChange(e);
+                            }}>
                                 <option hidden>Select State</option>
-                                {states.map((state, index) => <option value={state.isoCode} key={index}>{state.name}</option>)}
+                                {states.map((state, index) => <option value={state.name} key={index} selected={state.name === formData.state}>{state.name}</option>)}
                             </select>
                         </div>
                         <div className="w-full flex flex-col gap-2">
                             <label className="font-semibold text-xs text-gray-500 ">City</label>
-                            <select className="border rounded-lg px-3 py-2 text-black text-sm outline-none border-gray-200 bg-gray-100 w-full" name="city">
+                            <select className="border rounded-lg px-3 py-2 text-black text-sm outline-none border-gray-200 bg-gray-100 w-full" name="city" onChange={(e) => handleInputChange(e)}>
                                 <option hidden>Select City</option>
-                                {cities.length === 0
-                                    ? <option disabled>Select State first</option>
-                                    : cities.map((city, index) => <option value={city.isoCode} key={index}>{city.name}</option>)
+                                {
+                                    cities.map((city, index) => <option value={city.name} key={index} selected={city.name === formData.city}>{city.name}</option>)
                                 }
                             </select>
                         </div>

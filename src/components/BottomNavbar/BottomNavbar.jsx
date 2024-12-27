@@ -7,30 +7,37 @@ function BottomNavbar() {
     const location = useLocation();
 
     const handleScroll = () => {
-        const isBottom =
-            window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 10; // Add tolerance
-        setIsVisible(!isBottom); // Show/hide navbar based on scroll position
+        const scrollPosition = window.scrollY;
+        const windowHeight = window.innerHeight; // Includes visible height
+        const documentHeight = document.documentElement.scrollHeight; // Full page height
+
+        // Add offset (5px) for better precision due to dynamic height changes
+        const atBottom = scrollPosition + windowHeight >= documentHeight - 5;
+
+        setIsVisible(!atBottom); // Hide navbar if at the bottom
     };
 
     useEffect(() => {
-        // Attach scroll listener
+        // Scroll event listener
         window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll); // For mobile dynamic resizing
 
-        // Cleanup listener
         return () => {
             window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', handleScroll);
         };
-    }, []); // Attach listener only once
+    }, []); // Attach listener once
 
     useEffect(() => {
-        // Scroll to top when route changes
+        // Force scroll to top on route change
         window.scrollTo(0, 0);
 
-        // Trigger scroll check after DOM update (important for dynamic pages)
+        // Delay ensures correct height calculation after DOM updates
         setTimeout(() => {
-            handleScroll(); // Force a scroll check on route change
-        }, 50); // Delay ensures the DOM is rendered before calculating height
-    }, [location]); // React on route changes
+            handleScroll();
+        }, 100); // Increased delay for mobile rendering
+
+    }, [location]);
 
     return (
         <>

@@ -38,14 +38,15 @@ function AddDefaulter() {
     };
 
     const handleStateChange = (event) => {
-        const stateCode = event.target.value;
+        const stateName = event.target.value;
+        const stateData = states.find((state) => state.name === stateName);
+        const stateCode = stateData.isoCode;
         fetchCities(stateCode);
     };
 
     const fetchCities = (stateCode) => {
         const citiesList = City.getCitiesOfState("IN", stateCode);
         setCities(citiesList);
-        console.log(citiesList)
     };
 
     return (

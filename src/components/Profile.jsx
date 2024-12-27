@@ -25,7 +25,7 @@ function Profile() {
                                     className="object-cover h-full w-full"
                                     src={`${staticPath}${userData?.user_img}`}
                                     alt="profile"
-                                    onError={(e) => (e.target.src = '/img/default-avatar.jpg')}
+                                    // onError={(e) => (e.target.src = '/img/default-avatar.jpg')}
                                     loading='lazy'
                                 />
                             </div>
@@ -48,7 +48,7 @@ function Profile() {
                         </div>
                         <div className='flex flex-col'>
                             <span className='font-semibold text-xs text-gray-400'>Address:</span>
-                            <span>Varanasi, Uttar Pradesh, India</span>
+                            <span>{userData?.address}, {userData?.city}, {userData?.state}, {userData?.country}</span>
                         </div>
                         <div className='flex flex-col'>
                             <span className='font-semibold text-xs text-gray-400'>Firm Name:</span>
@@ -60,11 +60,11 @@ function Profile() {
                         </div>
                         <div className='flex flex-col'>
                             <span className='font-semibold text-xs text-gray-400'>GST no.:</span>
-                            <span>{userData?.gst_no}</span>
+                            <span className='uppercase'>{userData?.gst_no}</span>
                         </div>
                         <div className='flex flex-col'>
                             <span className='font-semibold text-xs text-gray-400'>PAN Card no.:</span>
-                            <span>{userData?.pan_no}</span>
+                            <span className='uppercase'>{userData?.pan_no}</span>
                         </div>
                     </div>
                     <div className='mt-5 text-center'>
