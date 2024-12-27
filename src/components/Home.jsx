@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom"
-import { useAuth } from "../contexts/authContext"
 import { useState } from "react";
+import { useAuth } from "../contexts/authContext"
+import { Link } from "react-router-dom"
 import Loader from "./Loader/Loader";
 
 function Home() {
@@ -12,6 +12,13 @@ function Home() {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = defaultersList.slice().reverse().slice(indexOfFirstItem, indexOfLastItem);
+
+    const sortedItems = currentItems.slice().sort((a, b) => {
+        const distanceA = a.city === userData.city ? 0 : 1;
+        const distanceB = b.city === userData.city ? 0 : 1;
+
+        return distanceA - distanceB;
+    });
 
     const totalPages = Math.ceil(defaultersList.length / itemsPerPage);
 
@@ -41,10 +48,10 @@ function Home() {
                 </section>
                 <section className="my-4">
                     <div className="customContainer min-h-[500px] relative bg-white lg:p-5 md:p-5 p-3 rounded-lg mx-auto shadow-sm">
-                        <p className="text-lg font-semibold col-span-2">Recently added Defaulters</p>
-                        <p className="text-xs text-gray-500 font-medium mb-3 col-span-2">The list is already sorted based on your nearest location.</p>
+                        <p className="text-lg font-semibold">Recently added Defaulters</p>
+                        <p className="text-xs text-gray-500 font-medium mb-3">The list is already sorted based on your nearest location.</p>
                         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mb-12">
-                            {currentItems.map((item) => {
+                            {sortedItems.map((item) => {
                                 return (
                                     <Link to={`/overview/defaulter/${item._id}`} className="bg-gradient-to-br hover:bg-gradient-to-bl from-white to-blue-50 inline-block border rounded-lg p-3 shadow-md hover:scale-105 hover:shadow-xl duration-200" key={item._id}>
                                         <div className="flex justify-between items-center border-b pb-1">

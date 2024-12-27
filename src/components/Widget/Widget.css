@@ -3,10 +3,7 @@
     background-color: #f3f3f3;
     display: inline-block;
     padding: 24px;
-    /* margin: 40px 0; */
-    /* width: 25%; */
-    width: 360px;
-    min-width: 300px;
+    max-width: 400px;
     box-shadow: 0px 4px 5px -3px rgba(0, 0, 0, 0.05);
 }
 .widget header {
@@ -14,9 +11,7 @@
     align-items: center;
     justify-content: space-between;
 }
-/* .widget .widget_body {
-    margin: 4px 56px;
-} */
+
 h4 {
     margin: 12px 0 24px;
     color: #494b59;
@@ -55,6 +50,7 @@ h4 {
 .coloredDisplay svg {
     transform: rotate(-127deg);
     transition: transform 0.6s ease;
+    transition-delay: 0.3s;
 }
 .leftCurve {
     fill: url(#Gradient1);
@@ -100,6 +96,7 @@ h4 {
     height: 100%;
     width: 20%;
     transition: transform 0.6s ease;
+    transition-delay: 0.3s;
 }
 .legend {
     display: flex;

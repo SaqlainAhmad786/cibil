@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { toast, Toaster } from "sonner"
-import axios from "axios";
 import { City, State } from "country-state-city";
+import { useAuth } from "../contexts/authContext";
+import axios from "axios";
+import { toast, Toaster } from "sonner"
 
 function AddDefaulter() {
     const [states, setStates] = useState([])
     const [cities, setCities] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [mobNumber, setMobNumber] = useState(false);
-    const [aadharNumber, setAadharNumber] = useState(false);
+    const [mobNumber, setMobNumber] = useState('');
+    const [aadharNumber, setAadharNumber] = useState('');
+    const { refreshDefaultersList } = useAuth();
 
     useEffect(() => {
         const fetchStates = () => {
@@ -42,9 +44,11 @@ function AddDefaulter() {
             await axios.post(`${import.meta.env.VITE_BASE_URL}/addDefaulter`, formData).then(res => {
                 if (res.data.status) {
                     toast.success("Defaulter added successfully", { duration: 3000 });
-                    console.log(formData)
                     form.reset()
+                    setMobNumber("");
+                    setAadharNumber("");
                     setLoading(false);
+                    refreshDefaultersList();
                 }
             })
         } catch (error) {

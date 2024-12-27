@@ -32,8 +32,8 @@ function Graph({ percentage, options }) {
                         <svg style={{ transform: `rotate(${rotateValue[0]}deg)` }} id='test' width="100%" height="100%" viewBox="0 0 399 399" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <defs>
                                 <linearGradient id="Gradient1" gradientTransform="rotate(-25)">
-                                    <stop id="stop1" offset="0%" stopColor="#F29363" />
-                                    <stop id="stop2" offset="100%" stopColor="#F6B597" />
+                                    <stop id="stop1" offset="0%" stopColor="#3c72fc" />
+                                    <stop id="stop2" offset="100%" stopColor="#3c72fc50" />
                                 </linearGradient>
                                 <linearGradient id="Gradient2" gradientTransform="rotate(120)">
                                     <stop id="stop1" offset="0%" stopColor="#586084" />
@@ -53,7 +53,7 @@ function Graph({ percentage, options }) {
                 </div>
             </div>
             <div className='legend'>
-                <LegendOption option={options} value={percentage} color='#F6B597' unit='%' />
+                <LegendOption option={options} value={percentage} color='#3c72fc' unit='%' />
                 {/* <LegendOption option={options[1]} value={100 - percentage} color='#586084' unit='%' /> */}
             </div>
         </>

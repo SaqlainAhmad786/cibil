@@ -58,10 +58,14 @@ export const AuthProvider = ({ children }) => {
     }
 
     const refreshUserData = async () => {
-        const uid = localStorage.getItem('userId');
         if (uid) {
             await getUserData(uid);
         }
+    };
+
+    const refreshDefaultersList = async () => {
+        await getDefaultersList();
+        await getUserDefaultersList();
     };
 
     const logout = () => {
@@ -73,7 +77,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ refreshUserData, logout, userData, defaultersList, userDefaultersList, userLoading, defaultersLoading, staticPath }}>
+        <AuthContext.Provider value={{ refreshUserData, refreshDefaultersList, logout, userData, defaultersList, userDefaultersList, userLoading, defaultersLoading, staticPath }}>
             {children}
         </AuthContext.Provider>
     );
