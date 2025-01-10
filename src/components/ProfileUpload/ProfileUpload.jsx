@@ -48,6 +48,11 @@ function ProfileUpload({ fileInputRef }) {
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
+        if (file.size > 1000000) {
+            toast.error("Image size should be less than 1MB", { duration: 3000 });
+            setImage(null);
+            return;
+        }
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
@@ -67,18 +72,15 @@ function ProfileUpload({ fileInputRef }) {
         try {
             const croppedImage = await getCroppedImg(image, croppedAreaPixels);
 
-            const blob = await fetch(croppedImage).then((res) => res.blob());
+            const blob = await fetch(croppedImage).then((res) => res.blob())
             const file = new File([blob], 'image.jpg', { type: blob.type });
 
             const formData = new FormData();
             formData.append('userImg', file);
-
             await axios.post(`${import.meta.env.VITE_BASE_URL}/useruplodimg/${uid}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
-                setLoading(true);
                 if (res.data.status) {
                     setIsDialogOpen(false);
                     toast.success("Profile picture uploaded successfully", { duration: 3000 });
-                    setLoading(false);
                     refreshUserData()
                 }
             });
@@ -87,13 +89,14 @@ function ProfileUpload({ fileInputRef }) {
             setIsDialogOpen(false);
             toast.error("Something went wrong", { description: "Please try again" }, { duration: 3000 });
             console.error('Error:', e);
+        } finally {
+            setLoading(false);
         }
     };
 
-
     return (
         <div>
-            <Toaster position="top-right" />
+            <Toaster position="top-right" richColors />
             <input type="file" accept="image/*" className="hidden" ref={fileInputRef} onChange={handleFileChange} />
             {isDialogOpen && (
                 <div className="cropDialogCont">
@@ -108,8 +111,19 @@ function ProfileUpload({ fileInputRef }) {
                             onCropComplete={onCropComplete}
                         />
                         <div className="controls">
-                            <button onClick={handleSave}>{loading ? 'Uploading...' : 'Save'}</button>
-                            <button onClick={() => setIsDialogOpen(false)}>Cancel</button>
+                            {!loading
+                                ? <>
+                                    <button onClick={handleSave}>Save</button>
+                                    <button onClick={() => setIsDialogOpen(false)}>Cancel</button>
+                                </>
+                                : <button className="col-span-2 flex justify-center items-center">
+                                    <l-mirage
+                                        size="80"
+                                        speed="4"
+                                        color="white"
+                                    ></l-mirage>
+                                </button>
+                            }
                         </div>
                     </div>
                 </div>

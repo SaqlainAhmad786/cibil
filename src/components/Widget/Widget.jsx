@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import './Widget.css'
+import { BadgeInfo } from "lucide-react";
+import { useHover } from "react-haiku";
 
-function Graph({ percentage, options }) {
+function Graph({ percentage, options, color }) {
     const [rotateValue, setRotateValue] = useState([-127, 100])
 
     useEffect(() => {
@@ -32,8 +34,8 @@ function Graph({ percentage, options }) {
                         <svg style={{ transform: `rotate(${rotateValue[0]}deg)` }} id='test' width="100%" height="100%" viewBox="0 0 399 399" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <defs>
                                 <linearGradient id="Gradient1" gradientTransform="rotate(-25)">
-                                    <stop id="stop1" offset="0%" stopColor="#3c72fc" />
-                                    <stop id="stop2" offset="100%" stopColor="#3c72fc50" />
+                                    <stop id="stop1" offset="0%" stopColor={color} />
+                                    <stop id="stop2" offset="100%" stopColor={`${color}50`} />
                                 </linearGradient>
                                 <linearGradient id="Gradient2" gradientTransform="rotate(120)">
                                     <stop id="stop1" offset="0%" stopColor="#586084" />
@@ -61,11 +63,24 @@ function Graph({ percentage, options }) {
 }
 
 function LegendOption({ option, color, value, unit }) {
+    const { hovered, ref } = useHover();
+
     return (
         <section className='legend_option'>
             <div className='option_title'>
                 <div className='option_mark' style={{ backgroundColor: `${color}` }}></div>
                 {option}
+                <div className="text-gray-700 ml-1 relative" ref={ref}>
+                    <BadgeInfo size={14} />
+                    {hovered && <div className="absolute top-5 right-[-80px] bg-white shadow-lg border rounded-lg px-3 py-2 w-72 duration-200">
+                        <p className="text-sm font-medium">Vyapar score categorization:</p>
+                        <div className="space-y-1 mt-2">
+                            <p className="text-xs">Scored between 75-100 - <span className="text-green-600 font-semibold">Average Risk</span></p>
+                            <p className="text-xs">Scored between 50-75 - <span className="text-yellow-600 font-semibold">High Risk</span></p>
+                            <p className="text-xs">Scored below 50 - <span className="text-red-600 font-semibold">Scammer</span></p>
+                        </div>
+                    </div>}
+                </div>
             </div>
             <div className='option_value'>
                 {value}{unit}

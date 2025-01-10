@@ -78,7 +78,7 @@ function Login() {
     return (
         <>
             <main className="h-[100dvh] flex items-center justify-center bg-[url('/img/login-cover.svg')] bg-cover bg-center px-4 sm:px-6 lg:px-8">
-                <Toaster position="top-center" />
+                <Toaster position="top-center" richColors />
                 <div className="w-[320px] min-h-96 px-8 py-6 text-left bg-gray-800 border border-gray-700 bg-opacity-70 backdrop-blur-lg rounded-xl shadow-lg">
                     <form onSubmit={handleSubmit}>
                         <div className="flex flex-col h-full select-none">

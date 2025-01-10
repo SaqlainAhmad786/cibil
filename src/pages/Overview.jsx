@@ -1,7 +1,7 @@
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom"
 import { useAuth } from "../contexts/authContext";
 import BottomNavbar from "../components/BottomNavbar/BottomNavbar";
-import { Binoculars, CircleHelp, CirclePlus, House, IndianRupee, LogOut, Search, Settings, User } from "lucide-react";
+import { Binoculars, CircleHelp, CirclePlus, House, IndianRupee, LogOut, Search, Settings, User, Users } from "lucide-react";
 
 function Overview() {
     const { logout, userData, staticPath } = useAuth();
@@ -65,6 +65,9 @@ function Overview() {
                             </li>
                             <li className="hover:translate-x-2 duration-200 "><NavLink to={'/overview/addDefaulter'} onClick={handleSideBar} className="text-md">
                                 <CirclePlus className="w-5 h-5" />Add Defaulter</NavLink>
+                            </li>
+                            <li className="hover:translate-x-2 duration-200 "><NavLink to={'/overview/defaultersList'} onClick={handleSideBar} className="text-md">
+                                <Users className="w-5 h-5" />My Defaulters List</NavLink>
                             </li>
                             <li className="hover:translate-x-2 duration-200"><NavLink to={'/overview/subscribe'} onClick={handleSideBar} className="text-md">
                                 <IndianRupee className="w-5 h-5" />Subscribe</NavLink>

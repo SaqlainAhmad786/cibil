@@ -2,31 +2,77 @@ import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/authContext";
 import Widget from "../Widget/Widget/";
 import { Graph } from "../Widget/Widget/";
+import { Download } from "lucide-react";
+import { toPng, toJpeg, toSvg } from 'html-to-image';
+import { useRef } from "react";
 
 function Defaulter() {
     const { defaultersList } = useAuth();
     const { id } = useParams();
     const defaulterData = defaultersList.find(defaulter => defaulter._id === id)
+    const componentRef = useRef();
 
     const maskedAadhar = String(defaulterData?.aadhar_card).replace(/^(\d{8})(\d{4})$/, '********$2');
     const maskedPan = String(defaulterData?.pan_card_no)?.slice(-4).padStart(String(defaulterData?.pan_card_no).length, '*');
 
+    let color;
+    let scoreText;
+
+    if (defaulterData?.cibil_score >= 75) {
+        color = '#00FF00';
+        scoreText = 'Average Risk';
+    } else if (defaulterData?.cibil_score >= 50) {
+        color = '#FF9900';
+        scoreText = 'High risk';
+    } else {
+        color = '#FF0000';
+        scoreText = 'Scammer';
+    }
+
+    const downloadImage = async (format) => {
+        if (!componentRef.current) return;
+
+        try {
+            let dataUrl;
+            if (format === 'png') {
+                dataUrl = await toPng(componentRef.current);
+            } else if (format === 'jpeg') {
+                dataUrl = await toJpeg(componentRef.current, { quality: 0.95 });
+            } else if (format === 'svg') {
+                dataUrl = await toSvg(componentRef.current);
+            }
+
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = `component.${format}`;
+            link.click();
+        } catch (err) {
+            console.error('Could not generate image:', err);
+        }
+    };
+
     return (
         <>
             <main>
-                <div className="customContainer mb-5 bg-white rounded-xl shadow-2xl max-w-4xl w-full lg:p-6 md:p-4 p-3 transition-all duration-300 animate-fade-in">
-                    <div className="flex gap-4 flex-col md:flex-row">
+                <div className="customContainer mb-5 bg-white rounded-xl overflow-hidden shadow-2xl max-w-4xl w-full transition-all duration-300 animate-fade-in">
+                    <div className="flex gap-4 flex-col md:flex-row bg-white lg:p-6 md:p-4 p-3" ref={componentRef}>
                         <div className="md:w-1/3">
-                            <Widget >
-                                <Graph percentage={56} options={'Vyapar Score'} />
+                            <Widget>
+                                <Graph percentage={defaulterData?.cibil_score} options={scoreText} color={color} />
                             </Widget>
                         </div>
                         <div className="md:w-2/3 md:pl-8">
-                            <h1 className="text-xl font-semibold text-blueClr mb-3 uppercase">About Defaulter</h1>
+                            <div className="flex justify-between items-center mb-3">
+                                <h1 className="text-xl font-semibold text-blueClr uppercase">About Defaulter</h1>
+                                <button onClick={() => downloadImage('png')} className="flex items-center gap-1 text-xs border px-3 py-2 rounded-full hover:bg-gray-200 duration-200">
+                                    <Download size={18} />
+                                    <span className="font-semibold lg:block md:block sm:block hidden">Report</span>
+                                </button>
+                            </div>
                             <div className="space-y-1 mb-5">
                                 <div className='flex flex-col'>
-                                    <span className='font-semibold text-xs text-gray-400'>Dues:</span>
-                                    <span className="font-semibold text-lg">₹ {defaulterData?.pending_amount}/-</span>
+                                    <span className='font-semibold text-xs text-gray-400'>Due amount:</span>
+                                    <span className="font-bold text-lg text-red-600">₹ {defaulterData?.pending_amount}/-</span>
                                 </div>
                                 <div className='flex flex-col'>
                                     <span className='font-semibold text-xs text-gray-400'>Name:</span>
@@ -36,26 +82,22 @@ function Defaulter() {
                                     <span className='font-semibold text-xs text-gray-400'>Address:</span>
                                     <span>{defaulterData?.address}, {defaulterData?.city}, {defaulterData?.state}, {defaulterData?.country}</span>
                                 </div>
+                            </div>
+                            <div className="space-y-1 mb-3">
                                 <div className='space-y-1 flex gap-x-8 items-center'>
+                                    <div className='flex flex-col'>
+                                        <span className='font-semibold text-xs text-gray-400'>Firm name:</span>
+                                        <span className="uppercase">{defaulterData?.firm_name}</span>
+                                    </div>
                                     <div className='flex flex-col'>
                                         <span className='font-semibold text-xs text-gray-400'>GST no.:</span>
                                         <span className="uppercase">{defaulterData?.gst_no}</span>
                                     </div>
+                                </div>
+                                <div className='space-y-1 flex gap-x-8 items-center'>
                                     <div className='flex flex-col'>
                                         <span className='font-semibold text-xs text-gray-400'>Aadhar Card no.:</span>
                                         <span className="uppercase">{maskedAadhar}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="space-y-1 mb-3">
-                                <div className='flex flex-col'>
-                                    <span className='font-semibold text-xs text-gray-400'>Firm name:</span>
-                                    <span>{defaulterData?.firm_name}</span>
-                                </div>
-                                <div className='space-y-1 flex gap-x-8 items-center'>
-                                    <div className='flex flex-col'>
-                                        <span className='font-semibold text-xs text-gray-400'>GST no.:</span>
-                                        <span className="uppercase">{defaulterData?.gst_no}</span>
                                     </div>
                                     <div className='flex flex-col'>
                                         <span className='font-semibold text-xs text-gray-400'>PAN Card no.:</span>
@@ -79,8 +121,12 @@ function Defaulter() {
                                 </div>
                             </div>
                             <div className="flex flex-wrap items-center gap-2">
-                                <p className='text-xs'>Added on <span className="font-semibold">{new Date(defaulterData?.added_on).toLocaleDateString('en-IN')}</span> by:</p>
-                                <span className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">{defaulterData?.added_by}</span>
+                                <p className='text-xs'>Listed as a defaulter on <span className="font-semibold">{new Date(defaulterData?.added_on).toLocaleDateString('en-IN')}</span> by:</p>
+                                {defaulterData?.added_by.map((item, index) => {
+                                    return (
+                                        <span key={index} className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">{item}</span>
+                                    )
+                                })}
                             </div>
                         </div>
                     </div>

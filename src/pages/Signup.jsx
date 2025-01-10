@@ -87,7 +87,7 @@ function Signup() {
     return (
         <>
             <main className="bg-[url('/img/login-cover.svg')] bg-cover bg-center grid place-items-center h-full">
-                <Toaster position="top-center" />
+                <Toaster position="top-center" richColors />
                 <div className="lg:w-[50%] md:w-[75%] sm:w-[85%] w-[95%] mx-auto my-5 bg-gray-800 border border-gray-700 bg-opacity-70 backdrop-blur-lg lg:p-6 md:p-5 p-4 rounded-xl">
                     <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl text-white">
                         <img className="w-16 h-16 mr-2 object-contain" src="/img/vyapar-logo.png" alt="logo" />

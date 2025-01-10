@@ -278,7 +278,7 @@ function ForgetPassword() {
     return (
         <>
             <main className="h-[100dvh] bg-[url('/img/login-cover.svg')] bg-cover bg-center flex items-center justify-center px-4 sm:px-6 lg:px-8">
-                <Toaster position="top-center" />
+                <Toaster position="top-center" richColors />
                 {showEmail && <div className="w-[320px] px-8 py-6 mt-4 bg-gray-800 border border-gray-700 bg-opacity-70 backdrop-blur-lg rounded-xl shadow-lg">
                     <form onSubmit={handleEmailForm}>
                         <div className="h-full">

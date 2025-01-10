@@ -105,7 +105,7 @@ function MoneyBlockerFinder() {
                                 </Link>
                             ))
                         ) : (
-                            <div className="col-span-3 h-[220px] flex flex-col gap-2 items-center justify-center">
+                            <div className="col-span-3 h-[320px] flex flex-col gap-2 items-center justify-center">
                                 <img src="/img/no-data.png" className="w-16" alt="" />
                                 <p className="text-sm font-medium">No matching results.</p>
                             </div>

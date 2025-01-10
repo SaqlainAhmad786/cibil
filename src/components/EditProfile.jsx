@@ -102,7 +102,7 @@ function EditProfile() {
     return (
         <>
             <section className="my-4">
-                <Toaster position="top-right" />
+                <Toaster position="top-right" richColors />
                 {userLoading && <Loader />}
                 <form className="customContainer bg-white p-5 rounded-lg mx-auto shadow-sm" >
                     <div className="flex items-center gap-2 border-b pb-3">
@@ -114,7 +114,7 @@ function EditProfile() {
                     <div className='space-y-3 my-4'>
                         <div className="w-full flex flex-col gap-2">
                             <label className="font-semibold text-xs text-gray-500 ">Full Name</label>
-                            <input type="text" className="border rounded-lg px-3 py-2 text-sm w-full outline-none border-gray-200 bg-gray-100" placeholder="John Doe" name="user_name" onChange={e => handleInputChange(e)} value={formData.user_name} />
+                            <input type="text" className="border rounded-lg px-3 py-2 text-sm w-full outline-none border-gray-200 bg-gray-100 capitalize" placeholder="Sunil Kumar" name="user_name" onChange={e => handleInputChange(e)} value={formData.user_name} />
                         </div>
                         <div className="w-full flex flex-col gap-2">
                             <label className="font-semibold text-xs text-gray-500 ">Mobile</label>
@@ -147,16 +147,16 @@ function EditProfile() {
                     <hr />
                     <div className='space-y-3 my-4'>
                         <div className="w-full flex flex-col gap-2">
-                            <label className="font-semibold text-xs text-gray-500 ">Firm Name</label>
+                            <label className="font-semibold text-xs text-gray-500 capitalize">Firm Name</label>
                             <input type="text" className="border rounded-lg px-3 py-2 text-sm w-full outline-none border-gray-200 bg-gray-100" placeholder="Company name" name="firm_name" onChange={e => handleInputChange(e)} value={formData.firm_name} />
                         </div>
                         <div className="w-full flex flex-col gap-2">
                             <label className="font-semibold text-xs text-gray-500 ">GST No.</label>
-                            <input type="text" className="border rounded-lg px-3 py-2 text-sm w-full outline-none border-gray-200 bg-gray-100" placeholder="789456123456" name="gst_no" onChange={e => handleInputChange(e)} value={formData.gst_no} />
+                            <input type="text" className="border rounded-lg px-3 py-2 text-sm w-full outline-none border-gray-200 bg-gray-100 uppercase" placeholder="789456123456" name="gst_no" onChange={e => handleInputChange(e)} value={formData.gst_no} />
                         </div>
                         <div className="w-full flex flex-col gap-2">
                             <label className="font-semibold text-xs text-gray-500 ">PAN Card No.</label>
-                            <input type="text" className="border rounded-lg px-3 py-2 text-sm w-full outline-none border-gray-200 bg-gray-100" placeholder="DSKPA123456" name="pan_no" onChange={e => handleInputChange(e)} value={formData.pan_no} />
+                            <input type="text" className="border rounded-lg px-3 py-2 text-sm w-full outline-none border-gray-200 bg-gray-100 uppercase" placeholder="DSKPA123456" name="pan_no" onChange={e => handleInputChange(e)} value={formData.pan_no} />
                         </div>
                     </div>
                     <div className='mt-4'>

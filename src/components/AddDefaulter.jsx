@@ -42,6 +42,7 @@ function AddDefaulter() {
 
         try {
             await axios.post(`${import.meta.env.VITE_BASE_URL}/addDefaulter`, formData).then(res => {
+                console.log(res.data)
                 if (res.data.status) {
                     toast.success("Defaulter added successfully", { duration: 3000 });
                     form.reset()
@@ -53,6 +54,7 @@ function AddDefaulter() {
             })
         } catch (error) {
             console.error('Error:', error.response ? error.response.data : error.message);
+            toast.error("Failed to add defaulter", { duration: 3000 });
             setLoading(false);
         }
     };
@@ -72,7 +74,7 @@ function AddDefaulter() {
     return (
         <>
             <section className="customContainer bg-white p-5 rounded-lg mb-5 shadow-sm">
-                <Toaster position="top-right" />
+                <Toaster position="top-right" richColors />
                 <div className="rounded-xl">
                     <img src="/img/fraud.png" alt="" className="w-20" />
                     <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-800 md:text-2xl">
