@@ -110,7 +110,7 @@ function Defaulter() {
                                 </div>
                             </div>
                             <div className="join mb-3 flex lg:justify-start md:justify-start sm:justify-start justify-center">
-                                <a href="#" className="bg-gray-100 border-gray-300 btn btn-outline btn-sm lg:text-xs md:text-xs text-[10px] join-item">View Bank Statement</a>
+                                <a href="#" className="bg-gray-100 border-gray-300 btn btn-outline btn-sm lg:text-xs md:text-xs text-[10px] join-item">View Ledger Statement</a>
                                 <a href="#" className="bg-gray-100 border-gray-300 btn btn-outline btn-sm lg:text-xs md:text-xs text-[10px] join-item" disabled={!defaulterData?.otherDocument}>View Other Documents</a>
                             </div>
                             <div className="collapse collapse-arrow border-gray-300 border rounded-lg mb-2">

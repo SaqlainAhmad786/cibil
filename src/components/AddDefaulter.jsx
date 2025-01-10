@@ -150,7 +150,7 @@ function AddDefaulter() {
                                 </div>
                                 <div className="mb-5 space-y-2">
                                     <div className="grid w-full items-center gap-1.5">
-                                        <label className="text-xs text-gray-500 font-semibold peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Upload Bank Statement</label>
+                                        <label className="text-xs text-gray-500 font-semibold peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Upload Ledger Statement</label>
                                         <input name="bankStatement" type="file" className="flex h-10 w-full rounded-md border border-gray-300 border-input bg-gray-100 px-3 py-2 text-sm text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium" />
                                     </div>
                                     <div className="grid w-full items-center gap-1.5">
