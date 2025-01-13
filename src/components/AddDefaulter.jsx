@@ -40,6 +40,18 @@ function AddDefaulter() {
         const formData = new FormData(form);
         formData.append('user_id', localStorage.getItem('userId'));
 
+        if (aadharNumber.length < 12) {
+            toast.error("Please enter a valid Aadhar number", { description: "Aadhar number must be 12 digits long" }, { duration: 3000 });
+            setLoading(false);
+            return
+        }
+
+        if (mobNumber.length < 10) {
+            toast.error("Please enter a valid mobile number", { description: "Mobile number must be 10 digits long" }, { duration: 3000 });
+            setLoading(false);
+            return
+        }
+
         try {
             await axios.post(`${import.meta.env.VITE_BASE_URL}/addDefaulter`, formData).then(res => {
                 console.log(res.data)

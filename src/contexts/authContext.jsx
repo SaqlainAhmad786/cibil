@@ -58,9 +58,8 @@ export const AuthProvider = ({ children }) => {
     }
 
     const refreshUserData = async () => {
-        if (uid) {
-            await getUserData(uid);
-        }
+        if (!uid) return;
+        await getUserData(uid);
     };
 
     const refreshDefaultersList = async () => {

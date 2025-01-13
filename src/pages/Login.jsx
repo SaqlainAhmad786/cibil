@@ -11,7 +11,7 @@ function Login() {
     const location = useLocation();
     const hasRun = useRef(false);
     const navigate = useNavigate()
-    const { refreshUserData } = useAuth();
+    const { refreshUserData, refreshDefaultersList } = useAuth();
 
     const newUserSignedUp = location?.state?.signedUp;
     const newUserEmail = location?.state?.email;
@@ -56,6 +56,7 @@ function Login() {
                     localStorage.setItem('userId', res.data.userData._id)
                     setLoading(false)
                     refreshUserData()
+                    refreshDefaultersList()
                     navigate('/')
                 }
             })

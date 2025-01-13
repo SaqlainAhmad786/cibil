@@ -7,10 +7,11 @@ import { toPng, toJpeg, toSvg } from 'html-to-image';
 import { useRef } from "react";
 
 function Defaulter() {
-    const { defaultersList } = useAuth();
+    const { defaultersList, staticPath } = useAuth();
     const { id } = useParams();
     const defaulterData = defaultersList.find(defaulter => defaulter._id === id)
     const componentRef = useRef();
+    console.log(defaulterData)
 
     const maskedAadhar = String(defaulterData?.aadhar_card).replace(/^(\d{8})(\d{4})$/, '********$2');
     const maskedPan = String(defaulterData?.pan_card_no)?.slice(-4).padStart(String(defaulterData?.pan_card_no).length, '*');
@@ -110,8 +111,8 @@ function Defaulter() {
                                 </div>
                             </div>
                             <div className="join mb-3 flex lg:justify-start md:justify-start sm:justify-start justify-center">
-                                <a href="#" className="bg-gray-100 border-gray-300 btn btn-outline btn-sm lg:text-xs md:text-xs text-[10px] join-item">View Ledger Statement</a>
-                                <a href="#" className="bg-gray-100 border-gray-300 btn btn-outline btn-sm lg:text-xs md:text-xs text-[10px] join-item" disabled={!defaulterData?.otherDocument}>View Other Documents</a>
+                                <a href={`${staticPath}${defaulterData?.bankStatement}`} target="_blank" className="bg-gray-100 border-gray-300 btn btn-outline btn-sm lg:text-xs md:text-xs text-[10px] join-item">View Ledger Statement</a>
+                                <a href={`${staticPath}${defaulterData?.otherDocument}`} target="_blank" className="bg-gray-100 border-gray-300 btn btn-outline btn-sm lg:text-xs md:text-xs text-[10px] join-item" disabled={defaulterData?.otherDocument == "upload/undefined"}>View Other Documents</a>
                             </div>
                             <div className="collapse collapse-arrow border-gray-300 border rounded-lg mb-2">
                                 <input type="radio" name="my-accordion-4" className="h-[20px]" />

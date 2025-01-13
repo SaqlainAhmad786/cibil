@@ -52,7 +52,6 @@ function Home() {
                         <p className="text-xs text-gray-500 font-medium mb-3">The list is already sorted based on your nearest location.</p>
                         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mb-12">
                             {sortedItems.map((item) => {
-                                console.log(item)
                                 return (
                                     <Link to={`/overview/defaulter/${item._id}`} className="bg-gradient-to-br hover:bg-gradient-to-bl from-white to-blue-50 inline-block border rounded-lg p-3 shadow-md hover:scale-105 hover:shadow-xl duration-200" key={item._id}>
                                         <div className="flex justify-between items-center border-b pb-1">

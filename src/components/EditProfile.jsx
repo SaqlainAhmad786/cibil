@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/authContext";
 import { useNavigate } from "react-router-dom";
+import { City, State } from "country-state-city";
+import Loader from "./Loader/Loader";
 import axios from "axios";
 import { toast, Toaster } from "sonner";
-import Loader from "./Loader/Loader";
-import { City, State } from "country-state-city";
 
 function EditProfile() {
     const { userData, refreshUserData, userLoading } = useAuth();
@@ -54,7 +54,7 @@ function EditProfile() {
         const stateData = states.find((state) => state.name === userData.state);
         const stateCode = stateData?.isoCode;
         fetchCities(stateCode);
-    }, [userData]);
+    }, [userData, states]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -91,6 +91,7 @@ function EditProfile() {
         const stateName = event.target.value;
         const stateData = states.find((state) => state.name === stateName);
         const stateCode = stateData.isoCode;
+        console.log(stateCode)
         fetchCities(stateCode);
     };
 

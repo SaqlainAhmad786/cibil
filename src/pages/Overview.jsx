@@ -36,8 +36,8 @@ function Overview() {
                                     <Link to={'/overview/profile'} className="lg:block hidden h-12 w-12 rounded-[100vh] overflow-hidden lg:order-2 order-1 border-2 border-blueClr">
                                         <img className="w-full h-full object-cover" src={`${staticPath}${userData?.user_img}`} onError={(e) => e.target.src = "/img/default-avatar.jpg"} alt="" />
                                     </Link>
-                                    <Link to={'/'} className="lg:hidden block bg-white p-1 h-14 w-14 rounded-[100vh] overflow-hidden lg:order-2 order-1">
-                                        <img className="w-full h-full object-cover" src="/img/logo-vector.svg" alt="" />
+                                    <Link to={'/'} className="lg:hidden block bg-white m-1 h-14 w-14 rounded-[100vh] overflow-hidden lg:order-2 order-1">
+                                        <img className="w-full h-full object-cover" src="/img/logo-circle.svg" alt="" />
                                     </Link>
                                 </div>
                                 <label htmlFor="my-drawer-2" className="drawer-button lg:hidden w-[36px] cursor-pointer">
