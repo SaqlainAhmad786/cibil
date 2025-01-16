@@ -15,6 +15,7 @@ import NotLoggedIn from "./components/NotLoggedIn/NotLoggedIn"
 import ForgetPassword from "./pages/ForgetPassword"
 import Defaulter from "./components/Defaulter/Defaulter"
 import DefaultersList from "./components/DefaultersList/DefaultersList"
+import PrintDetails from "./pages/PrintDetails"
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
               <Route path="editProfile" element={<EditProfile />} />
               <Route path="searchDefaulter" element={<MoneyBlockerFinder />} />
             </Route>
+            <Route path="print" element={<PrintDetails />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </BrowserRouter>

@@ -1,17 +1,17 @@
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/authContext";
+import { useRef } from "react";
 import Widget from "../Widget/Widget/";
 import { Graph } from "../Widget/Widget/";
 import { Download } from "lucide-react";
 import { toPng, toJpeg, toSvg } from 'html-to-image';
-import { useRef } from "react";
 
 function Defaulter() {
     const { defaultersList, staticPath } = useAuth();
     const { id } = useParams();
     const defaulterData = defaultersList.find(defaulter => defaulter._id === id)
     const componentRef = useRef();
-    console.log(defaulterData)
+    const navigate = useNavigate();
 
     const maskedAadhar = String(defaulterData?.aadhar_card).replace(/^(\d{8})(\d{4})$/, '********$2');
     const maskedPan = String(defaulterData?.pan_card_no)?.slice(-4).padStart(String(defaulterData?.pan_card_no).length, '*');
@@ -30,27 +30,9 @@ function Defaulter() {
         scoreText = 'Scammer';
     }
 
-    const downloadImage = async (format) => {
-        if (!componentRef.current) return;
-
-        try {
-            let dataUrl;
-            if (format === 'png') {
-                dataUrl = await toPng(componentRef.current);
-            } else if (format === 'jpeg') {
-                dataUrl = await toJpeg(componentRef.current, { quality: 0.95 });
-            } else if (format === 'svg') {
-                dataUrl = await toSvg(componentRef.current);
-            }
-
-            const link = document.createElement('a');
-            link.href = dataUrl;
-            link.download = `component.${format}`;
-            link.click();
-        } catch (err) {
-            console.error('Could not generate image:', err);
-        }
-    };
+    function printPage() {
+        navigate('/print', { state: defaulterData });
+    }
 
     return (
         <>
@@ -65,7 +47,7 @@ function Defaulter() {
                         <div className="md:w-2/3 md:pl-8">
                             <div className="flex justify-between items-center mb-3">
                                 <h1 className="text-xl font-semibold text-blueClr uppercase">About Defaulter</h1>
-                                <button onClick={() => downloadImage('png')} className="flex items-center gap-1 text-xs border px-3 py-2 rounded-full hover:bg-gray-200 duration-200">
+                                <button onClick={printPage} className="flex items-center gap-1 text-xs border px-3 py-2 rounded-full hover:bg-gray-200 duration-200">
                                     <Download size={18} />
                                     <span className="font-semibold lg:block md:block sm:block hidden">Report</span>
                                 </button>
@@ -132,7 +114,7 @@ function Defaulter() {
                         </div>
                     </div>
                 </div>
-                <div className="customContainer mb-5 bg-white rounded-xl shadow-2xl max-w-4xl w-full lg:p-6 md:p-4 p-3 transition-all duration-300 animate-fade-in">
+                {/* <div className="customContainer mb-5 bg-white rounded-xl shadow-2xl max-w-4xl w-full lg:p-6 md:p-4 p-3 transition-all duration-300 animate-fade-in">
                     <p className="text-lg font-semibold col-span-2 mb-3">Recently added Defaulters</p>
                     <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3">
                         {defaultersList.slice().reverse().slice(0, 3).map((item) => {
@@ -172,7 +154,7 @@ function Defaulter() {
                             );
                         })}
                     </div>
-                </div>
+                </div> */}
             </main>
         </>
     )

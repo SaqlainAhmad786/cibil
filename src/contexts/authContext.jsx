@@ -57,14 +57,14 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
-    const refreshUserData = async () => {
+    const refreshUserData = () => {
         if (!uid) return;
-        await getUserData(uid);
+        getUserData(uid);
     };
 
-    const refreshDefaultersList = async () => {
-        await getDefaultersList();
-        await getUserDefaultersList();
+    const refreshDefaultersList = () => {
+        getDefaultersList();
+        getUserDefaultersList();
     };
 
     const logout = () => {
