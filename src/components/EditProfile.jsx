@@ -26,35 +26,42 @@ function EditProfile() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        setFormData({
-            user_name: userData.user_name,
-            mobile_no: userData.mobile_no,
-            address: userData.address,
-            state: userData.state,
-            city: userData.city,
-            firm_name: userData.firm_name,
-            gst_no: userData.gst_no,
-            pan_no: userData.pan_no,
-        });
-        setInitialValues({
-            user_name: userData.user_name,
-            mobile_no: userData.mobile_no,
-            address: userData.address,
-            state: userData.state,
-            city: userData.city,
-            firm_name: userData.firm_name,
-            gst_no: userData.gst_no,
-            pan_no: userData.pan_no,
-        });
-        const fetchStates = () => {
-            const statesList = State.getStatesOfCountry("IN")
+        const fetchStates = async () => {
+            const statesList = await State.getStatesOfCountry("IN");
             setStates(statesList);
+
+            const stateData = statesList.find((state) => state.name === userData?.state);
+            if (stateData) {
+                const stateCode = stateData.isoCode;
+                fetchCities(stateCode);
+            }
         };
-        fetchStates()
-        const stateData = states.find((state) => state.name === userData.state);
-        const stateCode = stateData?.isoCode;
-        fetchCities(stateCode);
-    }, [userData, states]);
+
+        if (userData) {
+            setFormData({
+                user_name: userData?.user_name,
+                mobile_no: userData?.mobile_no,
+                address: userData?.address,
+                state: userData?.state,
+                city: userData?.city,
+                firm_name: userData?.firm_name,
+                gst_no: userData?.gst_no,
+                pan_no: userData?.pan_no,
+            });
+            setInitialValues({
+                user_name: userData?.user_name,
+                mobile_no: userData?.mobile_no,
+                address: userData?.address,
+                state: userData?.state,
+                city: userData?.city,
+                firm_name: userData?.firm_name,
+                gst_no: userData?.gst_no,
+                pan_no: userData?.pan_no,
+            });
+
+            fetchStates();
+        }
+    }, [userData]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -69,6 +76,11 @@ function EditProfile() {
         setLoading(true);
         if (isFormChanged) {
             toast.error("No changes made", { description: "Please make changes before saving" }, { duration: 3000 });
+            setLoading(false);
+            return
+        }
+        if (formData.city == '') {
+            toast.error("Please select a city", { duration: 3000 });
             setLoading(false);
             return
         }
@@ -90,13 +102,18 @@ function EditProfile() {
     const handleStateChange = (event) => {
         const stateName = event.target.value;
         const stateData = states.find((state) => state.name === stateName);
-        const stateCode = stateData.isoCode;
-        console.log(stateCode)
-        fetchCities(stateCode);
+
+        if (stateData) {
+            const stateCode = stateData.isoCode;
+            fetchCities(stateCode);
+        }
+
+        setFormData(prev => ({ ...prev, state: stateName, city: '' })); // Clear city on state change
     };
 
-    const fetchCities = (stateCode) => {
-        const citiesList = City.getCitiesOfState("IN", stateCode);
+    const fetchCities = async (stateCode) => {
+        if (!stateCode) return;
+        const citiesList = await City.getCitiesOfState("IN", stateCode);
         setCities(citiesList);
     };
 

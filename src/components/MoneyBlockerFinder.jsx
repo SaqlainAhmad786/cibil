@@ -75,7 +75,7 @@ function MoneyBlockerFinder() {
                                     <div className="flex justify-between items-center border-b pb-1">
                                         <div>
                                             <p className="text-xl font-semibold">{item.defaulter_name}</p>
-                                            <p className="text-xs font-semibold text-gray-500">{item.firm_name}</p>
+                                            <p className="text-xs font-semibold text-gray-500 uppercase">{item.firm_name}</p>
                                         </div>
                                         <div>
                                             <img src="/img/fraud.png" className="h-16 w-16" alt="" />

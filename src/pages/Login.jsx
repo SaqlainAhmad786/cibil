@@ -106,11 +106,11 @@ function Login() {
                         </div>
                         <div>
                             <button type="submit" className="py-2 text-sm bg-blueClr focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 flex justify-center text-center font-semibold shadow-md focus:outline-none rounded-lg cursor-pointer select-none">
-                                {loading ? <l-mirage
+                                {loading ? <l-mirages
                                     size="80"
                                     speed="4"
                                     color="white"
-                                ></l-mirage> : 'LOGIN'}
+                                ></l-mirages> : 'LOGIN'}
                             </button>
                         </div>
                     </form>

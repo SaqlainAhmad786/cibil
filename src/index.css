@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root{
+:root {
     --blueClr: #3c72fc;
 }
 
@@ -83,12 +83,12 @@ input[type=number] {
     background-color: #0056b3;
 }
 
-.bottomNavbar a{
+.bottomNavbar a {
     transition: all 0.2s ease-in-out;
 }
 
-.bottomNavbar a.active{
-    color: var(--blueClr)!important;
+.bottomNavbar a.active {
+    color: var(--blueClr) !important;
 }
 
 @media (width<568px) {

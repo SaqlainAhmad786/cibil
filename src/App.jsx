@@ -16,6 +16,7 @@ import ForgetPassword from "./pages/ForgetPassword"
 import Defaulter from "./components/Defaulter/Defaulter"
 import DefaultersList from "./components/DefaultersList/DefaultersList"
 import PrintDetails from "./pages/PrintDetails"
+import EditDefaulter from "./components/EditDefaulter/EditDefaulter"
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
               <Route index element={<Navigate to="home" />} />
               <Route path="home" element={<Home />} />
               <Route path="addDefaulter" element={<AddDefaulter />} />
+              <Route path="editDefaulter/:id" element={<EditDefaulter />} />
               <Route path="defaulter/:id" element={<Defaulter />} />
               <Route path="defaultersList" element={<DefaultersList />} />
               <Route path="subscribe" element={<Subscribe />} />

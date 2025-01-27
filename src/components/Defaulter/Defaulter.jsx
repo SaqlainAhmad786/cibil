@@ -100,7 +100,7 @@ function Defaulter() {
                                 <input type="radio" name="my-accordion-4" className="h-[20px]" />
                                 <div className="collapse-title font-medium ">Remark by adder</div>
                                 <div className="collapse-content">
-                                    <p>hello</p>
+                                    <p>{defaulterData?.remark}</p>
                                 </div>
                             </div>
                             <div className="flex flex-wrap items-center gap-2">
