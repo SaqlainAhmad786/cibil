@@ -9,23 +9,34 @@ export const AuthProvider = ({ children }) => {
     const [userDefaultersList, setUserDefaultersList] = useState([]);
     const [userLoading, setUserLoading] = useState(false);
     const [defaultersLoading, setDefaultersLoading] = useState(false);
-    const [staticPath, setStaticPath] = useState('');
-    const uid = localStorage.getItem('userId');
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
-        if (uid) {
+        if (token) {
             refreshUserData();
             getDefaultersList();
             getUserDefaultersList();
         }
-    }, [uid]);
+    }, [token]);
 
-    async function getUserData(uid) {
+    async function getDefaultersList() {
+        setDefaultersLoading(true);
+        try {
+            await axios.get(`${import.meta.env.VITE_BASE_URL}/defaulter`, { headers: { Authorization: `Bearer ${token}` } }).then(res => {
+                setDefaultersList(res.data.allDefaulter);
+                setDefaultersLoading(false);
+            })
+        } catch (error) {
+            console.error('Error fetching defaulter list:', error);
+            setDefaultersLoading(false);
+        }
+    }
+
+    async function getUserData(token) {
         setUserLoading(true);
         try {
-            await axios.post(`${import.meta.env.VITE_BASE_URL}/userdataById/${uid}`).then(res => {
-                setUserData(res.data.userData);
-                setStaticPath(res.data.staticPath)
+            await axios.get(`${import.meta.env.VITE_BASE_URL}/user/current-user`, { headers: { Authorization: `Bearer ${token}` } }).then(res => {
+                setUserData(res.data.user);
                 setUserLoading(false);
             })
         } catch (error) {
@@ -34,23 +45,10 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
-    async function getDefaultersList() {
-        setDefaultersLoading(true);
-        try {
-            await axios.get(`${import.meta.env.VITE_BASE_URL}/defaluterlist`).then(res => {
-                setDefaultersList(res.data.list);
-                setDefaultersLoading(false);
-            })
-        } catch (error) {
-            console.error('Error fetching user data:', error);
-            setDefaultersLoading(false);
-        }
-    }
-
     async function getUserDefaultersList() {
         try {
-            await axios.post(`${import.meta.env.VITE_BASE_URL}/listOfDefaulterById`, { user_id: uid }).then(res => {
-                setUserDefaultersList(res.data.data);
+            await axios.get(`${import.meta.env.VITE_BASE_URL}/defaulter/defaulter-by-current-user`, { headers: { Authorization: `Bearer ${token}` } }).then(res => {
+                setUserDefaultersList(res.data);
             })
         } catch (error) {
             console.error('Error fetching user data:', error);
@@ -58,13 +56,13 @@ export const AuthProvider = ({ children }) => {
     }
 
     const refreshUserData = () => {
-        if (!uid) return;
-        getUserData(uid);
+        if (!token) return;
+        getUserData(token);
     };
 
     const refreshDefaultersList = () => {
         getDefaultersList();
-        getUserDefaultersList();
+        // getUserDefaultersList();
     };
 
     const logout = () => {
@@ -76,7 +74,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ refreshUserData, refreshDefaultersList, logout, userData, defaultersList, userDefaultersList, userLoading, defaultersLoading, staticPath }}>
+        <AuthContext.Provider value={{ refreshUserData, userDefaultersList, refreshDefaultersList, logout, userData, defaultersList, userLoading, defaultersLoading }}>
             {children}
         </AuthContext.Provider>
     );

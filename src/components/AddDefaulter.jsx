@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { City, State } from "country-state-city";
 import { useAuth } from "../contexts/authContext";
 import axios from "axios";
 import { toast, Toaster } from "sonner"
-import { useNavigate } from "react-router-dom";
 
 function AddDefaulter() {
     const [states, setStates] = useState([])
@@ -40,7 +40,6 @@ function AddDefaulter() {
         setLoading(true);
         const form = e.target;
         const formData = new FormData(form);
-        formData.append('user_id', localStorage.getItem('userId'));
 
         if (aadharNumber.length < 12) {
             toast.error("Please enter a valid Aadhar number", { description: "Aadhar number must be 12 digits long" }, { duration: 3000 });
@@ -55,9 +54,9 @@ function AddDefaulter() {
         }
 
         try {
-            await axios.post(`${import.meta.env.VITE_BASE_URL}/addDefaulter`, formData).then(res => {
-                console.log(res.data)
-                if (res.data.status) {
+            await axios.post(`${import.meta.env.VITE_BASE_URL}/defaulter/add-defaulter`, formData, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(res => {
+                // console.log(res.data)
+                if (res.data.status == 200) {
                     toast.success("Defaulter added successfully", { duration: 3000 });
                     setMobNumber("");
                     setAadharNumber("");
@@ -99,20 +98,20 @@ function AddDefaulter() {
                             <div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Name</label>
-                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="John Doe" name="defaulter_name" />
+                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="John Doe" name="name" />
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Mobile</label>
-                                    <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="9876543210" name="mobile_No" value={mobNumber} onChange={handleMobNumber} maxLength="10" />
+                                    <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="9876543210" name="mobile_no" value={mobNumber} onChange={handleMobNumber} maxLength="10" />
                                 </div>
                                 <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 lg:gap-3 md:gap-3 gap-0">
                                     <div className="flex flex-col gap-2">
                                         <label className="font-semibold text-xs text-gray-500 ">PAN Card No.</label>
-                                        <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="" name="pan_card_no" />
+                                        <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100 uppercase" placeholder="" name="pan_no" />
                                     </div>
                                     <div className="flex flex-col gap-2">
                                         <label className="font-semibold text-xs text-gray-500 ">Aadhar Card No.</label>
-                                        <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="" name="aadhar_card" value={aadharNumber} onChange={handleAadharNumber} />
+                                        <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="" name="aadhar_no" value={aadharNumber} onChange={handleAadharNumber} />
                                     </div>
                                 </div>
                                 <div className="flex flex-col gap-2">
@@ -152,7 +151,7 @@ function AddDefaulter() {
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">GST No.</label>
-                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="" name="gst_no" />
+                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100 uppercase" placeholder="" name="gst_no" />
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Pending Amount</label>
@@ -165,11 +164,11 @@ function AddDefaulter() {
                                 <div className="mb-5 space-y-2">
                                     <div className="grid w-full items-center gap-1.5">
                                         <label className="text-xs text-gray-500 font-semibold peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Upload Ledger Statement</label>
-                                        <input name="bankStatement" type="file" className="flex h-10 w-full rounded-md border border-gray-300 border-input bg-gray-100 px-3 py-2 text-sm text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium" />
+                                        <input name="bank_statement" type="file" className="flex h-10 w-full rounded-md border border-gray-300 border-input bg-gray-100 px-3 py-2 text-sm text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium" />
                                     </div>
                                     <div className="grid w-full items-center gap-1.5">
                                         <label className="text-xs text-gray-500 font-semibold peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Upload Notice or other documents <span className="font-normal">(optional)</span></label>
-                                        <input name="otherDocs" type="file" className="flex h-10 w-full rounded-md border border-gray-300 border-input bg-gray-100 px-3 py-2 text-sm text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium" />
+                                        <input name="other_document" type="file" className="flex h-10 w-full rounded-md border border-gray-300 border-input bg-gray-100 px-3 py-2 text-sm text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium" />
                                     </div>
                                 </div>
                             </div>

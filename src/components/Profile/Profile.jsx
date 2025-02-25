@@ -6,7 +6,7 @@ import ProfileUpload from '../ProfileUpload/ProfileUpload';
 import Loader from '../Loader/Loader';
 
 function Profile() {
-    const { userData, userLoading,  staticPath } = useAuth();
+    const { userData, userLoading } = useAuth();
     const fileInputRef = useRef(null)
 
     const handleClick = () => {
@@ -23,10 +23,9 @@ function Profile() {
                             <div className="grid place-items-center aspect-square h-32 border-4 border-blueClr rounded-[100vh] shadow-[1px_1px_8px_0px_rgba(0,0,0,0.5)]">
                                 <img
                                     className="object-cover h-full w-full rounded-[100vh] overflow-hidden"
-                                    src={`${staticPath}${userData?.user_img}`}
+                                    src={userData?.avatar}
                                     alt="profile"
                                     onError={(e) => (e.target.src = '/img/default-avatar.jpg')}
-                                    loading='lazy'
                                 />
                             </div>
                             <button htmlFor='profile' className={styles.browse} onClick={handleClick}>
@@ -48,7 +47,7 @@ function Profile() {
                         </div>
                         <div className='flex flex-col'>
                             <span className='font-semibold text-xs text-gray-500'>Address:</span>
-                            <span className='text-neutral-800'>{userData?.address}, {userData?.city}, {userData?.state}, {userData?.country}</span>
+                            <span className='text-neutral-800'>{userData?.address?.city}, {userData?.address?.state}, {userData?.address?.country}</span>
                         </div>
                         <div className='flex flex-col'>
                             <span className='font-semibold text-xs text-gray-500'>Firm Name:</span>
@@ -71,7 +70,7 @@ function Profile() {
                         <Link to={"/overview/editProfile"} className='bg-blueClr text-white py-2 px-4 rounded-lg font-semibold text-sm'><i className="fa-solid fa-pen mr-1"></i>Edit Profile</Link>
                     </div>
                 </div>
-                
+
             </section>
         </>
     )

@@ -56,7 +56,7 @@ function Home() {
                                     <Link to={`/overview/defaulter/${item._id}`} className="bg-gradient-to-br hover:bg-gradient-to-bl from-white to-blue-50 inline-block border rounded-lg p-3 shadow-md hover:scale-105 hover:shadow-xl duration-200" key={item._id}>
                                         <div className="flex justify-between items-center border-b pb-1">
                                             <div>
-                                                <p className="text-xl font-semibold">{item.defaulter_name}</p>
+                                                <p className="text-xl font-semibold">{item.name}</p>
                                                 <p className="text-xs font-semibold text-gray-500 uppercase">{item.firm_name}</p>
                                             </div>
                                             <div>
@@ -70,7 +70,7 @@ function Home() {
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <i className="fa-solid fa-phone text-blueClr border p-2 rounded-full"></i>
-                                                <p className="font-medium text-sm text-gray-700">+91 {item.mobile_No}</p>
+                                                <p className="font-medium text-sm text-gray-700">+91 {item.mobile_no}</p>
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <p className="text-sm text-blueClr font-semibold border rounded-full px-[9px] py-[6px]">-₹</p>
@@ -80,8 +80,8 @@ function Home() {
                                         <div>
                                             <p className="text-[10px] text-gray-700">
                                                 <span className="font-medium">Posted by: </span>
-                                                <span className="capitalize">{item.added_by[0]} </span>
-                                                <span>on {new Date(item.added_on).toLocaleDateString('en-IN')}</span>
+                                                <span className="capitalize">{item.added_by.firm_name} </span>
+                                                <span>on {new Date(item.createdAt).toLocaleDateString('en-IN')}</span>
                                             </p>
                                         </div>
                                     </Link>

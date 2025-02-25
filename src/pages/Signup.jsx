@@ -54,7 +54,7 @@ function Signup() {
         }
 
         try {
-            await axios.post(`${import.meta.env.VITE_BASE_URL}/register`, data).then(res => {
+            await axios.post(`${import.meta.env.VITE_BASE_URL}/user/register`, data).then(res => {
                 if (res.data.status) {
                     setLoading(false)
                     navigate('/login', { state: { signedUp: 1, email: data.email } })
@@ -62,12 +62,9 @@ function Signup() {
             })
         } catch (error) {
             console.error('Error:', error.response ? error.response.data : error.message);
-            if (error.response.data.msg === "All field are Required") {
+            if (error.response.data.status == 400) {
+                toast.error(error.response.data.message, { duration: 3000 })
                 setLoading(false)
-                toast.error('All fields are required!', { description: 'Please fill up all the related fields' }, { duration: 3000 })
-            } else if (error.response.data.msg === "Email already Exists Please Try another email") {
-                setLoading(false)
-                toast.error('User Already Exists!', { description: 'Please Log in to continue or try another email' }, { duration: 3000 })
             }
         }
     }
@@ -161,15 +158,15 @@ function Signup() {
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">Firm Name</label>
-                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="Organization" name="firm_name" />
+                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="Company name" name="firm_name" />
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">GST No.</label>
-                                    <input className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="" name="gst_no" />
+                                    <input className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400 uppercase" placeholder="" name="gst_no" />
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">PAN Card No.</label>
-                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="" name="pan_no" />
+                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400 uppercase" placeholder="" name="pan_no" />
                                 </div>
                             </div>
                         </div>

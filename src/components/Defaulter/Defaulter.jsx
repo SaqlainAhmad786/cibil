@@ -3,7 +3,7 @@ import { useAuth } from "../../contexts/authContext";
 import { useRef } from "react";
 import Widget from "../Widget/Widget/";
 import { Graph } from "../Widget/Widget/";
-import { Download } from "lucide-react";
+import { Download, X } from "lucide-react";
 import { toPng, toJpeg, toSvg } from 'html-to-image';
 
 function Defaulter() {
@@ -12,6 +12,7 @@ function Defaulter() {
     const defaulterData = defaultersList.find(defaulter => defaulter._id === id)
     const componentRef = useRef();
     const navigate = useNavigate();
+    console.log(defaulterData)
 
     const maskedAadhar = String(defaulterData?.aadhar_card).replace(/^(\d{8})(\d{4})$/, '********$2');
     const maskedPan = String(defaulterData?.pan_card_no)?.slice(-4).padStart(String(defaulterData?.pan_card_no).length, '*');
@@ -92,9 +93,37 @@ function Defaulter() {
                                     <span>+91 {defaulterData?.mobile_No}</span>
                                 </div>
                             </div>
-                            <div className="join mb-3 flex lg:justify-start md:justify-start sm:justify-start justify-center">
-                                <a href={`${staticPath}${defaulterData?.bankStatement}`} target="_blank" className="bg-gray-100 border-gray-300 btn btn-outline btn-sm lg:text-xs md:text-xs text-[10px] join-item">View Ledger Statement</a>
-                                <a href={`${staticPath}${defaulterData?.otherDocument}`} target="_blank" className="bg-gray-100 border-gray-300 btn btn-outline btn-sm lg:text-xs md:text-xs text-[10px] join-item" disabled={defaulterData?.otherDocument == "upload/undefined"}>View Other Documents</a>
+                            <div className="join rounded-none mb-3 flex lg:justify-start md:justify-start sm:justify-start justify-center">
+                                <label htmlFor="ledgerModal" className="bg-gray-100 border-gray-300 btn btn-outline btn-sm lg:text-xs md:text-xs text-[10px] join-item">View Ledger Statement</label>
+                                <input type="checkbox" id="ledgerModal" className="modal-toggle" />
+                                <div className="modal" role="dialog">
+                                    <div className="modal-box">
+                                        <div className="flex justify-between items-center">
+                                            <h3 className="text-lg font-bold">Ledger Statement</h3>
+                                            <div className="modal-action m-0">
+                                                <label htmlFor="ledgerModal" className="btn btn-ghost p-0"><X className="w-5 h-5" /></label>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <img src={`${staticPath}${defaulterData?.bankStatement}`} className="w-full object-contain" alt="" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <label htmlFor="otherModal" className="bg-gray-100 border-gray-300 btn btn-outline btn-sm lg:text-xs md:text-xs text-[10px] join-item" disabled={defaulterData?.otherDocument == "upload/undefined"}>View Other Documents</label>
+                                <input type="checkbox" id="otherModal" className="modal-toggle" />
+                                <div className="modal" role="dialog">
+                                    <div className="modal-box">
+                                        <div className="flex justify-between items-center">
+                                            <h3 className="text-lg font-bold">Ledger Statement</h3>
+                                            <div className="modal-action m-0">
+                                                <label htmlFor="otherModal" className="btn btn-ghost p-0"><X className="w-5 h-5" /></label>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <img src={`${staticPath}${defaulterData?.otherDocument}`} className="w-full object-contain" alt="" />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div className="collapse collapse-arrow border-gray-300 border rounded-lg mb-2">
                                 <input type="radio" name="my-accordion-4" className="h-[20px]" />
@@ -105,11 +134,11 @@ function Defaulter() {
                             </div>
                             <div className="flex flex-wrap items-center gap-2">
                                 <p className='text-xs'>Listed as a defaulter on <span className="font-semibold">{new Date(defaulterData?.added_on).toLocaleDateString('en-IN')}</span> by:</p>
-                                {defaulterData?.added_by.map((item, index) => {
+                                {/* {defaulterData?.added_by.map((item, index) => {
                                     return (
                                         <span key={index} className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">{item}</span>
                                     )
-                                })}
+                                })} */}
                             </div>
                         </div>
                     </div>

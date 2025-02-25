@@ -2,10 +2,15 @@ import { Link, NavLink, Outlet, useNavigate } from "react-router-dom"
 import { useAuth } from "../contexts/authContext";
 import BottomNavbar from "../components/BottomNavbar/BottomNavbar";
 import { Binoculars, CircleHelp, CirclePlus, House, IndianRupee, LogOut, Search, Settings, User, Users } from "lucide-react";
+import { useEffect } from "react";
 
 function Overview() {
-    const { logout, userData, staticPath } = useAuth();
+    const { logout, userData } = useAuth();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        document.title = "Vyapar Score";
+    })
 
     function handleSideBar() {
         document.getElementById("my-drawer-2").checked = false
@@ -34,7 +39,7 @@ function Overview() {
                                         <Search />
                                     </Link>
                                     <Link to={'/overview/profile'} className="lg:block hidden h-12 w-12 rounded-[100vh] overflow-hidden lg:order-2 order-1 border-2 border-blueClr">
-                                        <img className="w-full h-full object-cover" src={`${staticPath}${userData?.user_img}`} onError={(e) => e.target.src = "/img/default-avatar.jpg"} alt="" />
+                                        <img className="w-full h-full object-cover" src={userData?.avatar} onError={(e) => e.target.src = "/img/default-avatar.jpg"} alt="" />
                                     </Link>
                                     <Link to={'/'} className="lg:hidden block bg-white m-1 h-14 w-14 rounded-[100vh] overflow-hidden lg:order-2 order-1">
                                         <img className="w-full h-full object-cover" src="/img/logo-circle.svg" alt="" />

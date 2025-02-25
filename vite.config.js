@@ -5,6 +5,13 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    historyApiFallback: true, // Ensures client-side routing works
+    historyApiFallback: true,
+    proxy: {
+      '/api': {
+        target: 'https://vyapar-score-backend-final.onrender.com/api/v1', // Your backend API server
+        changeOrigin: true,
+        secure: false, // Set to true if using HTTPS backend
+      },
+    },
   }
 })

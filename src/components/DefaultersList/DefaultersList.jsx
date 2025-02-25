@@ -5,11 +5,10 @@ import axios from "axios"
 
 function DefaultersList() {
     const { userDefaultersList, refreshDefaultersList } = useAuth()
-    const userId = localStorage.getItem('userId');
 
     async function handleClear(id) {
         try {
-            await axios.post(`${import.meta.env.VITE_BASE_URL}/cleanDefaulterScore`, { user_id: userId, defaulter_id: id }).then(res => {
+            await axios.get(`${import.meta.env.VITE_BASE_URL}/cleanDefaulterScore`).then(res => {
                 if (res.data.status) {
                     refreshDefaultersList();
                     console.log(res.data)
@@ -33,7 +32,7 @@ function DefaultersList() {
                                     <div key={index} className="border rounded-lg shadow-md lg:p-4 p-3 flex lg:flex-row md:flex-col flex-col lg:justify-between justify-start lg:*:items-center">
                                         <Link to={`/overview/defaulter/${item._id}`} className='flex-1 grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 lg:gap-4 gap-0'>
                                             <div>
-                                                <p><span className="font-medium text-neutral-400 me-2">Name: </span>{item.defaulter_name}</p>
+                                                <p><span className="font-medium text-neutral-400 me-2">Name: </span>{item.name}</p>
                                                 <p><span className="font-medium text-neutral-400 me-2">Mobile: </span>+91 {item.mobile_No}</p>
                                             </div>
                                             <div>

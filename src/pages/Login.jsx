@@ -50,24 +50,23 @@ function Login() {
             return
         }
         try {
-            await axios.post(`${import.meta.env.VITE_BASE_URL}/login-user`, data).then(res => {
+            await axios.post(`${import.meta.env.VITE_BASE_URL}/user/login`, data).then(res => {
                 if (res.data.status) {
-                    localStorage.setItem('token', res.data.token_key)
-                    localStorage.setItem('userId', res.data.userData._id)
+                    localStorage.setItem('token', res.data.data.token)
                     setLoading(false)
-                    refreshUserData()
-                    refreshDefaultersList()
+                    // refreshUserData()    
+                    // refreshDefaultersList()
                     navigate('/')
                 }
             })
         } catch (error) {
             setLoading(false)
-            if (error.response.data.msg === "user not found") {
+            if (error.response.data.message === "Invalid email or password") {
                 toast.error('User not found',
                     { description: 'Please Sign up to continue' },
                     { duration: 3000 })
                 return
-            } else if (error.response.data.msg === "password not match") {
+            } else if (error.response.data.message === "Invalid Password") {
                 toast.error('Password does not match',
                     { description: 'Please check your password' },
                     { duration: 3000 })
@@ -105,12 +104,12 @@ function Login() {
                             <label htmlFor="remember" className="text-xs text-gray-200">Remember me</label>
                         </div>
                         <div>
-                            <button type="submit" className="py-2 text-sm bg-blueClr focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 flex justify-center text-center font-semibold shadow-md focus:outline-none rounded-lg cursor-pointer select-none">
-                                {loading ? <l-mirages
+                            <button type="submit" className="py-2 text-sm bg-blueClr focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 flex justify-center text-center font-semibold shadow-md focus:outline-none rounded-lg cursor-pointer select-none" disabled={loading}>
+                                {loading ? <l-mirage
                                     size="80"
                                     speed="4"
                                     color="white"
-                                ></l-mirages> : 'LOGIN'}
+                                ></l-mirage> : 'LOGIN'}
                             </button>
                         </div>
                     </form>

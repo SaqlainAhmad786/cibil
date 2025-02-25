@@ -76,8 +76,8 @@ function ProfileUpload({ fileInputRef }) {
             const file = new File([blob], 'image.jpg', { type: blob.type });
 
             const formData = new FormData();
-            formData.append('userImg', file);
-            await axios.post(`${import.meta.env.VITE_BASE_URL}/useruplodimg/${uid}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
+            formData.append('avatar', file);
+            await axios.put(`${import.meta.env.VITE_BASE_URL}/user/update-avatar`, formData, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(res => {
                 if (res.data.status) {
                     setIsDialogOpen(false);
                     toast.success("Profile picture uploaded successfully", { duration: 3000 });

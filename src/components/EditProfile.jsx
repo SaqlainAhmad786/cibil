@@ -15,14 +15,13 @@ function EditProfile() {
     const [formData, setFormData] = useState({
         user_name: '',
         mobile_no: '',
-        address: '',
+        // address: '',
         state: '',
         city: '',
         firm_name: '',
         gst_no: '',
         pan_no: '',
     });
-    const id = localStorage.getItem('userId');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -30,7 +29,7 @@ function EditProfile() {
             const statesList = await State.getStatesOfCountry("IN");
             setStates(statesList);
 
-            const stateData = statesList.find((state) => state.name === userData?.state);
+            const stateData = statesList.find((state) => state.name === userData?.address?.state);
             if (stateData) {
                 const stateCode = stateData.isoCode;
                 fetchCities(stateCode);
@@ -41,9 +40,9 @@ function EditProfile() {
             setFormData({
                 user_name: userData?.user_name,
                 mobile_no: userData?.mobile_no,
-                address: userData?.address,
-                state: userData?.state,
-                city: userData?.city,
+                // address: userData?.address.address,
+                state: userData?.address?.state,
+                city: userData?.address?.city,
                 firm_name: userData?.firm_name,
                 gst_no: userData?.gst_no,
                 pan_no: userData?.pan_no,
@@ -51,9 +50,9 @@ function EditProfile() {
             setInitialValues({
                 user_name: userData?.user_name,
                 mobile_no: userData?.mobile_no,
-                address: userData?.address,
-                state: userData?.state,
-                city: userData?.city,
+                // address: userData?.address.address,
+                state: userData?.address?.state,
+                city: userData?.address?.city,
                 firm_name: userData?.firm_name,
                 gst_no: userData?.gst_no,
                 pan_no: userData?.pan_no,
@@ -69,7 +68,6 @@ function EditProfile() {
     }
 
     const isFormChanged = JSON.stringify(initialValues) == JSON.stringify(formData);
-    const finalData = { ...formData, user_id: id };
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -85,15 +83,18 @@ function EditProfile() {
             return
         }
         try {
-            await axios.post(`${import.meta.env.VITE_BASE_URL}/userEditById/${id}`, finalData).then(res => {
+            await axios.put(`${import.meta.env.VITE_BASE_URL}/user/update-user/${userData._id}`, formData, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(res => {
                 if (res.data.status) {
                     toast.success("Profile updated successfully", { duration: 3000 });
+            console.log(formData)
+
                     setLoading(false);
                     navigate('/overview/profile')
-                    refreshUserData();
+                    // refreshUserData();
                 }
             })
         } catch (error) {
+            console.log(formData)
             console.log(error)
             setLoading(false);
         }
@@ -138,10 +139,10 @@ function EditProfile() {
                             <label className="font-semibold text-xs text-gray-500 ">Mobile</label>
                             <input type="number" className="border rounded-lg px-3 py-2 text-sm w-full outline-none border-gray-200 bg-gray-100" placeholder="9876543210" name="mobile_no" onChange={e => handleInputChange(e)} value={formData.mobile_no} />
                         </div>
-                        <div className="w-full flex flex-col gap-2">
+                        {/* <div className="w-full flex flex-col gap-2">
                             <label className="font-semibold text-xs text-gray-500 ">Address</label>
-                            <input type="text" className="border rounded-lg px-3 py-2 text-sm w-full outline-none border-gray-200 bg-gray-100" name="address" onChange={(e) => handleInputChange(e)} value={formData.address} />
-                        </div>
+                            <input type="text" className="border rounded-lg px-3 py-2 text-sm w-full outline-none border-gray-200 bg-gray-100" name="address" onChange={(e) => handleInputChange(e)} value={formData.address.address} />
+                        </div> */}
                         <div className="w-full flex flex-col gap-2">
                             <label className="font-semibold text-xs text-gray-500 ">State</label>
                             <select className="border rounded-lg px-3 py-2 text-black text-sm outline-none border-gray-200 bg-gray-100 w-full" name="state" onChange={(e) => {

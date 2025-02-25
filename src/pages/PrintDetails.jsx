@@ -53,16 +53,16 @@ function PrintDetails() {
         <>
             <main>
                 <div className="bg-white p-8 w-[800px] min-w-[800px]" ref={componentRef}>
-                    <div className="grid grid-cols-3 items-center border-b-2 pb-4 mb-8">
-                        <img src="/img/logo-vector.svg" alt="Logo" className="h-12" />
-                        <h1 className="text-2xl font-bold text-center">Defaulters Data</h1>
-                        <div className="text-right">
-                            <p className="text-sm">Date: {currentDate}</p>
+                    <div className="flex justify-between items-end border-b-2 pb-4 mb-8">
+                        <div className="flex items-center gap-2">
+                            <img src="/img/logo-vector.svg" alt="Logo" className="h-12" />
+                            <h1 className="text-2xl font-bold text-center">Vyapar Score</h1>
                         </div>
+                        <p className="text-sm text-gray-500">www.vyaparscore.com</p>
                     </div>
 
                     <div className="mb-8">
-                        <h2 className="text-lg font-semibold mb-4">Personal Details</h2>
+                        <h2 className="text-lg font-semibold mb-4">Current Application Information</h2>
                         <table className="w-full border-collapse border border-gray-300">
                             <tbody>
                                 <tr>
