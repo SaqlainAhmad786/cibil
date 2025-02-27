@@ -7,23 +7,22 @@ import { Download, X } from "lucide-react";
 import { toPng, toJpeg, toSvg } from 'html-to-image';
 
 function Defaulter() {
-    const { defaultersList, staticPath } = useAuth();
+    const { defaultersList } = useAuth();
     const { id } = useParams();
     const defaulterData = defaultersList.find(defaulter => defaulter._id === id)
     const componentRef = useRef();
     const navigate = useNavigate();
-    console.log(defaulterData)
 
-    const maskedAadhar = String(defaulterData?.aadhar_card).replace(/^(\d{8})(\d{4})$/, '********$2');
-    const maskedPan = String(defaulterData?.pan_card_no)?.slice(-4).padStart(String(defaulterData?.pan_card_no).length, '*');
+    const maskedAadhar = String(defaulterData?.aadhar_no).replace(/^(\d{8})(\d{4})$/, '********$2');
+    const maskedPan = String(defaulterData?.pan_no)?.slice(-4).padStart(String(defaulterData?.pan_no).length, '*');
 
     let color;
     let scoreText;
 
-    if (defaulterData?.cibil_score >= 75) {
+    if (defaulterData?.cibil_score?.cibil_score >= 75) {
         color = '#00FF00';
         scoreText = 'Average Risk';
-    } else if (defaulterData?.cibil_score >= 50) {
+    } else if (defaulterData?.cibil_score?.cibil_score >= 50) {
         color = '#FF9900';
         scoreText = 'High risk';
     } else {
@@ -42,7 +41,7 @@ function Defaulter() {
                     <div className="flex gap-4 flex-col md:flex-row bg-white lg:p-6 md:p-4 p-3" ref={componentRef}>
                         <div className="md:w-1/3">
                             <Widget>
-                                <Graph percentage={defaulterData?.cibil_score} options={scoreText} color={color} />
+                                <Graph percentage={defaulterData?.cibil_score?.cibil_score} options={scoreText} color={color} />
                             </Widget>
                         </div>
                         <div className="md:w-2/3 md:pl-8">
@@ -60,11 +59,11 @@ function Defaulter() {
                                 </div>
                                 <div className='flex flex-col'>
                                     <span className='font-semibold text-xs text-gray-400'>Name:</span>
-                                    <span>{defaulterData?.defaulter_name}</span>
+                                    <span className="capitalize">{defaulterData?.name}</span>
                                 </div>
                                 <div className='flex flex-col'>
                                     <span className='font-semibold text-xs text-gray-400'>Address:</span>
-                                    <span>{defaulterData?.address}, {defaulterData?.city}, {defaulterData?.state}, {defaulterData?.country}</span>
+                                    <span className="capitalize">{defaulterData?.address?.address}, {defaulterData?.address?.city}, {defaulterData?.address?.state}, {defaulterData?.address?.country}</span>
                                 </div>
                             </div>
                             <div className="space-y-1 mb-3">
@@ -90,7 +89,7 @@ function Defaulter() {
                                 </div>
                                 <div className='flex flex-col'>
                                     <span className='font-semibold text-xs text-gray-400'>Mobile:</span>
-                                    <span>+91 {defaulterData?.mobile_No}</span>
+                                    <span>+91 {defaulterData?.mobile_no}</span>
                                 </div>
                             </div>
                             <div className="join rounded-none mb-3 flex lg:justify-start md:justify-start sm:justify-start justify-center">
@@ -105,7 +104,7 @@ function Defaulter() {
                                             </div>
                                         </div>
                                         <div>
-                                            <img src={`${staticPath}${defaulterData?.bankStatement}`} className="w-full object-contain" alt="" />
+                                            <img src={defaulterData?.bank_statement} className="w-full object-contain" alt="" />
                                         </div>
                                     </div>
                                 </div>
@@ -120,7 +119,7 @@ function Defaulter() {
                                             </div>
                                         </div>
                                         <div>
-                                            <img src={`${staticPath}${defaulterData?.otherDocument}`} className="w-full object-contain" alt="" />
+                                            <img src={defaulterData?.other_document} className="w-full object-contain" alt="" />
                                         </div>
                                     </div>
                                 </div>
@@ -133,12 +132,12 @@ function Defaulter() {
                                 </div>
                             </div>
                             <div className="flex flex-wrap items-center gap-2">
-                                <p className='text-xs'>Listed as a defaulter on <span className="font-semibold">{new Date(defaulterData?.added_on).toLocaleDateString('en-IN')}</span> by:</p>
-                                {/* {defaulterData?.added_by.map((item, index) => {
+                                <p className='text-xs'>Listed as a defaulter on <span className="font-semibold">{new Date(defaulterData?.createdAt).toLocaleDateString('en-IN')}</span> by:</p>
+                                {defaulterData?.claimers?.map((item, index) => {
                                     return (
-                                        <span key={index} className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">{item}</span>
+                                        <span key={index} className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm capitalize">{item.firm_name}</span>
                                     )
-                                })} */}
+                                })}
                             </div>
                         </div>
                     </div>
