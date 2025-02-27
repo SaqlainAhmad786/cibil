@@ -71,7 +71,6 @@ function Login() {
                     { description: 'Please check your password' },
                     { duration: 3000 })
             }
-            console.error('Error:', error.response ? error.response.data : error.msg);
         }
     }
 

@@ -7,12 +7,19 @@ function DefaultersList() {
     const { userDefaultersList, refreshDefaultersList } = useAuth()
 
     async function handleClear(id) {
+        // try {
+        //     await axios.put(`${import.meta.env.VITE_BASE_URL}/defaulter/clear-score/${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(res => {
+        //         if (res.data.status) {
+        //             refreshDefaultersList();
+        //             console.log(res.data)
+        //         }
+        //     })
+        // } catch (error) {
+        //     console.log(error)
+        // }
         try {
-            await axios.get(`${import.meta.env.VITE_BASE_URL}/cleanDefaulterScore`).then(res => {
-                if (res.data.status) {
-                    refreshDefaultersList();
-                    console.log(res.data)
-                }
+            await axios.put(`https://vyapar-score-backend-final.onrender.com/api/v1/defaulter/clear-score/${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(res => {
+                console.log(res.data)
             })
         } catch (error) {
             console.log(error)
@@ -32,12 +39,12 @@ function DefaultersList() {
                                     <div key={index} className="border rounded-lg shadow-md lg:p-4 p-3 flex lg:flex-row md:flex-col flex-col lg:justify-between justify-start lg:*:items-center">
                                         <Link to={`/overview/defaulter/${item._id}`} className='flex-1 grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 lg:gap-4 gap-0'>
                                             <div>
-                                                <p><span className="font-medium text-neutral-400 me-2">Name: </span>{item.name}</p>
-                                                <p><span className="font-medium text-neutral-400 me-2">Mobile: </span>+91 {item.mobile_No}</p>
+                                                <p className="capitalize"><span className="font-medium text-neutral-400 me-2">Name: </span>{item.name}</p>
+                                                <p><span className="font-medium text-neutral-400 me-2">Mobile: </span>+91 {item.mobile_no}</p>
                                             </div>
                                             <div>
-                                                <p><span className="font-medium text-neutral-400 me-2">Company name: </span>{item.firm_name}</p>
-                                                <p><span className="font-medium text-neutral-400 me-2">GST: </span>{item.gst_no}</p>
+                                                <p className="uppercase"><span className="font-medium text-neutral-400 me-2">Company name: </span>{item.firm_name}</p>
+                                                <p className="uppercase"><span className="font-medium text-neutral-400 me-2">GST: </span>{item.gst_no}</p>
                                             </div>
                                         </Link>
                                         <div className='lg:col-span-1 md:col-span-2 mt-2'>

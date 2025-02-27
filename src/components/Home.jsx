@@ -43,7 +43,7 @@ function Home() {
                 <section className="my-4">
                     <div className="customContainer bg-gradient-to-r from-blueClr to-transparent text-white p-5 rounded-lg mx-auto">
                         <h2 className="text-2xl font-bold">Welcome,</h2>
-                        <p>{userData?.user_name}</p>
+                        <p className="capitalize text-lg">{userData?.user_name}</p>
                     </div>
                 </section>
                 <section className="my-4">
@@ -56,7 +56,7 @@ function Home() {
                                     <Link to={`/overview/defaulter/${item._id}`} className="bg-gradient-to-br hover:bg-gradient-to-bl from-white to-blue-50 inline-block border rounded-lg p-3 shadow-md hover:scale-105 hover:shadow-xl duration-200" key={item._id}>
                                         <div className="flex justify-between items-center border-b pb-1">
                                             <div>
-                                                <p className="text-xl font-semibold">{item.name}</p>
+                                                <p className="text-xl font-semibold capitalize">{item.name}</p>
                                                 <p className="text-xs font-semibold text-gray-500 uppercase">{item.firm_name}</p>
                                             </div>
                                             <div>

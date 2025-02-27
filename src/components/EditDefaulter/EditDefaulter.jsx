@@ -8,35 +8,30 @@ import axios from "axios";
 function EditDefaulter() {
     const { defaultersList, refreshDefaultersList } = useAuth();
     const { id } = useParams();
-    const userId = localStorage.getItem('userId');
     const [states, setStates] = useState([])
     const [cities, setCities] = useState([]);
     const [initialValues, setInitialValues] = useState({});
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
-        defaulter_name: '',
-        mobile_No: '',
-        pan_card_no: '',
-        aadhar_card: '',
+        name: '',
+        mobile_no: '',
+        aadhar_no: '',
         address: '',
-        country: '',
         state: '',
         city: '',
         firm_name: '',
-        gst_no: '',
         pending_amount: '',
         remark: '',
     });
-    const defaulterData = defaultersList.find(defaulter => defaulter._id === id)
     const navigate = useNavigate();
+    const defaulterData = defaultersList.find(defaulter => defaulter._id === id)
 
     useEffect(() => {
         const fetchStates = async () => {
             const statesList = await State.getStatesOfCountry("IN");
             setStates(statesList);
 
-            // After states are set, find the corresponding state and fetch cities
-            const stateData = statesList.find((state) => state.name === defaulterData?.state);
+            const stateData = statesList.find((state) => state.name.toLowerCase() === defaulterData?.address?.state);
             if (stateData) {
                 const stateCode = stateData.isoCode;
                 fetchCities(stateCode);
@@ -47,23 +42,23 @@ function EditDefaulter() {
 
         if (defaulterData) {
             setFormData({
-                defaulter_name: defaulterData?.defaulter_name,
-                mobile_No: defaulterData?.mobile_No,
-                aadhar_card: defaulterData?.aadhar_card,
-                address: defaulterData?.address,
-                state: defaulterData?.state,
-                city: defaulterData?.city,
+                name: defaulterData?.name,
+                mobile_no: defaulterData?.mobile_no,
+                aadhar_no: defaulterData?.aadhar_no,
+                address: defaulterData?.address?.address,
+                state: defaulterData?.address?.state,
+                city: defaulterData?.address?.city,
                 firm_name: defaulterData?.firm_name,
                 pending_amount: defaulterData?.pending_amount,
                 remark: defaulterData?.remark,
             });
             setInitialValues({
-                defaulter_name: defaulterData?.defaulter_name,
-                mobile_No: defaulterData?.mobile_No,
-                aadhar_card: defaulterData?.aadhar_card,
-                address: defaulterData?.address,
-                state: defaulterData?.state,
-                city: defaulterData?.city,
+                name: defaulterData?.name,
+                mobile_no: defaulterData?.mobile_no,
+                aadhar_no: defaulterData?.aadhar_no,
+                address: defaulterData?.address?.address,
+                state: defaulterData?.address?.state,
+                city: defaulterData?.address?.city,
                 firm_name: defaulterData?.firm_name,
                 pending_amount: defaulterData?.pending_amount,
                 remark: defaulterData?.remark,
@@ -91,7 +86,7 @@ function EditDefaulter() {
     };
 
     const isFormChanged = JSON.stringify(initialValues) == JSON.stringify(formData);
-    const finalData = { ...formData, user_id: userId, defaulter_id: id };
+    const finalData = { ...formData, defaulter_id: id };
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -107,7 +102,7 @@ function EditDefaulter() {
             return
         }
         try {
-            await axios.post(`${import.meta.env.VITE_BASE_URL}/editDefaulter`, finalData).then(res => {
+            await axios.patch(`${import.meta.env.VITE_BASE_URL}/defaulter/update/${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }, finalData).then(res => {
                 if (res.data.status) {
                     toast.success("Profile updated successfully", { duration: 3000 });
                     setLoading(false);
@@ -135,20 +130,20 @@ function EditDefaulter() {
                             <div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Name</label>
-                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="John Doe" name="defaulter_name" onChange={(e) => handleInputChange(e)} value={formData.defaulter_name} />
+                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100 capitalize" placeholder="John Doe" name="name" onChange={(e) => handleInputChange(e)} value={formData.name} />
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Mobile</label>
-                                    <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="9876543210" name="mobile_No" maxLength="10" onChange={(e) => handleInputChange(e)} value={formData.mobile_No} />
+                                    <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="9876543210" name="mobile_no" maxLength="10" onChange={(e) => handleInputChange(e)} value={formData.mobile_no} />
                                 </div>
                                 <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 lg:gap-3 md:gap-3 gap-0">
                                     <div className="flex flex-col gap-2">
                                         <label className="font-semibold text-xs text-gray-500 ">PAN Card No.</label>
-                                        <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-gray-500 text-sm w-full outline-none border-gray-300 bg-gray-100 uppercase input-disabled" placeholder="" value={defaulterData?.pan_card_no} name="pan_card_no" disabled />
+                                        <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-gray-500 text-sm w-full outline-none border-gray-300 bg-gray-100 uppercase input-disabled" placeholder="" value={defaulterData?.pan_no} name="pan_card_no" disabled />
                                     </div>
                                     <div className="flex flex-col gap-2">
                                         <label className="font-semibold text-xs text-gray-500 ">Aadhar Card No.</label>
-                                        <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="" name="aadhar_card" onChange={(e) => handleInputChange(e)} value={formData.aadhar_card} />
+                                        <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="" name="aadhar_no" onChange={(e) => handleInputChange(e)} value={formData.aadhar_no} />
                                     </div>
                                 </div>
                                 <div className="flex flex-col gap-2">
@@ -158,7 +153,7 @@ function EditDefaulter() {
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Country</label>
                                     <select className="border rounded-lg px-3 py-2 mb-4 text-black text-sm outline-none border-gray-300 bg-gray-100 w-full input-disabled" name="country" disabled>
-                                        <option value={"India"} selected>{defaulterData?.country}</option>
+                                        <option value={"India"} selected>{defaulterData?.address?.country}</option>
                                     </select>
                                 </div>
                                 <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 lg:gap-3 md:gap-3 gap-0">
@@ -166,7 +161,7 @@ function EditDefaulter() {
                                         <label className="font-semibold text-xs text-gray-500 ">State</label>
                                         <select className="border rounded-lg px-3 py-2 mb-4 text-black text-sm outline-none border-gray-300 bg-gray-100 w-full" name="state" onChange={(e) => { handleStateChange(e); handleInputChange(e) }}>
                                             <option hidden>Select State</option>
-                                            {states.map((state, index) => <option value={state.name} key={index} selected={state.name === formData.state}>{state.name}</option>)}
+                                            {states.map((state, index) => <option value={state.name} key={index} selected={state.name.toLowerCase() === formData.state}>{state.name}</option>)}
                                         </select>
                                     </div>
                                     <div className="flex flex-col gap-2">
@@ -174,7 +169,7 @@ function EditDefaulter() {
                                         <select className="border rounded-lg px-3 py-2 mb-4 text-black text-sm outline-none border-gray-300 bg-gray-100 w-full" name="city" onChange={(e) => handleInputChange(e)}>
                                             <option hidden>Select City</option>
                                             {
-                                                cities.map((city, index) => <option value={city.name} key={index} selected={city.name === formData.city}>{city.name}</option>)
+                                                cities.map((city, index) => <option value={city.name} key={index} selected={city.name.toLowerCase() === formData.city}>{city.name}</option>)
                                             }
                                         </select>
                                     </div>
@@ -183,7 +178,7 @@ function EditDefaulter() {
                             <div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Firm Name</label>
-                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="Company" name="firm_name" onChange={(e) => handleInputChange(e)} value={formData.firm_name} />
+                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100 uppercase" placeholder="Company" name="firm_name" onChange={(e) => handleInputChange(e)} value={formData.firm_name} />
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">GST No.</label>

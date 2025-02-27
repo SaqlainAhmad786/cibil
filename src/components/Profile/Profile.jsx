@@ -39,7 +39,7 @@ function Profile() {
                     <div className='bg-gradient-to-r from-gray-200 to-white p-3 rounded-lg lg:w-[60%] md:w-[70%] w-full mx-auto mt-4 space-y-2'>
                         <div className='flex flex-col'>
                             <span className='font-semibold text-xs text-gray-500'>Full Name:</span>
-                            <span className='text-neutral-800'>{userData?.user_name}</span>
+                            <span className='text-neutral-800 capitalize'>{userData?.user_name}</span>
                         </div>
                         <div className='flex flex-col'>
                             <span className='font-semibold text-xs text-gray-500'>Mobile:</span>

@@ -46,7 +46,7 @@ function Overview() {
                                     </Link>
                                 </div>
                                 <label htmlFor="my-drawer-2" className="drawer-button lg:hidden w-[36px] cursor-pointer">
-                                    <img src="/img/bars.svg" alt="" />
+                                    <img src="/img/bars.svg" alt="hamburger menu" />
                                 </label>
                             </div>
                         </div>
