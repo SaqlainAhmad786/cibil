@@ -215,8 +215,7 @@ function ForgetPassword() {
         }
         try {
             await axios.post(`${import.meta.env.VITE_BASE_URL}/user/verify-otp`, { email, otp: finalOtp }).then(res => {
-
-                if (res.response.data.status == 200) {
+                if (res.data.status == 200) {
                     toast.success('OTP Verified!', { description: 'You can now change your password' }, { duration: 3000 })
                     setLoading(false)
                     setShowOtp(false)
