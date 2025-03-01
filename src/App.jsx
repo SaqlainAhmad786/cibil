@@ -17,6 +17,8 @@ import Defaulter from "./components/Defaulter/Defaulter"
 import DefaultersList from "./components/DefaultersList/DefaultersList"
 import PrintDetails from "./pages/PrintDetails"
 import EditDefaulter from "./components/EditDefaulter/EditDefaulter"
+import AdminPanel from "./pages/AdminPanel"
+import Dashboard from "./admin/Dashboard"
 
 function App() {
 
@@ -42,6 +44,10 @@ function App() {
               <Route path="searchDefaulter" element={<MoneyBlockerFinder />} />
             </Route>
             <Route path="print" element={<PrintDetails />} />
+            <Route path="admin" element={<AdminPanel />}>
+              <Route index element={<Navigate to="dashboard" />} />
+              <Route path="dashboard" element={<Dashboard />} />
+            </Route>
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </BrowserRouter>

@@ -55,7 +55,6 @@ function AddDefaulter() {
 
         try {
             await axios.post(`${import.meta.env.VITE_BASE_URL}/defaulter/add-defaulter`, formData, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(res => {
-                // console.log(res.data)
                 if (res.data.status == 200) {
                     toast.success("Defaulter added successfully", { duration: 3000 });
                     setMobNumber("");

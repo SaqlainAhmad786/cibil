@@ -47,11 +47,11 @@ function Profile() {
                         </div>
                         <div className='flex flex-col'>
                             <span className='font-semibold text-xs text-gray-500'>Address:</span>
-                            <span className='text-neutral-800'>{userData?.address?.city}, {userData?.address?.state}, {userData?.address?.country}</span>
+                            <span className='text-neutral-800 capitalize'>{userData?.address?.address}, {userData?.address?.city}, {userData?.address?.state}, {userData?.address?.country}</span>
                         </div>
                         <div className='flex flex-col'>
                             <span className='font-semibold text-xs text-gray-500'>Firm Name:</span>
-                            <span className='text-neutral-800'>{userData?.firm_name}</span>
+                            <span className='text-neutral-800 uppercase'>{userData?.firm_name}</span>
                         </div>
                         <div className='flex flex-col'>
                             <span className='font-semibold text-xs text-gray-500'>Business type:</span>

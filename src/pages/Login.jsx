@@ -5,13 +5,13 @@ import { useAuth } from "../contexts/authContext"
 import axios from "axios"
 
 function Login() {
+    const { refreshUserData, refreshDefaultersList } = useAuth();
     const [loading, setLoading] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
     const [emailValue, setEmailValue] = useState('')
     const location = useLocation();
     const hasRun = useRef(false);
     const navigate = useNavigate()
-    const { refreshUserData, refreshDefaultersList } = useAuth();
 
     const newUserSignedUp = location?.state?.signedUp;
     const newUserEmail = location?.state?.email;
@@ -54,8 +54,8 @@ function Login() {
                 if (res.data.status) {
                     localStorage.setItem('token', res.data.data.token)
                     setLoading(false)
-                    // refreshUserData()    
-                    // refreshDefaultersList()
+                    refreshUserData()
+                    refreshDefaultersList()
                     navigate('/')
                 }
             })

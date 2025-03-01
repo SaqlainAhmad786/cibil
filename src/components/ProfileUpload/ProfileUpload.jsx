@@ -44,7 +44,6 @@ function ProfileUpload({ fileInputRef }) {
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null); // Stores crop coordinates
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-    const uid = localStorage.getItem('userId');
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -69,6 +68,7 @@ function ProfileUpload({ fileInputRef }) {
     }, []);
 
     const handleSave = async () => {
+        setLoading(true);
         try {
             const croppedImage = await getCroppedImg(image, croppedAreaPixels);
 
@@ -116,7 +116,7 @@ function ProfileUpload({ fileInputRef }) {
                                     <button onClick={handleSave}>Save</button>
                                     <button onClick={() => setIsDialogOpen(false)}>Cancel</button>
                                 </>
-                                : <button className="col-span-2 flex justify-center items-center">
+                                : <button className="col-span-2 flex justify-center items-center" type="button">
                                     <l-mirage
                                         size="80"
                                         speed="4"

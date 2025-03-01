@@ -6,8 +6,6 @@ import Loader from "./Loader/Loader";
 function Home() {
 	const { userData, defaultersList, defaultersLoading } = useAuth();
 
-	console.log(defaultersList);
-
 	const [currentPage, setCurrentPage] = useState(1);
 	const itemsPerPage = 6;
 

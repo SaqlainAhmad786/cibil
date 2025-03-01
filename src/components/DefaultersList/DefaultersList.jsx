@@ -20,6 +20,7 @@ function DefaultersList() {
                 )
                 .then((res) => {
                     console.log(res.data);
+                    refreshDefaultersList();
                 });
         } catch (error) {
             console.log(error);

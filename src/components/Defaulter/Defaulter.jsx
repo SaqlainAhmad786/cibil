@@ -1,15 +1,15 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/authContext";
 import { useRef } from "react";
 import Widget from "../Widget/Widget/";
 import { Graph } from "../Widget/Widget/";
 import { Download, X } from "lucide-react";
-import { toPng, toJpeg, toSvg } from 'html-to-image';
 
 function Defaulter() {
     const { defaultersList } = useAuth();
     const { id } = useParams();
     const defaulterData = defaultersList.find(defaulter => defaulter._id === id)
+    console.log(defaulterData);
     const componentRef = useRef();
     const navigate = useNavigate();
 
@@ -46,7 +46,13 @@ function Defaulter() {
                         </div>
                         <div className="md:w-2/3 md:pl-8">
                             <div className="flex justify-between items-center mb-3">
-                                <h1 className="text-xl font-semibold text-blueClr uppercase">About Defaulter</h1>
+                                <div>
+                                    <h1 className="text-xl font-semibold text-blueClr uppercase">About Defaulter</h1>
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        <p className='text-xs'>Listed as a defaulter on {new Date(defaulterData?.createdAt).toLocaleDateString('en-IN')} by <strong className="uppercase">{defaulterData?.added_by?.firm_name}</strong></p>
+                                    </div>
+                                </div>
+
                                 <button onClick={printPage} className="flex items-center gap-1 text-xs border px-3 py-2 rounded-full hover:bg-gray-200 duration-200">
                                     <Download size={18} />
                                     <span className="font-semibold lg:block md:block sm:block hidden">Report</span>
@@ -131,58 +137,26 @@ function Defaulter() {
                                     <p>{defaulterData?.remark}</p>
                                 </div>
                             </div>
-                            <div className="flex flex-wrap items-center gap-2">
-                                <p className='text-xs'>Listed as a defaulter on <span className="font-semibold">{new Date(defaulterData?.createdAt).toLocaleDateString('en-IN')}</span> by:</p>
-                                {defaulterData?.claimers?.map((item, index) => {
-                                    return (
-                                        <span key={index} className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm capitalize">{item.firm_name}</span>
-                                    )
-                                })}
+                            <div>
+                                <p className='text-sm mb-1'>Other companies aslo listed as defaulter:</p>
+                                <div className="grid grid-cols-2 gap-1">
+                                    {defaulterData?.claimers?.map((item, index) => {
+                                        return (
+                                            <div key={index} className="collapse collapse-arrow border-gray-300 border rounded-lg mb-2">
+                                                <input type="radio" name="my-accordion-4" className="h-[20px]" />
+                                                <div className="collapse-title font-medium uppercase">{item.firm_name}</div>
+                                                <div className="collapse-content">
+                                                    <p>{defaulterData?.remark}</p>
+                                                    <Link to={`/overview/defaulter/${item._id}`} className="btn btn-outline btn-sm">Visit data</Link>
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                {/* <div className="customContainer mb-5 bg-white rounded-xl shadow-2xl max-w-4xl w-full lg:p-6 md:p-4 p-3 transition-all duration-300 animate-fade-in">
-                    <p className="text-lg font-semibold col-span-2 mb-3">Recently added Defaulters</p>
-                    <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3">
-                        {defaultersList.slice().reverse().slice(0, 3).map((item) => {
-                            return (
-                                <Link to={`/overview/defaulter/${item._id}`} className="bg-gradient-to-br hover:bg-gradient-to-bl from-white to-blue-50 inline-block border rounded-lg p-3 shadow-md hover:scale-105 hover:shadow-xl duration-200" key={item._id}>
-                                    <div className="flex justify-between items-center border-b pb-1">
-                                        <div>
-                                            <p className="text-xl font-semibold">{item.defaulter_name}</p>
-                                            <p className="text-xs font-semibold text-gray-500">{item.firm_name}</p>
-                                        </div>
-                                        <div>
-                                            <img src="/img/fraud.png" className="h-16 w-16" alt="" />
-                                        </div>
-                                    </div>
-                                    <div className="flex flex-col gap-2 py-3 mb-2 border-b" >
-                                        <div className="flex items-center gap-2">
-                                            <p className="text-xs text-blueClr font-semibold border rounded-full p-1 py-2">GST</p>
-                                            <p className="font-medium text-sm text-gray-700 uppercase">{item.gst_no}</p>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                            <i className="fa-solid fa-phone text-blueClr border p-2 rounded-full"></i>
-                                            <p className="font-medium text-sm text-gray-700">+91 {item.mobile_No}</p>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                            <p className="text-sm text-blueClr font-semibold border rounded-full px-[9px] py-[6px]">-₹</p>
-                                            <p className="font-medium text-sm text-gray-700">₹ {new Intl.NumberFormat('en-IN').format(item.pending_amount)}</p>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p className="text-[10px] text-gray-700">
-                                            <span className="font-medium">Posted by: </span>
-                                            <span className="capitalize">{item.firm_name} </span>
-                                            <span>on {new Date(item.added_on).toLocaleDateString('en-IN')}</span>
-                                        </p>
-                                    </div>
-                                </Link>
-                            );
-                        })}
-                    </div>
-                </div> */}
             </main>
         </>
     )

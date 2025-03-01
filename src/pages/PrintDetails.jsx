@@ -7,17 +7,18 @@ import { toJpeg, toPng, toSvg } from "html-to-image";
 function PrintDetails() {
     const currentDate = new Date().toLocaleDateString('en-IN');
     const data = useLocation().state;
+    console.log(data);
 
-    const maskedAadhar = String(data?.aadhar_card).replace(/^(\d{8})(\d{4})$/, '********$2');
-    const maskedPan = String(data?.pan_card_no)?.slice(-4).padStart(String(data?.pan_card_no).length, '*');
+    const maskedAadhar = String(data?.aadhar_no).replace(/^(\d{8})(\d{4})$/, '********$2');
+    const maskedPan = String(data?.pan_no)?.slice(-4).padStart(String(data?.pan_no).length, '*');
 
     let color;
     let scoreText;
 
-    if (data?.cibil_score >= 75) {
+    if (data?.cibil_score?.cibil_score >= 75) {
         color = '#00FF00';
         scoreText = 'Average Risk';
-    } else if (data?.cibil_score >= 50) {
+    } else if (data?.cibil_score?.cibil_score >= 50) {
         color = '#FF9900';
         scoreText = 'High risk';
     } else {
@@ -66,20 +67,20 @@ function PrintDetails() {
                         <table className="w-full border-collapse border border-gray-300">
                             <tbody>
                                 <tr>
-                                    <td className="p-4 border border-gray-300 font-medium">Name:</td>
-                                    <td className="p-4 border border-gray-300">{data.defaulter_name}</td>
+                                    <td className="p-3 border border-gray-300 font-medium">Name:</td>
+                                    <td className="p-3 border border-gray-300 capitalize">{data?.name}</td>
+                                    <td className="p-3 border border-gray-300 font-medium">Mobile:</td>
+                                    <td className="p-3 border border-gray-300">{data?.mobile_no}</td>
                                 </tr>
                                 <tr>
-                                    <td className="p-4 border border-gray-300 font-medium">Address:</td>
-                                    <td className="p-4 border border-gray-300 capitalize">
-                                        {data.address}, {data.city}, {data.state}, India
-                                    </td>
+                                    <td className="p-3 border border-gray-300 font-medium">PAN:</td>
+                                    <td className="p-3 border border-gray-300 uppercase">{maskedPan}</td>
+                                    <td className="p-3 border border-gray-300 font-medium">Aadhar card:</td>
+                                    <td className="p-3 border border-gray-300">{maskedAadhar}</td>
                                 </tr>
                                 <tr>
-                                    <td className="p-4 border border-gray-300 font-medium">
-                                        Contact Number:
-                                    </td>
-                                    <td className="p-4 border border-gray-300">{data.mobile_No}</td>
+                                    <td className="p-3 border border-gray-300 font-medium">GST:</td>
+                                    <td className="p-3 border border-gray-300">{data?.gst_no}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -92,11 +93,11 @@ function PrintDetails() {
                                     <td className="p-4 border border-gray-300 font-medium">
                                         Firm Name:
                                     </td>
-                                    <td className="p-4 border border-gray-300 capitalize">{data.firm_name}</td>
+                                    <td className="p-4 border border-gray-300 capitalize">{data?.firm_name}</td>
                                     <td className="p-4 border border-gray-300 font-medium">
                                         GST No.:
                                     </td>
-                                    <td className="p-4 border border-gray-300">{data.gst_no}</td>
+                                    <td className="p-4 border border-gray-300">{data?.gst_no}</td>
                                 </tr>
                                 <tr>
                                     <td className="p-4 border border-gray-300 font-medium">
@@ -114,7 +115,7 @@ function PrintDetails() {
                     <div className="grid grid-cols-3 gap-16">
                         <div>
                             <Widget>
-                                <Graph percentage={data?.cibil_score} options={scoreText} color={color} />
+                                <Graph percentage={data?.cibil_score?.cibil_score} options={scoreText} color={color} />
                             </Widget>
                         </div>
                         <div className="col-span-2">
@@ -125,28 +126,24 @@ function PrintDetails() {
                                         <td className="p-4 border border-gray-300 font-medium">
                                             Amount Due:
                                         </td>
-                                        <td className="p-4 border border-gray-300 capitalize text-red-500 font-semibold" colSpan={3}>{data.pending_amount}/-</td>
-
+                                        <td className="p-4 border border-gray-300 capitalize text-red-500 font-semibold" colSpan={3}>{data?.pending_amount}/-</td>
                                     </tr>
                                     <tr>
                                         <td className="p-4 border border-gray-300 font-medium">
                                             Added by:
                                         </td>
-                                        <td className="p-4 border border-gray-300 capitalize">{data.added_by[0]}</td>
+                                        <td className="p-4 border border-gray-300 capitalize">{data?.added_by?.firm_name}</td>
                                         <td className="p-4 border border-gray-300 font-medium">
                                             Due Date:
                                         </td>
-                                        <td className="p-4 border border-gray-300">{new Date(data?.added_on).toLocaleDateString('en-IN')}</td>
+                                        <td className="p-4 border border-gray-300">{new Date(data?.createdAt).toLocaleDateString('en-IN')}</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div className="text-center text-sm text-gray-500 mt-12">
-                        Source: www.vyaparscore.com
-                    </div>
                 </div>
-                <div className="my-3 ml-3 flex justify-center">
+                <div className="py-3 ml-3 flex justify-center">
                     <button
                         className="cursor-pointer flex justify-between bg-gray-800 px-3 py-2 rounded-full text-white tracking-wider shadow-xl hover:bg-gray-900 hover:scale-105 duration-500 hover:ring-1 font-mono w-[140px]" onClick={() => downloadImage('png')}
                     >

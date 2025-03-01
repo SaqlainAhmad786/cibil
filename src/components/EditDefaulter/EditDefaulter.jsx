@@ -104,7 +104,7 @@ function EditDefaulter() {
         try {
             await axios.put(`${import.meta.env.VITE_BASE_URL}/defaulter/update/${id}`, finalData, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(res => {
                 if (res.data.status) {
-                    toast.success("Profile updated successfully", { duration: 3000 });
+                    toast.success("Defaulter updated successfully", { duration: 3000 });
                     setLoading(false);
                     navigate('/overview/defaultersList')
                     refreshDefaultersList();

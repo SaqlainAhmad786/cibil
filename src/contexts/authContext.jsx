@@ -77,12 +77,11 @@ export const AuthProvider = ({ children }) => {
 
 	const refreshDefaultersList = () => {
 		getDefaultersList();
-		// getUserDefaultersList();
+		getUserDefaultersList();
 	};
 
 	const logout = () => {
 		localStorage.removeItem("token");
-		localStorage.removeItem("userId");
 		setUserData({});
 		setDefaultersList([]);
 		setUserDefaultersList([]);
@@ -92,9 +91,9 @@ export const AuthProvider = ({ children }) => {
 		<AuthContext.Provider
 			value={{
 				refreshUserData,
-				userDefaultersList,
 				refreshDefaultersList,
 				logout,
+				userDefaultersList,
 				userData,
 				defaultersList,
 				userLoading,

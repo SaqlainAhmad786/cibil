@@ -8,6 +8,7 @@ import { toast, Toaster } from "sonner";
 
 function EditProfile() {
     const { userData, refreshUserData, userLoading } = useAuth();
+    console.log(userData);
     const [states, setStates] = useState([])
     const [cities, setCities] = useState([]);
     const [initialValues, setInitialValues] = useState({});
@@ -15,7 +16,7 @@ function EditProfile() {
     const [formData, setFormData] = useState({
         user_name: '',
         mobile_no: '',
-        // address: '',
+        address: '',
         state: '',
         city: '',
         firm_name: '',
@@ -29,7 +30,7 @@ function EditProfile() {
             const statesList = await State.getStatesOfCountry("IN");
             setStates(statesList);
 
-            const stateData = statesList.find((state) => state.name === userData?.address?.state);
+            const stateData = statesList.find((state) => state.name.toLowerCase() === userData?.address?.state);
             if (stateData) {
                 const stateCode = stateData.isoCode;
                 fetchCities(stateCode);
@@ -40,7 +41,7 @@ function EditProfile() {
             setFormData({
                 user_name: userData?.user_name,
                 mobile_no: userData?.mobile_no,
-                // address: userData?.address.address,
+                address: userData?.address?.address,
                 state: userData?.address?.state,
                 city: userData?.address?.city,
                 firm_name: userData?.firm_name,
@@ -50,7 +51,7 @@ function EditProfile() {
             setInitialValues({
                 user_name: userData?.user_name,
                 mobile_no: userData?.mobile_no,
-                // address: userData?.address.address,
+                address: userData?.address?.address,
                 state: userData?.address?.state,
                 city: userData?.address?.city,
                 firm_name: userData?.firm_name,
@@ -86,11 +87,9 @@ function EditProfile() {
             await axios.put(`${import.meta.env.VITE_BASE_URL}/user/update-user/${userData._id}`, formData, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(res => {
                 if (res.data.status) {
                     toast.success("Profile updated successfully", { duration: 3000 });
-            console.log(formData)
-
                     setLoading(false);
                     navigate('/overview/profile')
-                    // refreshUserData();
+                    refreshUserData();
                 }
             })
         } catch (error) {
@@ -139,10 +138,10 @@ function EditProfile() {
                             <label className="font-semibold text-xs text-gray-500 ">Mobile</label>
                             <input type="number" className="border rounded-lg px-3 py-2 text-sm w-full outline-none border-gray-200 bg-gray-100" placeholder="9876543210" name="mobile_no" onChange={e => handleInputChange(e)} value={formData.mobile_no} />
                         </div>
-                        {/* <div className="w-full flex flex-col gap-2">
+                        <div className="w-full flex flex-col gap-2">
                             <label className="font-semibold text-xs text-gray-500 ">Address</label>
-                            <input type="text" className="border rounded-lg px-3 py-2 text-sm w-full outline-none border-gray-200 bg-gray-100" name="address" onChange={(e) => handleInputChange(e)} value={formData.address.address} />
-                        </div> */}
+                            <input type="text" className="border rounded-lg px-3 py-2 text-sm w-full outline-none border-gray-200 bg-gray-100" name="address" onChange={(e) => handleInputChange(e)} value={formData.address} />
+                        </div>
                         <div className="w-full flex flex-col gap-2">
                             <label className="font-semibold text-xs text-gray-500 ">State</label>
                             <select className="border rounded-lg px-3 py-2 text-black text-sm outline-none border-gray-200 bg-gray-100 w-full" name="state" onChange={(e) => {
@@ -150,7 +149,7 @@ function EditProfile() {
                                 handleInputChange(e);
                             }}>
                                 <option hidden>Select State</option>
-                                {states.map((state, index) => <option value={state.name} key={index} selected={state.name === formData.state}>{state.name}</option>)}
+                                {states.map((state, index) => <option value={state.name} key={index} selected={state.name.toLowerCase() === formData.state}>{state.name}</option>)}
                             </select>
                         </div>
                         <div className="w-full flex flex-col gap-2">
@@ -158,7 +157,7 @@ function EditProfile() {
                             <select className="border rounded-lg px-3 py-2 text-black text-sm outline-none border-gray-200 bg-gray-100 w-full" name="city" onChange={(e) => handleInputChange(e)}>
                                 <option hidden>Select City</option>
                                 {
-                                    cities.map((city, index) => <option value={city.name} key={index} selected={city.name === formData.city}>{city.name}</option>)
+                                    cities.map((city, index) => <option value={city.name} key={index} selected={city.name.toLowerCase() === formData.city}>{city.name}</option>)
                                 }
                             </select>
                         </div>
