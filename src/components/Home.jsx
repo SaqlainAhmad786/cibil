@@ -46,8 +46,8 @@ function Home() {
 						<p className="capitalize text-lg">{userData?.user_name}</p>
 					</div>
 				</section>
-				<section className="my-4">
-					<div className="customContainer min-h-[500px] relative bg-white lg:p-5 md:p-5 p-3 rounded-lg mx-auto shadow-sm">
+				<section className="my-4 ">
+					<div className="customContainer relative bg-white lg:p-5 md:p-5 p-3 rounded-lg mx-auto shadow-sm">
 						<p className="text-lg font-semibold">Recently added Defaulters</p>
 						<p className="text-xs text-gray-500 font-medium mb-3">The list is already sorted based on your nearest location.</p>
 						<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mb-12">
@@ -85,12 +85,13 @@ function Home() {
 												<p className="font-medium text-sm text-gray-700">₹ {new Intl.NumberFormat("en-IN").format(item.pending_amount)}</p>
 											</div>
 										</div>
-										<div>
+										<div className="flex items-center justify-between">
 											<p className="text-[10px] text-gray-700">
 												<span className="font-medium">Posted by: </span>
 												<span className="capitalize">{item.added_by.firm_name} </span>
 												<span>on {new Date(item.createdAt).toLocaleDateString("en-IN")}</span>
 											</p>
+											{item.is_cleared && <p className="text-sm font-semibold bg-green-600 px-2 py-1 rounded-full text-white">cleared</p>}
 										</div>
 									</Link>
 								);
