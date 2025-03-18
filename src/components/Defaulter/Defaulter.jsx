@@ -16,7 +16,8 @@ function Defaulter() {
 
 	useEffect(() => {
 		const defaulterData = defaultersList.filter((el) => el.gst_no == defaulter?.gst_no || el.pan_no == defaulter?.pan_no);
-		setFilteredDefaulter(defaulterData);
+		const otherList = defaulterData.filter((el) => el.gst_no != defaulter?.gst_no || el.pan_no != defaulter?.pan_no);
+		setFilteredDefaulter(otherList);
 	}, [defaulter, defaultersList]);
 
 	const componentRef = useRef();
@@ -40,7 +41,7 @@ function Defaulter() {
 	}
 
 	function printPage() {
-		navigate("/print", { state: defaulter });
+		navigate("/print", { state: { defaulter, filteredDefaulter } });
 	}
 
 

@@ -1,13 +1,16 @@
+import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import Widget from "../components/Widget/Widget/";
 import { Graph } from "../components/Widget/Widget/";
-import { useRef } from "react";
 import { toJpeg, toPng, toSvg } from "html-to-image";
 
 function PrintDetails() {
-    const currentDate = new Date().toLocaleDateString('en-IN');
-    const data = useLocation().state;
-    console.log(data);
+    const data = useLocation().state.defaulter;
+    const otherData = useLocation().state.filteredDefaulter;
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     const maskedAadhar = String(data?.aadhar_no).replace(/^(\d{8})(\d{4})$/, '********$2');
     const maskedPan = String(data?.pan_no)?.slice(-4).padStart(String(data?.pan_no).length, '*');
@@ -33,17 +36,19 @@ function PrintDetails() {
 
         try {
             let dataUrl;
+            const options = { quality: 0.95, pixelRatio: 3 }; // Increase pixel ratio for better quality
+
             if (format === 'png') {
-                dataUrl = await toPng(componentRef.current);
+                dataUrl = await toPng(componentRef.current, options);
             } else if (format === 'jpeg') {
-                dataUrl = await toJpeg(componentRef.current, { quality: 0.95 });
+                dataUrl = await toJpeg(componentRef.current, options);
             } else if (format === 'svg') {
                 dataUrl = await toSvg(componentRef.current);
             }
 
             const link = document.createElement('a');
             link.href = dataUrl;
-            link.download = `component.${format}`;
+            link.download = `${data?.firm_name}_report_(www.vyaparscore.com).${format}`;
             link.click();
         } catch (err) {
             console.error('Could not generate image:', err);
@@ -80,11 +85,11 @@ function PrintDetails() {
                                 </tr>
                                 <tr>
                                     <td className="px-3 py-2 border border-gray-300 font-medium">GST:</td>
-                                    <td className="px-3 py-2 border border-gray-300">{data?.gst_no}</td>
+                                    <td className="px-3 py-2 border border-gray-300 uppercase">{data?.gst_no}</td>
                                     <td className="px-3 py-2 border border-gray-300 font-medium">
                                         Firm Name:
                                     </td>
-                                    <td className="px-3 py-2 border border-gray-300 capitalize">{data?.firm_name}</td>
+                                    <td className="px-3 py-2 border border-gray-300 uppercase">{data?.firm_name}</td>
                                 </tr>
                                 <tr>
                                     <td className="px-3 py-2 border border-gray-300 font-medium">Address:</td>
@@ -112,26 +117,65 @@ function PrintDetails() {
                         <div className="col-span-2">
                             <p className="text-lg font-semibold">Summary: CREDIT ACCOUNT INFORMATION</p>
                             <p className="text-xs italic font-light mb-3"><span className="text-red-500">*</span>This section displays a summary of all your reported credit accounts found in the Vyapar Score Credit Bureau database.</p>
-                            <table className="w-full border-collapse border border-gray-300">
+                            <table className="w-full border-collapse border border-gray-300 mb-3">
                                 <tbody>
                                     <tr>
-                                        <td className="p-4 border border-gray-300 font-medium">
-                                            Amount Due:
+                                        <td className="px-3 py-2 border text-sm border-gray-300 font-medium" >
+                                            Lender Firm Name:
                                         </td>
-                                        <td className="p-4 border border-gray-300 capitalize text-red-500 font-semibold" colSpan={3}>{data?.pending_amount}/-</td>
+                                        <td className="px-3 py-2 border border-gray-300 capitalize" colSpan={5}>{data?.added_by?.firm_name}</td>
                                     </tr>
                                     <tr>
-                                        <td className="p-4 border border-gray-300 font-medium">
-                                            Added by:
+                                        <td className="px-3 py-2 border border-gray-300 font-medium">
+                                            Amount Due:
                                         </td>
-                                        <td className="p-4 border border-gray-300 capitalize">{data?.added_by?.firm_name}</td>
-                                        <td className="p-4 border border-gray-300 font-medium">
+                                        <td className={`px-3 py-2 border border-gray-300 capitalize font-semibold ${data?.is_cleared ? 'text-green-600' : 'text-red-600'}`} colSpan={3}>{data?.pending_amount}/-</td>
+                                        <td className="px-3 py-2 border border-gray-300 font-medium">
                                             Due Date:
                                         </td>
-                                        <td className="p-4 border border-gray-300">{new Date(data?.createdAt).toLocaleDateString('en-IN')}</td>
+                                        <td className="px-3 py-2 border border-gray-300">{new Date(data?.createdAt).toLocaleDateString('en-IN')}</td>
                                     </tr>
                                 </tbody>
+
                             </table>
+                            {otherData.map((item, index) => {
+                                return (
+                                    <>
+                                        <div key={index} className="border border-gray-300 p-4 rounded-lg shadow mb-3">
+                                            <div className="mb-1">
+                                                <span className="font-medium">Lender Firm Name:</span>
+                                                <span className="capitalize ml-2">{item?.added_by?.firm_name}</span>
+                                            </div>
+                                            <div className="mb-1">
+                                                <span className="font-medium">Firm Owner Name:</span>
+                                                <span className="capitalize ml-2">{item?.name}</span>
+                                            </div>
+                                            <div className="flex justify-between mb-1">
+                                                <div>
+                                                    <span className="font-medium">GST No.:</span>
+                                                    <span className="capitalize ml-2">{item?.gst_no}</span>
+                                                </div>
+                                                <div>
+                                                    <span className="font-medium">PAN No.:</span>
+                                                    <span className="uppercase ml-2">{maskedPan}</span>
+                                                </div>
+                                            </div>
+                                            <div className="flex justify-between mb-1">
+                                                <div>
+                                                    <span className="font-medium">Amount Due:</span>
+                                                    <span className={`font-semibold ml-2 ${item?.is_cleared ? 'text-green-600' : 'text-red-600'}`}>
+                                                        {item?.pending_amount}/-
+                                                    </span>
+                                                </div>
+                                                <div>
+                                                    <span className="font-medium">Due Date:</span>
+                                                    <span className="ml-2">{new Date(item?.createdAt).toLocaleDateString('en-IN')}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
+                                )
+                            })}
                         </div>
                     </div>
                     <div className="border-t mt-6">
