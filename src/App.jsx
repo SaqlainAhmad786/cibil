@@ -29,7 +29,7 @@ function App() {
           <Routes>
             <Route index element={<Navigate to="overview" />} />
             <Route path="login" element={<LoggedIn Component={Login} />} />
-            <Route path="signup" element={<LoggedIn Component={Signup} />} />
+            <Route path="signup" element={<LoggedIn Component={Signup} />} /> 
             <Route path="forgetPassword" element={<LoggedIn Component={ForgetPassword} />} />
             <Route path="overview" element={<NotLoggedIn Component={Overview} />}>
               <Route index element={<Navigate to="home" />} />

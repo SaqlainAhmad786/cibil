@@ -1,23 +1,23 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import Widget from "../Widget/Widget/";
-import { Graph } from "../Widget/Widget/";
-import { ArrowBigLeft, ArrowBigRight, Download, X } from "lucide-react";
+import { useAuth } from "../../contexts/authContext";
 import useDefaulterById from "../../hooks/useDefaulterById";
 import Loader from "../Loader/Loader";
-import { useAuth } from "../../contexts/authContext";
+import Widget from "../Widget/Widget/";
+import { Graph } from "../Widget/Widget/";
+import { ChevronDown, Download, MoveUpRight, X } from "lucide-react";
 
 function Defaulter() {
 	const { id } = useParams();
 	const { defaultersList } = useAuth();
 	const [filteredDefaulter, setFilteredDefaulter] = useState([]);
 	const { loading, defaulter } = useDefaulterById(id);
+	const [openIndex, setOpenIndex] = useState(null);
 
 	useEffect(() => {
-		const defaulterData = defaultersList.filter((el) => el.gst_no == defaulter?.gst_no);
+		const defaulterData = defaultersList.filter((el) => el.gst_no == defaulter?.gst_no || el.pan_no == defaulter?.pan_no);
 		setFilteredDefaulter(defaulterData);
-	}, [defaulter]);
-	console.log("Filtered", filteredDefaulter);
+	}, [defaulter, defaultersList]);
 
 	const componentRef = useRef();
 	const navigate = useNavigate();
@@ -43,6 +43,11 @@ function Defaulter() {
 		navigate("/print", { state: defaulter });
 	}
 
+
+	const toggleOpen = (index) => {
+		setOpenIndex(openIndex === index ? null : index);
+	};
+
 	if (loading) {
 		return <Loader />;
 	}
@@ -63,7 +68,7 @@ function Defaulter() {
 									color={color}
 								/>
 							</Widget>
-							<div className="">
+							<div className="lg:block md:block hidden">
 								<div className="text-lg font-semibold">Remark:</div>
 								<p>{defaulter.remark}</p>
 							</div>
@@ -185,7 +190,7 @@ function Defaulter() {
 								>
 									<div className="modal-box">
 										<div className="flex justify-between items-center">
-											<h3 className="text-lg font-bold">Ledger Statement</h3>
+											<h3 className="text-lg font-bold">Other Documents</h3>
 											<div className="modal-action m-0">
 												<label
 													htmlFor="otherModal"
@@ -205,31 +210,51 @@ function Defaulter() {
 									</div>
 								</div>
 							</div>
-
-							<div>
-								<p className="text-sm mb-1">Other companies aslo listed as defaulter:</p>
-								<div className="grid lg:grid-cols-2 gap-2 h-[200px] bg-gray-100 rounded-lg px-4 py-2 overflow-y-scroll">
+							<div className="lg:hidden md:hidden block border-b-2 pb-2">
+								<div className="text-lg font-semibold">Remark:</div>
+								<p>{defaulter.remark}</p>
+							</div>
+							<div className="my-3">
+								<p className="text-sm mb-2">Other firms aslo listed as defaulter:</p>
+								<div className="grid gap-1">
 									{filteredDefaulter.map((data, index) => {
-										console.log(data);
 										return (
 											<>
-												<Link
-													to={`/overview/defaulter/${data._id}`}
+												<div
 													key={index}
-													className="cursor-pointer border px-2 py-1 bg-white rounded-md hover:translate-x-1 duration-200"
+													className="p-3 border border-blue-500 rounded-lg cursor-pointer mb-2"
+													onClick={() => toggleOpen(index)}
 												>
-													<div>
-														<div className="text-[0.8em]">
-															Firm: <span className="font-semibold uppercase">{data.firm_name}</span>
-														</div>
-														<div className="text-[0.8em]">
-															Added By: <span className="font-semibold ">{data.added_by.user_name}</span>
-														</div>
-														<div className="text-[0.8em]">
-															Listed On: <span className="font-semibold ">{new Date(data.createdAt).toLocaleDateString("en-IN")}</span>
+													<div className="flex justify-between items-center">
+														<p className="font-medium uppercase text-sm">{data.added_by.firm_name}</p>
+														<ChevronDown
+															className={`w-5 h-5 transition-transform duration-300 ${openIndex === index ? "rotate-180" : "rotate-0"
+																}`}
+														/>
+													</div>
+													<div
+														className={`overflow-hidden transition-all duration-300 ${openIndex === index ? "h-auto opacity-100 mt-2" : "h-0 opacity-0"
+															}`}
+													>
+														<div>
+															<div>
+																Added By: <span className="font-semibold capitalize">{data.added_by.user_name}</span>
+															</div>
+															<div>
+																Amount due: <span className="font-semibold capitalize">₹ {data.pending_amount}</span>
+															</div>
+															<div>
+																Listed On: <span className="font-semibold ">{new Date(data.createdAt).toLocaleDateString("en-IN")}</span>
+															</div>
+															<div className="text-[0.8em] flex justify-end">
+																<Link to={`/overview/defaulter/${data._id}`} className="text-blueClr hover:underline flex items-center">
+																	<span>Show Details</span>
+																	<MoveUpRight className="w-4 h-4" />
+																</Link>
+															</div>
 														</div>
 													</div>
-												</Link>
+												</div>
 											</>
 										);
 									})}

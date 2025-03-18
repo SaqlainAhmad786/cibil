@@ -122,7 +122,7 @@ function MoneyBlockerFinder() {
 						{filteredList.length ? (
 							filteredList.map((item, index) => (
 								<Link
-									to={`/ overview / defaulter / ${item._id}`}
+									to={`/overview/defaulter/${item._id}`}
 									className="bg-gradient-to-br hover:bg-gradient-to-bl from-white to-blue-50 inline-block border rounded-lg p-3 shadow-md hover:scale-105 hover:shadow-xl duration-200"
 									key={index}
 								>
