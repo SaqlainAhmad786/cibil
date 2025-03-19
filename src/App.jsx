@@ -19,7 +19,7 @@ import PrintDetails from "./pages/PrintDetails";
 import EditDefaulter from "./components/EditDefaulter/EditDefaulter";
 import AdminPanel from "./pages/AdminPanel";
 import Dashboard from "./admin/Dashboard";
-import Payment from "./pages/Payment";
+// import Payment from "./pages/Payment";
 
 function App() {
 

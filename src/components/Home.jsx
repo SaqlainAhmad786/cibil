@@ -43,7 +43,7 @@ function Home() {
 				<section className="my-4">
 					<div className="customContainer bg-gradient-to-r from-blueClr to-transparent text-white p-5 rounded-lg mx-auto">
 						<h2 className="text-2xl font-bold">Welcome,</h2>
-						<p className="capitalize text-lg">{userData?.user_name}</p>
+						<p className="capitalize text-lg">{userData?.firm_name}</p>
 					</div>
 				</section>
 				<section className="my-4 ">

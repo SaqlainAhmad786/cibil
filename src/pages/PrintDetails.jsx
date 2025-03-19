@@ -127,7 +127,7 @@ function PrintDetails() {
                                     </tr>
                                     <tr>
                                         <td className="px-3 py-2 border border-gray-300 font-medium">
-                                            Amount Due:
+                                            {data?.is_cleared ? "Dues cleared:" : "Amount Due:"}
                                         </td>
                                         <td className={`px-3 py-2 border border-gray-300 capitalize font-semibold ${data?.is_cleared ? 'text-green-600' : 'text-red-600'}`} colSpan={3}>{data?.pending_amount}/-</td>
                                         <td className="px-3 py-2 border border-gray-300 font-medium">
@@ -141,7 +141,7 @@ function PrintDetails() {
                             {otherData.map((item, index) => {
                                 return (
                                     <>
-                                        <div key={index} className="border border-gray-300 p-4 rounded-lg shadow mb-3">
+                                        <div key={index} className="text-sm border border-gray-300 p-4 rounded-lg shadow mb-3">
                                             <div className="mb-1">
                                                 <span className="font-medium">Lender Firm Name:</span>
                                                 <span className="capitalize ml-2">{item?.added_by?.firm_name}</span>
@@ -162,7 +162,7 @@ function PrintDetails() {
                                             </div>
                                             <div className="flex justify-between mb-1">
                                                 <div>
-                                                    <span className="font-medium">Amount Due:</span>
+                                                    <span className="font-medium">{item?.is_cleared ? "Dues cleared:" : "Amount Due:"}</span>
                                                     <span className={`font-semibold ml-2 ${item?.is_cleared ? 'text-green-600' : 'text-red-600'}`}>
                                                         {item?.pending_amount}/-
                                                     </span>

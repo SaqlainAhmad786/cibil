@@ -144,9 +144,9 @@ function Signup() {
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">City/District</label>
-                                    <select className="border rounded-lg px-3 py-2 mb-4 text-white text-sm outline-none border-gray-600 bg-gray-600 bg-opacity-40 w-full" name="city">
+                                    <select className="border rounded-lg px-3 py-2 mb-4 text-white text-sm outline-none border-gray-600 bg-gray-600 bg-opacity-40 w-full" name="city" disabled={!cities.length}>
                                         <option hidden>Select City</option>
-                                        {cities.length === 0
+                                        {!cities.length
                                             ? <option disabled>Select State first</option>
                                             : cities.map((city, index) => <option value={city.name} key={index}>{city.name}</option>)
                                         }
@@ -161,7 +161,7 @@ function Signup() {
                                     <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="Company name" name="firm_name" />
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
-                                    <label className="font-semibold text-xs text-white tracking-wide ">GST No.</label>
+                                    <label className="font-semibold text-xs text-white tracking-wide ">GST No. <span className="font-extralight">(optional)</span></label>
                                     <input className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400 uppercase" placeholder="" name="gst_no" />
                                 </div>
                                 <div className="w-full flex flex-col gap-2">

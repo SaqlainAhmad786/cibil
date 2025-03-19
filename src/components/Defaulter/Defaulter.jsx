@@ -97,7 +97,12 @@ function Defaulter() {
 							<div className="space-y-1 mb-5">
 								<div className="flex flex-col">
 									<span className="font-semibold text-xs text-gray-400">Due amount:</span>
-									<span className="font-bold text-lg text-red-600">₹ {defaulter?.pending_amount}/-</span>
+									<span className={`font-bold text-lg ${defaulter?.is_cleared ? "text-green-600" : "text-red-600"}`}>
+										<span>₹ {defaulter?.pending_amount}/-</span>
+										<span className="ml-2">
+											{defaulter?.is_cleared && <span className="text-white font-semibold text-sm bg-green-600 px-2 py-1 rounded-lg">cleared</span>}
+										</span>
+									</span>
 								</div>
 								<div className="flex flex-col">
 									<span className="font-semibold text-xs text-gray-400">Name:</span>
@@ -242,7 +247,7 @@ function Defaulter() {
 																Added By: <span className="font-semibold capitalize">{data.added_by.user_name}</span>
 															</div>
 															<div>
-																Amount due: <span className="font-semibold capitalize">₹ {data.pending_amount}</span>
+																{data?.is_cleared ? "Dues cleared:" : "Amount Due:"} <span className="font-semibold capitalize">₹ {data.pending_amount}</span>
 															</div>
 															<div>
 																Listed On: <span className="font-semibold ">{new Date(data.createdAt).toLocaleDateString("en-IN")}</span>
