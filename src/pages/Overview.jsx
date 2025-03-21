@@ -1,7 +1,18 @@
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
 import BottomNavbar from "../components/BottomNavbar/BottomNavbar";
-import { Binoculars, CircleHelp, CirclePlus, House, IndianRupee, LogOut, Search, Settings, User, Users } from "lucide-react";
+import {
+	Binoculars,
+	CircleHelp,
+	CirclePlus,
+	House,
+	IndianRupee,
+	LogOut,
+	Search,
+	Settings,
+	User,
+	Users,
+} from "lucide-react";
 import { useEffect } from "react";
 
 function Overview() {
@@ -142,7 +153,7 @@ function Overview() {
 							</li>
 							<li className="hover:translate-x-2 duration-200">
 								<NavLink
-									to={"/overview/subscribe"}
+									to={"/subscribe"}
 									onClick={handleSideBar}
 									className="text-md"
 								>
