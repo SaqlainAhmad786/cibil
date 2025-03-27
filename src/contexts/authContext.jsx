@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
 	const [defaultersList, setDefaultersList] = useState([]);
 	const [userDefaultersList, setUserDefaultersList] = useState([]);
 	const [userLoading, setUserLoading] = useState(false);
+	const [plans, setPlans] = useState([]);
 	const [defaultersLoading, setDefaultersLoading] = useState(false);
 	const token = localStorage.getItem("token");
 
@@ -16,6 +17,7 @@ export const AuthProvider = ({ children }) => {
 			refreshUserData();
 			getDefaultersList();
 			getUserDefaultersList();
+			loadPlans();
 		}
 	}, [token]);
 
@@ -56,17 +58,28 @@ export const AuthProvider = ({ children }) => {
 	async function getUserDefaultersList() {
 		try {
 			await axios
-				.get(
-					`${
-						import.meta.env.VITE_BASE_URL
-					}/defaulter/defaulter-by-current-user`,
-					{ headers: { Authorization: `Bearer ${token}` } }
-				)
+				.get(`${import.meta.env.VITE_BASE_URL}/defaulter/defaulter-by-current-user`, {
+					headers: { Authorization: `Bearer ${token}` },
+				})
 				.then((res) => {
 					setUserDefaultersList(res.data.defaulters);
 				});
 		} catch (error) {
 			console.error("Error fetching user data:", error);
+		}
+	}
+
+	async function loadPlans() {
+		try {
+			await axios
+				.get(`${import.meta.env.VITE_BASE_URL}/admin/plan`, {
+					headers: { Authorization: `Bearer ${token}` },
+				})
+				.then((res) => {
+					setPlans(res.data.plans);
+				});
+		} catch (error) {
+			console.error("Error fetching plans: ", error);
 		}
 	}
 
@@ -90,8 +103,10 @@ export const AuthProvider = ({ children }) => {
 	return (
 		<AuthContext.Provider
 			value={{
+				plans,
 				refreshUserData,
 				refreshDefaultersList,
+				loadPlans,
 				logout,
 				userDefaultersList,
 				userData,
