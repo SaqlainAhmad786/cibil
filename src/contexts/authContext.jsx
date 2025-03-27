@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 
 const AuthContext = createContext();
@@ -20,6 +20,8 @@ export const AuthProvider = ({ children }) => {
 			loadPlans();
 		}
 	}, [token]);
+
+	const userDataContext = useMemo(() => ({ userData, setUserData }), [userData]);
 
 	async function getDefaultersList() {
 		setDefaultersLoading(true);
@@ -46,7 +48,6 @@ export const AuthProvider = ({ children }) => {
 					headers: { Authorization: `Bearer ${token}` },
 				})
 				.then((res) => {
-					console.log(res);
 					setUserData(res.data.user);
 					setUserLoading(false);
 				});
@@ -55,6 +56,7 @@ export const AuthProvider = ({ children }) => {
 			setUserLoading(false);
 		}
 	}
+
 
 	async function getUserDefaultersList() {
 		try {
@@ -111,6 +113,7 @@ export const AuthProvider = ({ children }) => {
 				logout,
 				userDefaultersList,
 				userData,
+				userDataContext,
 				defaultersList,
 				userLoading,
 				defaultersLoading,

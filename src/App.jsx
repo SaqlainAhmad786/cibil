@@ -1,3 +1,4 @@
+import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./contexts/authContext";
 import Login from "./pages/Login";
@@ -17,15 +18,14 @@ import Defaulter from "./components/Defaulter/Defaulter";
 import DefaultersList from "./components/DefaultersList/DefaultersList";
 import PrintDetails from "./pages/PrintDetails";
 import EditDefaulter from "./components/EditDefaulter/EditDefaulter";
-import AdminPanel from "./pages/AdminPanel";
 import Dashboard from "./admin/Dashboard";
 import VerifyPayment from "./pages/VerifyPayment";
 import Subscribers from "./admin/Subscribers";
 import Plans from "./admin/Plans";
-import EditPlan from "./admin/EditPlan";
 import Users from "./admin/Users";
 import User from "./admin/User";
-// import Payment from "./pages/Payment";
+import NotAdmin from "./components/NotAdmin/NotAdmin";
+const LazyComponent = React.lazy(() => import("./pages/AdminPanel"));
 
 function App() {
 	return (
@@ -46,13 +46,12 @@ function App() {
 							<Route path="editDefaulter/:id" element={<EditDefaulter />} />
 							<Route path="defaulter/:id" element={<Defaulter />} />
 							<Route path="defaultersList" element={<DefaultersList />} />
-
 							<Route path="profile" element={<Profile />} />
 							<Route path="editProfile" element={<EditProfile />} />
 							<Route path="searchDefaulter" element={<MoneyBlockerFinder />} />
 						</Route>
 						<Route path="print" element={<PrintDetails />} />
-						<Route path="admin" element={<AdminPanel />}>
+						<Route path="admin" element={<NotAdmin Component={LazyComponent} />}>
 							<Route index element={<Navigate to="dashboard" />} />
 							<Route path="dashboard" element={<Dashboard />} />
 							<Route path="subscribers" element={<Subscribers />} />
