@@ -42,10 +42,11 @@ export const AuthProvider = ({ children }) => {
 		setUserLoading(true);
 		try {
 			await axios
-				.get(`${import.meta.env.VITE_BASE_URL}/user/current-user`, {
+				.post(`${import.meta.env.VITE_BASE_URL}/user/current-user`, {}, {
 					headers: { Authorization: `Bearer ${token}` },
 				})
 				.then((res) => {
+					console.log(res);
 					setUserData(res.data.user);
 					setUserLoading(false);
 				});
