@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./contexts/authContext";
+import NotAdmin from "./components/NotAdmin/NotAdmin";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Overview from "./pages/Overview";
@@ -24,7 +25,7 @@ import Subscribers from "./admin/Subscribers";
 import Plans from "./admin/Plans";
 import Users from "./admin/Users";
 import User from "./admin/User";
-import NotAdmin from "./components/NotAdmin/NotAdmin";
+import Help from "./pages/Help";
 const LazyComponent = React.lazy(() => import("./pages/AdminPanel"));
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
 							<Route path="profile" element={<Profile />} />
 							<Route path="editProfile" element={<EditProfile />} />
 							<Route path="searchDefaulter" element={<MoneyBlockerFinder />} />
+							<Route path="help" element={<Help />} />
 						</Route>
 						<Route path="print" element={<PrintDetails />} />
 						<Route path="admin" element={<NotAdmin Component={LazyComponent} />}>
