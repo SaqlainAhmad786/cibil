@@ -8,27 +8,26 @@ function Signup() {
     const [loading, setLoading] = useState(false)
     const [number, setNumber] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
-    const [confirmPassword, setConfirmPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState("")
     const [states, setStates] = useState([])
-    const [cities, setCities] = useState([]);
+    const [cities, setCities] = useState([])
     const navigate = useNavigate()
 
     useEffect(() => {
         document.title = "Signup | Vyapar Score"
         const fetchStates = () => {
             const statesList = State.getStatesOfCountry("IN")
-            setStates(statesList);
-        };
+            setStates(statesList)
+        }
         fetchStates()
     }, [])
 
-
     const handleNumber = (e) => {
-        const input = e.target.value;
+        const input = e.target.value
         if (/^\d{0,10}$/.test(input)) {
-            setNumber(input);
+            setNumber(input)
         }
-    };
+    }
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -37,31 +36,35 @@ function Signup() {
         const data = Object.fromEntries(formData)
         if (data.mobile_no.length !== 10) {
             setLoading(false)
-            toast.error('Please enter a valid mobile number!', { duration: 3000 })
+            toast.error("Please enter a valid mobile number!", { duration: 3000 })
             return
         }
 
         if (data.password.length < 8) {
             setLoading(false)
-            toast.error('Password must be at least 8 characters long!', { duration: 3000 })
+            toast.error("Password must be at least 8 characters long!", { duration: 3000 })
             return
         }
 
         if (data.password !== confirmPassword) {
             setLoading(false)
-            toast.error('Password does not match!', { description: 'Please type your password correctly' }, { duration: 3000 })
+            toast.error(
+                "Password does not match!",
+                { description: "Please type your password correctly" },
+                { duration: 3000 }
+            )
             return
         }
 
         try {
-            await axios.post(`${import.meta.env.VITE_BASE_URL}/user/register`, data).then(res => {
+            await axios.post(`${import.meta.env.VITE_BASE_URL}/user/register`, data).then((res) => {
                 if (res.data.status) {
                     setLoading(false)
-                    navigate('/login', { state: { signedUp: 1, email: data.email } })
+                    navigate("/login", { state: { signedUp: 1, email: data.email } })
                 }
             })
         } catch (error) {
-            console.error('Error:', error.response ? error.response.data : error.message);
+            console.error("Error:", error.response ? error.response.data : error.message)
             if (error.response.data.status == 400) {
                 toast.error(error.response.data.message, { duration: 3000 })
                 setLoading(false)
@@ -70,16 +73,16 @@ function Signup() {
     }
 
     const handleStateChange = (event) => {
-        const stateName = event.target.value;
-        const stateData = states.find((state) => state.name === stateName);
-        const stateCode = stateData.isoCode;
-        fetchCities(stateCode);
-    };
+        const stateName = event.target.value
+        const stateData = states.find((state) => state.name === stateName)
+        const stateCode = stateData.isoCode
+        fetchCities(stateCode)
+    }
 
     const fetchCities = (stateCode) => {
-        const citiesList = City.getCitiesOfState("IN", stateCode);
-        setCities(citiesList);
-    };
+        const citiesList = City.getCitiesOfState("IN", stateCode)
+        setCities(citiesList)
+    }
 
     return (
         <>
@@ -91,39 +94,82 @@ function Signup() {
                         Create an account
                     </h1>
                     <form onSubmit={handleSubmit}>
-                        <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-x-4 mt-5" >
+                        <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-x-4 mt-5">
                             <div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">Full Name</label>
-                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="John Doe" name="user_name" />
+                                    <input
+                                        type="text"
+                                        className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400"
+                                        placeholder="John Doe"
+                                        name="user_name"
+                                    />
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">Mobile</label>
-                                    <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="9876543210" name="mobile_no" value={number} onChange={handleNumber} maxLength="10" />
+                                    <input
+                                        type="number"
+                                        className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400"
+                                        placeholder="9876543210"
+                                        name="mobile_no"
+                                        value={number}
+                                        onChange={handleNumber}
+                                        maxLength="10"
+                                    />
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">Email</label>
-                                    <input type="email" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="example@mail.com" name="email" />
+                                    <input
+                                        type="email"
+                                        className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400"
+                                        placeholder="example@mail.com"
+                                        name="email"
+                                    />
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">Password</label>
                                     <div className="flex items-center w-full mb-4 border border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400 rounded-lg px-3 py-2">
-                                        <input type={showPassword ? "text" : "password"} className="bg-transparent text-white text-sm outline-none flex-1" placeholder="••••••••" name="password" />
-                                        <button type="button" className="text-white tracking-wide text-sm" onClick={() => setShowPassword(!showPassword)}>
-                                            {showPassword ? <i className="fa-regular fa-eye-slash"></i> : <i className="fa-regular fa-eye"></i>}
+                                        <input
+                                            type={showPassword ? "text" : "password"}
+                                            className="bg-transparent text-white text-sm outline-none flex-1"
+                                            placeholder="••••••••"
+                                            name="password"
+                                        />
+                                        <button
+                                            type="button"
+                                            className="text-white tracking-wide text-sm"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                        >
+                                            {showPassword ? (
+                                                <i className="fa-regular fa-eye-slash"></i>
+                                            ) : (
+                                                <i className="fa-regular fa-eye"></i>
+                                            )}
                                         </button>
                                     </div>
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
-                                    <label className="font-semibold text-xs text-white tracking-wide ">Confirm Password</label>
-                                    <input type="password" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="••••••••" onChange={(e) => setConfirmPassword(e.target.value)} />
+                                    <label className="font-semibold text-xs text-white tracking-wide ">
+                                        Confirm Password
+                                    </label>
+                                    <input
+                                        type="password"
+                                        className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400"
+                                        placeholder="••••••••"
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                    />
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
-                                    <label className="font-semibold text-xs text-white tracking-wide ">Business Type</label>
-                                    <select className="border rounded-lg px-3 py-2 mb-4 text-white text-sm outline-none border-gray-600 bg-gray-600 bg-opacity-40 w-full" name="business_type">
+                                    <label className="font-semibold text-xs text-white tracking-wide ">
+                                        Business Type
+                                    </label>
+                                    <select
+                                        className="border rounded-lg px-3 py-2 mb-4 text-white text-sm outline-none border-gray-600 bg-gray-600 bg-opacity-40 w-full"
+                                        name="business_type"
+                                    >
                                         <option hidden>Select Business Type</option>
                                         <option value={"manufacturer"}>Manufacturer</option>
-                                        <option value={"distributor"}>Distributor / Wholesaler</option>
+                                        <option value={"wholesaler"}>Distributor / Wholesaler</option>
                                         <option value={"retailer"}>Retailer</option>
                                     </select>
                                 </div>
@@ -131,63 +177,123 @@ function Signup() {
                             <div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">Country</label>
-                                    <select className="border rounded-lg px-3 py-2 mb-4 text-white text-sm outline-none border-gray-600 bg-gray-600 bg-opacity-40 w-full" name="country">
-                                        <option value={"India"} selected>India</option>
+                                    <select
+                                        className="border rounded-lg px-3 py-2 mb-4 text-white text-sm outline-none border-gray-600 bg-gray-600 bg-opacity-40 w-full"
+                                        name="country"
+                                    >
+                                        <option value={"India"} selected>
+                                            India
+                                        </option>
                                     </select>
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">State</label>
-                                    <select className="border rounded-lg px-3 py-2 mb-4 text-white text-sm outline-none border-gray-600 bg-gray-600 bg-opacity-40 w-full" name="state" onChange={(e) => handleStateChange(e)}>
+                                    <select
+                                        className="border rounded-lg px-3 py-2 mb-4 text-white text-sm outline-none border-gray-600 bg-gray-600 bg-opacity-40 w-full"
+                                        name="state"
+                                        onChange={(e) => handleStateChange(e)}
+                                    >
                                         <option hidden>Select State</option>
-                                        {states.map((state, index) => <option value={state.name} key={index}>{state.name}</option>)}
+                                        {states.map((state, index) => (
+                                            <option value={state.name} key={index}>
+                                                {state.name}
+                                            </option>
+                                        ))}
                                     </select>
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
-                                    <label className="font-semibold text-xs text-white tracking-wide ">City/District</label>
-                                    <select className="border rounded-lg px-3 py-2 mb-4 text-white text-sm outline-none border-gray-600 bg-gray-600 bg-opacity-40 w-full" name="city" disabled={!cities.length}>
+                                    <label className="font-semibold text-xs text-white tracking-wide ">
+                                        City/District
+                                    </label>
+                                    <select
+                                        className="border rounded-lg px-3 py-2 mb-4 text-white text-sm outline-none border-gray-600 bg-gray-600 bg-opacity-40 w-full"
+                                        name="city"
+                                        disabled={!cities.length}
+                                    >
                                         <option hidden>Select City</option>
-                                        {!cities.length
-                                            ? <option disabled>Select State first</option>
-                                            : cities.map((city, index) => <option value={city.name} key={index}>{city.name}</option>)
-                                        }
+                                        {!cities.length ? (
+                                            <option disabled>Select State first</option>
+                                        ) : (
+                                            cities.map((city, index) => (
+                                                <option value={city.name} key={index}>
+                                                    {city.name}
+                                                </option>
+                                            ))
+                                        )}
                                     </select>
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">Address</label>
-                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="Enter street address" name="address" />
+                                    <input
+                                        type="text"
+                                        className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400"
+                                        placeholder="Enter street address"
+                                        name="address"
+                                    />
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-white tracking-wide ">Firm Name</label>
-                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400" placeholder="Company name" name="firm_name" />
+                                    <input
+                                        type="text"
+                                        className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400"
+                                        placeholder="Company name"
+                                        name="firm_name"
+                                    />
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
-                                    <label className="font-semibold text-xs text-white tracking-wide ">GST No. <span className="font-extralight">(optional)</span></label>
-                                    <input className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400 uppercase" placeholder="" name="gst_no" />
+                                    <label className="font-semibold text-xs text-white tracking-wide ">
+                                        GST No. <span className="font-extralight">(optional)</span>
+                                    </label>
+                                    <input
+                                        className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400 uppercase"
+                                        placeholder=""
+                                        name="gst_no"
+                                    />
                                 </div>
                                 <div className="w-full flex flex-col gap-2">
-                                    <label className="font-semibold text-xs text-white tracking-wide ">PAN Card No.</label>
-                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400 uppercase" placeholder="" name="pan_no" />
+                                    <label className="font-semibold text-xs text-white tracking-wide ">
+                                        PAN Card No.
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400 uppercase"
+                                        placeholder=""
+                                        name="pan_no"
+                                    />
                                 </div>
                             </div>
                         </div>
                         <div>
                             <div className="flex items-center mb-2">
                                 <div>
-                                    <input id="terms" aria-describedby="terms" type="checkbox" required className="w-3 h-3 border rounded bg-gray-700 border-gray-600" />
+                                    <input
+                                        id="terms"
+                                        aria-describedby="terms"
+                                        type="checkbox"
+                                        required
+                                        className="w-3 h-3 border rounded bg-gray-700 border-gray-600"
+                                    />
                                 </div>
                                 <div className="ml-2 text-xs">
-                                    <label htmlFor="terms" className="font-light text-gray-300">I accept the <a className="font-medium text-primary-600 hover:underline text-white" href="#">Terms and Conditions</a></label>
+                                    <label htmlFor="terms" className="font-light text-gray-300">
+                                        I accept the{" "}
+                                        <a className="font-medium text-primary-600 hover:underline text-white" href="#">
+                                            Terms and Conditions
+                                        </a>
+                                    </label>
                                 </div>
                             </div>
-                            <button type="submit" className="flex justify-center w-full text-sm text-white bg-blueClr hover:bg-primary-700 focus:outline-none font-semibold rounded-lg px-5 py-2 text-center hover:bg-primary-700">
-                                {loading ? <l-mirage
-                                    size="80"
-                                    speed="4"
-                                    color="white"
-                                ></l-mirage> : 'SIGN UP'}
+                            <button
+                                type="submit"
+                                className="flex justify-center w-full text-sm text-white bg-blueClr hover:bg-primary-700 focus:outline-none font-semibold rounded-lg px-5 py-2 text-center hover:bg-primary-700"
+                            >
+                                {loading ? <l-mirage size="80" speed="4" color="white"></l-mirage> : "SIGN UP"}
                             </button>
                             <p className="text-xs font-extralight text-white tracking-wide mt-3">
-                                Already have an account? <Link to="/login" className="font-semibold text-blueClr hover:underline">Login </Link>
+                                Already have an account?{" "}
+                                <Link to="/login" className="font-semibold text-blueClr hover:underline">
+                                    Login{" "}
+                                </Link>
                                 here!
                             </p>
                         </div>
