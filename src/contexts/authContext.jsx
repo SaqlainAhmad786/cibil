@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
                         headers: { Authorization: `Bearer ${token}` },
                     }
                 )
-				.then((res) => {
+                .then((res) => {
                     setUserData(res.data.user)
                     setUserLoading(false)
                 })

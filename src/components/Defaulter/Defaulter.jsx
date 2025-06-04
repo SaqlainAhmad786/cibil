@@ -61,7 +61,7 @@ function Defaulter() {
 						className="flex gap-4 flex-col md:flex-row bg-white lg:p-6 md:p-4 p-3"
 						ref={componentRef}
 					>
-						<div className="flex flex-col gap-4">
+						<div className="max-w-[400px] flex flex-col gap-4">
 							<Widget>
 								<Graph
 									percentage={defaulter?.cibil_score?.cibil_score}
@@ -74,7 +74,7 @@ function Defaulter() {
 								<p>{defaulter.remark}</p>
 							</div>
 						</div>
-						<div className="md:w-2/3 md:pl-8">
+						<div className="flex-grow md:pl-8">
 							<div className="flex justify-between items-center mb-3">
 								<div>
 									<h1 className="text-xl font-semibold text-blueClr uppercase">About Defaulter</h1>

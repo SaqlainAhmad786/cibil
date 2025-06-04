@@ -58,14 +58,14 @@ function Subscribe() {
     return (
         <>
             <section>
-                <div className="h-screen grid place-content-center gap-4">
+                <div className="min-h-[100dvh] py-8 px-4 h-full grid place-content-center gap-4">
                     <div className="text-center">
                         <span className="font-bold tracking-wider uppercase text-blueClr">Pricing</span>
                         <h2 className="text-2xl font-bold">Choose your best plan</h2>
                     </div>
                     <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 px-4 -mx-4">
-                        {plans.map((plan) => (
-                            <div className="flex mb-8 lg:mb-0">
+                        {plans.map((plan, index) => (
+                            <div className="flex mb-8 lg:mb-0" key={index}>
                                 <div className="flex flex-grow flex-col p-6 space-y-6 rounded shadow sm:p-8 bg-gray-100 border border-gray-300">
                                     <div className="space-y-2">
                                         <h4 className="text-2xl font-bold uppercase">{plan.name}</h4>

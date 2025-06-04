@@ -63,8 +63,12 @@ function Login() {
                 setLoading(false)
                 refreshUserData()
                 refreshDefaultersList()
-                if (!res.data.data.user.isSubscribed) {
-                    navigate("/subscribe")
+                // if (!res.data.data.user.isSubscribed) {
+                //     navigate("/subscribe")
+                //     return
+                // }
+                if (res.data.data.user.role == "admin") {
+                    navigate("/admin")
                     return
                 }
                 navigate("/")

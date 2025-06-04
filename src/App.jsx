@@ -1,4 +1,3 @@
-import React from "react"
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import { AuthProvider } from "./contexts/authContext"
 import NotAdmin from "./components/NotAdmin/NotAdmin"
@@ -24,9 +23,8 @@ import VerifyPayment from "./pages/VerifyPayment"
 import Subscribers from "./admin/Subscribers"
 import Plans from "./admin/Plans"
 import Users from "./admin/Users"
-import User from "./admin/User"
 import Help from "./pages/Help"
-const LazyComponent = React.lazy(() => import("./pages/AdminPanel"))
+import AdminPanel from "./pages/AdminPanel"
 
 function App() {
     return (
@@ -53,12 +51,11 @@ function App() {
                             <Route path="help" element={<Help />} />
                         </Route>
                         <Route path="print" element={<PrintDetails />} />
-                        <Route path="admin" element={<NotAdmin Component={LazyComponent} />}>
+                        <Route path="admin" element={<NotAdmin Component={AdminPanel} />}>
                             <Route index element={<Navigate to="dashboard" />} />
                             <Route path="dashboard" element={<Dashboard />} />
                             <Route path="subscribers" element={<Subscribers />} />
                             <Route path="users" element={<Users />} />
-                            <Route path="user/:id" element={<User />} />
                             <Route path="plans" element={<Plans />} />
                         </Route>
                         <Route path="*" element={<PageNotFound />} />

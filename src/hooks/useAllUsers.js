@@ -64,5 +64,5 @@ export default function useAllUsers(id) {
             setLoading(false)
         }
     }
-    return { users, singleUser, loading }
+    return { users, singleUser, loading, subscribers }
 }

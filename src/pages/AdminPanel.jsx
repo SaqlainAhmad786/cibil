@@ -28,13 +28,18 @@ function AdminPanel() {
                         <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
                         <ul className="menu p-4 w-80 bg-white h-[100vh] lg:h-[90vh] text-color2 shadow-[1px_1px_8px_0px_rgba(0,0,0,0.5)]">
                             <li className="hover:translate-x-2 duration-200">
-                                <NavLink to={"/"} onClick={handleSideBar} className="text-lg">
-                                    <i className="fa-solid fa-file-import me-1 text-blueClr"></i>Overview
+                                <NavLink to={"dashboard"} onClick={handleSideBar} className="text-lg">
+                                    <i className="fa-solid fa-file-import me-1 text-blueClr"></i>Dashboard
                                 </NavLink>
                             </li>
                             <li className="hover:translate-x-2 duration-200">
                                 <NavLink to={"plans"} onClick={handleSideBar} className="text-lg">
-                                    <i className="fa-solid fa-pen-to-square me-1 text-blueClr"></i>Plans
+                                    <i className="fa-solid fa-pen-to-square me-1 text-blueClr"></i>Edit Plans
+                                </NavLink>
+                            </li>
+                            <li className="hover:translate-x-2 duration-200">
+                                <NavLink to={"subscribers"} onClick={handleSideBar} className="text-lg">
+                                    <i className="fa-solid fa-pen-to-square me-1 text-blueClr"></i>Subscribers
                                 </NavLink>
                             </li>
                             <li className="hover:translate-x-2 duration-200">
