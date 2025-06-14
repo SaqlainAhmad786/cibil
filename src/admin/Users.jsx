@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom"
 import useAllUsers from "../hooks/useAllUsers"
 import { useState } from "react"
+import TableSkeleton from "../components/TableSkeleton"
 
 export default function Users() {
-    const { users } = useAllUsers()
+    const { users, loading } = useAllUsers()
     const [filter, setFilter] = useState("all")
     const filteredData = users?.filter((user) => {
         if (filter === "all") return true
@@ -11,8 +12,24 @@ export default function Users() {
         if (filter === "not-subscribed") return !user.isSubscribed
         return true
     })
+    if (loading) {
+        return (
+            <>
+                <div className="flex flex-wrap items-center gap-2">
+                    <div className="rounded-md bg-white border px-4 py-2 w-48 h-10 animate-pulse">
+                        <div className="bg-gray-200 rounded w-full h-full"></div>
+                    </div>
+                    <div className="rounded-md bg-white border px-4 py-2 w-60 h-10 animate-pulse">
+                        <div className="bg-gray-200 rounded w-full h-full"></div>
+                    </div>
+                </div>
+                <TableSkeleton />
+            </>
+        )
+    }
 
-    console.log(filteredData)
+    if (!users.length)
+        return <p className="h-full w-full flex items-center justify-center font-semibold text-xl">No Users</p>
 
     return (
         <section className="sm:p-4 p-2 space-y-4">
@@ -46,6 +63,11 @@ export default function Users() {
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 text-gray-700">
+                        {filteredData?.length === 0 && (
+                            <tr className="text-center">
+                                <td colSpan="5">No users found</td>
+                            </tr>
+                        )}
                         {filteredData?.map((user, index) => (
                             <tr key={user._id}>
                                 <td className="px-6 py-4">{index + 1}</td>
@@ -53,16 +75,20 @@ export default function Users() {
                                 <td className="px-6 py-4">{user.email}</td>
                                 <td className="px-6 py-4">
                                     <span
-                                        className={`inline-block px-2 py-1 text-xs font-medium rounded-full ${user.isSubscribed
-                                            ? "bg-green-100 text-green-700"
-                                            : "bg-red-100 text-red-700"
-                                            }`}
+                                        className={`inline-block px-2 py-1 text-xs font-medium rounded-full ${
+                                            user.isSubscribed
+                                                ? "bg-green-100 text-green-700"
+                                                : "bg-red-100 text-red-700"
+                                        }`}
                                     >
                                         {user.isSubscribed ? "Subscribed" : "Not Subscribed"}
                                     </span>
                                 </td>
                                 <td className="px-6 py-4">
-                                    <label htmlFor={`my_modal_${index}`} className="text-indigo-600 hover:text-indigo-900 text-sm font-medium cursor-pointer">
+                                    <label
+                                        htmlFor={`my_modal_${index}`}
+                                        className="text-indigo-600 hover:text-indigo-900 text-sm font-medium cursor-pointer"
+                                    >
                                         View details
                                     </label>
 
@@ -71,21 +97,51 @@ export default function Users() {
                                         <div className="modal-box max-w-2xl">
                                             <h3 className="text-lg font-bold mb-4">User Details</h3>
                                             <div className="py-2 space-y-2">
-                                                <img src={user.avatar} alt="User Avatar" className="w-20 h-20 rounded-full mb-4" />
-                                                <p className="text-[16px]"><strong>Name:</strong> {user.user_name}</p>
-                                                <p className="text-[16px]"><strong>Email:</strong> {user.email}</p>
-                                                <p className="text-[16px]"><strong>Mobile:</strong> {user.mobile_no}</p>
-                                                <p className="text-[16px]"><strong>Firm Name:</strong> {user.firm_name}</p>
-                                                <p className="text-[16px]"><strong>Business Type:</strong> {user.business_type}</p>
-                                                <p className="text-[16px]"><strong>GST No:</strong> {user.gst_no}</p>
-                                                <p className="text-[16px]"><strong>PAN No:</strong> {user.pan_no}</p>
-                                                <p className="text-[16px]"><strong>Address:</strong> {user.address.address}, {user.address.city}, {user.address.state}</p>
-                                                <p className="text-[16px]"><strong>Role:</strong> {user.role}</p>
-                                                <p className="text-[16px]"><strong>Subscribed:</strong> {user.isSubscribed ? 'Yes' : 'No'}</p>
-                                                <p className="text-[16px]"><strong>Created At:</strong> {new Date(user.createdAt).toLocaleString('en-IN')}</p>
+                                                <img
+                                                    src={user.avatar}
+                                                    alt="User Avatar"
+                                                    className="w-20 h-20 rounded-full mb-4"
+                                                />
+                                                <p className="text-[16px]">
+                                                    <strong>Name:</strong> {user.user_name}
+                                                </p>
+                                                <p className="text-[16px]">
+                                                    <strong>Email:</strong> {user.email}
+                                                </p>
+                                                <p className="text-[16px]">
+                                                    <strong>Mobile:</strong> {user.mobile_no}
+                                                </p>
+                                                <p className="text-[16px]">
+                                                    <strong>Firm Name:</strong> {user.firm_name}
+                                                </p>
+                                                <p className="text-[16px]">
+                                                    <strong>Business Type:</strong> {user.business_type}
+                                                </p>
+                                                <p className="text-[16px]">
+                                                    <strong>GST No:</strong> {user.gst_no}
+                                                </p>
+                                                <p className="text-[16px]">
+                                                    <strong>PAN No:</strong> {user.pan_no}
+                                                </p>
+                                                <p className="text-[16px]">
+                                                    <strong>Address:</strong> {user.address.address},{" "}
+                                                    {user.address.city}, {user.address.state}
+                                                </p>
+                                                <p className="text-[16px]">
+                                                    <strong>Role:</strong> {user.role}
+                                                </p>
+                                                <p className="text-[16px]">
+                                                    <strong>Subscribed:</strong> {user.isSubscribed ? "Yes" : "No"}
+                                                </p>
+                                                <p className="text-[16px]">
+                                                    <strong>Created At:</strong>{" "}
+                                                    {new Date(user.createdAt).toLocaleString("en-IN")}
+                                                </p>
                                             </div>
                                         </div>
-                                        <label className="modal-backdrop" htmlFor={`my_modal_${index}`}>Close</label>
+                                        <label className="modal-backdrop" htmlFor={`my_modal_${index}`}>
+                                            Close
+                                        </label>
                                     </div>
                                 </td>
                             </tr>
