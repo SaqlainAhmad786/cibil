@@ -13,7 +13,7 @@ function Profile() {
         fileInputRef.current.click();
     };
 
-    const planExpiry = userData?.subscriptions?.filter((plan) => plan.isActive)[0].expiry;
+    const planExpiry = userData?.subscriptions?.filter((plan) => plan.isActive)[0]?.expiry;
 
     return (
         <>
@@ -40,11 +40,11 @@ function Profile() {
                     <ProfileUpload fileInputRef={fileInputRef} />
                     <div className='flex flex-col items-center gap-1 justify-center mt-4'>
                         <p className='text-sm text-gray-600'>SUBSCRIPTION: <span className={userData?.isSubscribed ? "text-white bg-green-600 p-1 rounded-lg font-semibold tracking-wider" : "text-white bg-red-600 p-1 rounded-lg font-semibold tracking-wider"}>{userData?.isSubscribed ? "ACTIVE" : "EXPIRED"}</span></p>
-                        <p className='text-sm text-gray-600'>Valid upto:{" "}
+                        {userData?.isSubscribed && <p className='text-sm text-gray-600'>Valid upto:{" "}
                             <span className='text-gray-800 font-semibold'>
                                 {new Date(planExpiry).toLocaleDateString('en-IN')}
                             </span>
-                        </p>
+                        </p>}
                     </div>
                     <div className='bg-gradient-to-r from-gray-200 to-white p-3 rounded-lg lg:w-[60%] md:w-[70%] w-full mx-auto mt-4 space-y-2'>
                         <div className='flex flex-col'>
@@ -57,7 +57,7 @@ function Profile() {
                         </div>
                         <div className='flex flex-col'>
                             <span className='font-semibold text-xs text-gray-600'>Address:</span>
-                            <span className='text-lg text-neutral-800 capitalize'>{userData?.address?.address}, {userData?.address?.city}, {userData?.address?.state}, {userData?.address?.country}</span>
+                            <span className='text-lg text-neutral-800 leading-6 capitalize'>{userData?.address?.address}, {userData?.address?.city}, {userData?.address?.state}, {userData?.address?.country}</span>
                         </div>
                         <div className='flex flex-col'>
                             <span className='font-semibold text-xs text-gray-600'>Firm Name:</span>
