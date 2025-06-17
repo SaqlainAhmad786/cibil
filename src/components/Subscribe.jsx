@@ -2,6 +2,7 @@ import axios from "axios"
 import { useAuth } from "../contexts/authContext"
 import { useEffect, useState } from "react"
 import Loader from "./Loader/Loader"
+import { useNavigate } from "react-router-dom"
 
 function Subscribe() {
     const { userData, refreshUserData } = useAuth()
@@ -9,6 +10,8 @@ function Subscribe() {
     const [loading, setLoading] = useState(true)
 
     const { user_name, mobile_no } = userData
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchPlans = async () => {
@@ -57,6 +60,9 @@ function Subscribe() {
             <section>
                 {loading && <Loader />}
                 <div className="min-h-[100dvh] py-8 px-4 h-full grid place-content-center gap-4">
+                    <div>
+                        <button className="font-semibold" onClick={() => navigate(-1)}><span className="mr-2 bg-blueClr text-white px-2 py-[5px] rounded-full"><i className="fa-solid fa-arrow-left"></i></span> Go back</button>
+                    </div>
                     <div className="text-center">
                         <span className="font-bold tracking-wider uppercase text-blueClr">Pricing</span>
                         <h2 className="text-2xl font-bold">Choose your best plan</h2>

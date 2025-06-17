@@ -2,10 +2,12 @@ import { useState } from "react"
 import { useAuth } from "../contexts/authContext"
 import { Link } from "react-router-dom"
 import Loader from "./Loader/Loader"
+import AlertModal from "./AlertModal"
 
 function Home() {
     const { userData, defaultersList, defaultersLoading } = useAuth()
 
+    const [popupShow, setPopupShow] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
     const itemsPerPage = 9
 
@@ -39,6 +41,7 @@ function Home() {
     return (
         <>
             <main>
+                {popupShow && <AlertModal setPopupShow={setPopupShow} />}
                 {defaultersLoading && <Loader />}
                 <section className="my-4">
                     <div className="customContainer bg-gradient-to-r from-blueClr to-transparent text-white p-5 rounded-lg mx-auto">
@@ -117,9 +120,7 @@ function Home() {
                                             <div
                                                 role="button"
                                                 key={item._id}
-                                                onClick={() => {
-                                                    alert("Please subscribe to use this feature")
-                                                }}
+                                                onClick={() => { setPopupShow(!popupShow) }}
                                                 className="bg-gradient-to-br hover:bg-gradient-to-bl from-white to-blue-50 inline-block border rounded-lg p-3 shadow-md hover:scale-105 hover:shadow-xl duration-200"
                                             >
                                                 <div className="flex justify-between items-center border-b pb-1">
