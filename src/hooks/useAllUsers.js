@@ -56,7 +56,6 @@ export default function useAllUsers(id) {
                     Authorization: `Bearer ${token}`,
                 },
             })
-            console.log(response.data.subscriptions)
             setSubscribers(response.data.subscriptions)
         } catch (error) {
             console.log(error)

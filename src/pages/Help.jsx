@@ -1,9 +1,39 @@
+import { useState } from "react";
+import { toast, Toaster } from "sonner";
+
 function Help() {
+    const [loading, setLoading] = useState(false);
+
+    const onSubmit = async (event) => {
+        event.preventDefault();
+        setLoading(true);
+        const formData = new FormData(event.target);
+
+        formData.append("access_key", "723893dd-551b-4542-8d62-66f3dcdcee4b");
+
+        const response = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            toast.success("Message sent successfully!", { description: "We will get back to you soon!" }, { duration: 3000 });
+            event.target.reset();
+            setLoading(false);
+        } else {
+            toast.error('Message not sent', { description: "Please try again later" }, { duration: 3000 });
+            setLoading(false);
+        }
+    };
+
     return (
         <>
+            <Toaster richColors position="top-right" />
             <section className="py-6">
                 <div className="grid max-w-6xl grid-cols-1 px-6 mx-auto lg:px-8 md:grid-cols-2 md:divide-x">
-                    <div className="py-6 md:py-0 md:px-6">
+                    <div>
                         <h1 className="text-4xl font-bold">Get in touch</h1>
                         <p className="pt-2 pb-4">Fill in the form to start a conversation</p>
                         <div className="space-y-4">
@@ -18,24 +48,30 @@ function Help() {
                                     <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
                                     <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
                                 </svg>
-                                <span>info@vyaparscore.com</span>
+                                <span>vyaparscore@gmail.com</span>
                             </p>
                         </div>
                     </div>
-                    <form noValidate="" className="flex flex-col py-6 space-y-6 md:py-0 md:px-6">
+                    <form onSubmit={onSubmit} className="flex flex-col py-6 space-y-6 md:py-0 md:px-6">
                         <label className="block">
                             <span className="mb-1">Full name</span>
-                            <input type="text" placeholder="Leroy Jenkins" className="block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-75 focus:ring-blueClr border p-2" />
+                            <input type="text" placeholder="Leroy Jenkins" name="fullname" className="block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-75 focus:ring-blueClr border p-2" />
                         </label>
                         <label className="block">
                             <span className="mb-1">Email address</span>
-                            <input type="email" placeholder="leroy@jenkins.com" className="block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-75 focus:ring-blueClr border p-2" />
+                            <input type="email" placeholder="leroy@jenkins.com" name="email" className="block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-75 focus:ring-blueClr border p-2" />
+                        </label>
+                        <label className="block">
+                            <span className="mb-1">Mobile</span>
+                            <input type="number" placeholder="9876543210" name="mobile" className="block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-75 focus:ring-blueClr border p-2" />
                         </label>
                         <label className="block">
                             <span className="mb-1">Message</span>
-                            <textarea rows="3" className="block w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-blueClr border p-2"></textarea>
+                            <textarea rows="3" name="message" className="block w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-blueClr border p-2"></textarea>
                         </label>
-                        <button type="button" className="self-center px-8 py-3 text-lg rounded focus:ring hover:ring focus:ring-opacity-75 bg-blueClr text-white focus:ring-blueClr hover:ring-blueClr">Submit</button>
+                        <button type="submit" className="flex items-center justify-center px-8 py-3 rounded focus:ring hover:ring focus:ring-opacity-75 bg-blueClr text-white focus:ring-blueClr hover:ring-blueClr">
+                            {loading ? <l-mirage size="80" speed="4" color="white"></l-mirage> : "Submit"}
+                        </button>
                     </form>
                 </div>
             </section>

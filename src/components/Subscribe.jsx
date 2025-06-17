@@ -1,9 +1,10 @@
 import axios from "axios"
 import { useAuth } from "../contexts/authContext"
 import { useEffect, useState } from "react"
+import Loader from "./Loader/Loader"
 
 function Subscribe() {
-    const { userData } = useAuth()
+    const { userData, refreshUserData } = useAuth()
     const [plans, setPlans] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -21,7 +22,6 @@ function Subscribe() {
                     }
                 )
                 setPlans(response.data.plans)
-                console.log(response.data.plans)
             } catch (error) {
                 console.log(error)
             } finally {
@@ -47,17 +47,15 @@ function Subscribe() {
             }
         )
 
+        refreshUserData()
         window.location.href = response.data.redirectUrl
         setLoading(false)
-    }
-
-    if (loading) {
-        return <div>loading...</div>
     }
 
     return (
         <>
             <section>
+                {loading && <Loader />}
                 <div className="min-h-[100dvh] py-8 px-4 h-full grid place-content-center gap-4">
                     <div className="text-center">
                         <span className="font-bold tracking-wider uppercase text-blueClr">Pricing</span>
@@ -65,7 +63,7 @@ function Subscribe() {
                     </div>
                     <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 px-4 -mx-4">
                         {plans.map((plan, index) => (
-                            <div className="flex mb-8 lg:mb-0" key={index}>
+                            <div className="flex" key={index}>
                                 <div className="flex flex-grow flex-col p-6 space-y-6 rounded shadow sm:p-8 bg-gray-100 border border-gray-300">
                                     <div className="space-y-2">
                                         <h4 className="text-2xl font-bold uppercase">{plan.name}</h4>
@@ -74,9 +72,27 @@ function Subscribe() {
                                             <span className="text-sm tracking-wide">/{plan.durationType}</span>
                                         </span>
                                     </div>
-                                    <p className="mt-3 leading-relaxed text-gray-600">
-                                        Etiam ac convallis enim, eget euismod dolor.
-                                    </p>
+                                    {
+                                        plan.name === "beginner" && (
+                                            <p className="mt-3 font-semibold leading-relaxed text-gray-600">
+                                                Flexibility First – Pay As You Go
+                                            </p>
+                                        )
+                                    }
+                                    {
+                                        plan.name === "professional" && (
+                                            <p className="mt-3 font-semibold leading-relaxed text-gray-600">
+                                                Better Value, Bigger Commitment
+                                            </p>
+                                        )
+                                    }
+                                    {
+                                        plan.name === "advance" && (
+                                            <p className="mt-3 font-semibold leading-relaxed text-gray-600">
+                                                Best Deal – Full Year, Full Access
+                                            </p>
+                                        )
+                                    }
                                     <ul className="flex-1 mb-6 text-gray-500">
                                         <li className="flex items-center mb-2 space-x-2">
                                             <i className="fa-solid fa-circle-check text-blueClr"></i>
@@ -113,10 +129,11 @@ function Subscribe() {
                                     </ul>
                                     <button
                                         type="button"
-                                        className="inline-block px-5 py-3 font-semibold tracking-wider text-center rounded bg-blueClr text-white"
+                                        className="inline-block px-5 py-3 font-semibold tracking-wider text-center rounded bg-blueClr text-white uppercase disabled:bg-gray-400"
                                         onClick={() => handleSubscription(plan)}
+                                        disabled={userData.isSubscribed}
                                     >
-                                        SUBSCRIBE
+                                        {userData.isSubscribed ? "Subscribed" : "Subscribe"}
                                     </button>
                                 </div>
                             </div>

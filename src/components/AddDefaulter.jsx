@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { City, State } from "country-state-city";
 import { useAuth } from "../contexts/authContext";
 import axios from "axios";
@@ -12,7 +11,6 @@ function AddDefaulter() {
     const [mobNumber, setMobNumber] = useState('');
     const [aadharNumber, setAadharNumber] = useState('');
     const { refreshDefaultersList } = useAuth();
-    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchStates = () => {
@@ -61,7 +59,8 @@ function AddDefaulter() {
                     setAadharNumber("");
                     setLoading(false);
                     refreshDefaultersList();
-                    navigate('/overview/home')
+                    e.target.reset();
+                    toast.success("Defaulter added successfully", { duration: 3000 });
                 }
             })
         } catch (error) {

@@ -1,6 +1,6 @@
+import { useAuth } from '../../contexts/authContext';
 import { useRef } from 'react';
 import { Link } from 'react-router-dom'
-import { useAuth } from '../../contexts/authContext';
 import styles from './Profile.module.css'
 import ProfileUpload from '../ProfileUpload/ProfileUpload';
 import Loader from '../Loader/Loader';
@@ -12,6 +12,8 @@ function Profile() {
     const handleClick = () => {
         fileInputRef.current.click();
     };
+
+    const planExpiry = userData?.subscriptions?.filter((plan) => plan.isActive)[0].expiry;
 
     return (
         <>
@@ -36,38 +38,46 @@ function Profile() {
                         </div>
                     </div>
                     <ProfileUpload fileInputRef={fileInputRef} />
+                    <div className='flex flex-col items-center gap-1 justify-center mt-4'>
+                        <p className='text-sm text-gray-600'>SUBSCRIPTION: <span className={userData?.isSubscribed ? "text-white bg-green-600 p-1 rounded-lg font-semibold tracking-wider" : "text-white bg-red-600 p-1 rounded-lg font-semibold tracking-wider"}>{userData?.isSubscribed ? "ACTIVE" : "EXPIRED"}</span></p>
+                        <p className='text-sm text-gray-600'>Valid upto:{" "}
+                            <span className='text-gray-800 font-semibold'>
+                                {new Date(planExpiry).toLocaleDateString('en-IN')}
+                            </span>
+                        </p>
+                    </div>
                     <div className='bg-gradient-to-r from-gray-200 to-white p-3 rounded-lg lg:w-[60%] md:w-[70%] w-full mx-auto mt-4 space-y-2'>
                         <div className='flex flex-col'>
-                            <span className='font-semibold text-xs text-gray-500'>Full Name:</span>
-                            <span className='text-neutral-800 capitalize'>{userData?.user_name}</span>
+                            <span className='font-semibold text-xs text-gray-600'>Full Name:</span>
+                            <span className='text-lg text-neutral-800 capitalize'>{userData?.user_name}</span>
                         </div>
                         <div className='flex flex-col'>
-                            <span className='font-semibold text-xs text-gray-500'>Mobile:</span>
-                            <span className='text-neutral-800'>+91 {userData?.mobile_no}</span>
+                            <span className='font-semibold text-xs text-gray-600'>Mobile:</span>
+                            <span className='text-lg text-neutral-800'>+91 {userData?.mobile_no}</span>
                         </div>
                         <div className='flex flex-col'>
-                            <span className='font-semibold text-xs text-gray-500'>Address:</span>
-                            <span className='text-neutral-800 capitalize'>{userData?.address?.address}, {userData?.address?.city}, {userData?.address?.state}, {userData?.address?.country}</span>
+                            <span className='font-semibold text-xs text-gray-600'>Address:</span>
+                            <span className='text-lg text-neutral-800 capitalize'>{userData?.address?.address}, {userData?.address?.city}, {userData?.address?.state}, {userData?.address?.country}</span>
                         </div>
                         <div className='flex flex-col'>
-                            <span className='font-semibold text-xs text-gray-500'>Firm Name:</span>
-                            <span className='text-neutral-800 uppercase'>{userData?.firm_name}</span>
+                            <span className='font-semibold text-xs text-gray-600'>Firm Name:</span>
+                            <span className='text-lg text-neutral-800 uppercase'>{userData?.firm_name}</span>
                         </div>
                         <div className='flex flex-col'>
-                            <span className='font-semibold text-xs text-gray-500'>Business type:</span>
-                            <span className='text-neutral-800'>Manufacturer</span>
+                            <span className='font-semibold text-xs text-gray-600'>Business type:</span>
+                            <span className='text-lg text-neutral-800 uppercase'>{userData?.business_type}</span>
                         </div>
                         <div className='flex flex-col'>
-                            <span className='font-semibold text-xs text-gray-500'>GST no.:</span>
-                            <span className='text-neutral-800 uppercase'>{userData?.gst_no}</span>
+                            <span className='font-semibold text-xs text-gray-600'>GST no.:</span>
+                            <span className='text-lg text-neutral-800 uppercase'>{userData?.gst_no}</span>
                         </div>
                         <div className='flex flex-col'>
-                            <span className='font-semibold text-xs text-gray-500'>PAN Card no.:</span>
-                            <span className='text-neutral-800 uppercase'>{userData?.pan_no}</span>
+                            <span className='font-semibold text-xs text-gray-600'>PAN Card no.:</span>
+                            <span className='text-lg text-neutral-800 uppercase'>{userData?.pan_no}</span>
                         </div>
                     </div>
                     <div className='mt-5 mb-1 text-center'>
-                        <Link to={"/overview/editProfile"} className='bg-blueClr text-white py-2 px-4 rounded-lg font-semibold text-sm'><i className="fa-solid fa-pen mr-1"></i>Edit Profile</Link>
+                        <Link to={"/overview/editProfile"} className='bg-blueClr text-white py-2 px-4 rounded-lg font-semibold text-sm'><i className="fa-solid fa-pen mr-1"></i> Edit Profile</Link>
                     </div>
                 </div>
 

@@ -18,6 +18,7 @@ import Defaulter from "./components/Defaulter/Defaulter"
 import DefaultersList from "./components/DefaultersList/DefaultersList"
 import PrintDetails from "./pages/PrintDetails"
 import EditDefaulter from "./components/EditDefaulter/EditDefaulter"
+import ViewResume from "./components/ViewResume"
 import Dashboard from "./admin/Dashboard"
 import VerifyPayment from "./pages/VerifyPayment"
 import Subscribers from "./admin/Subscribers"
@@ -38,6 +39,7 @@ function App() {
                         <Route path="login" element={<LoggedIn Component={Login} />} />
                         <Route path="signup" element={<LoggedIn Component={Signup} />} />
                         <Route path="forgetPassword" element={<LoggedIn Component={ForgetPassword} />} />
+                        <Route path="/view-resume" element={<ViewResume />} />
                         <Route path="overview" element={<NotLoggedIn Component={Overview} />}>
                             <Route index element={<Navigate to="home" />} />
                             <Route path="home" element={<Home />} />

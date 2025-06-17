@@ -16,7 +16,6 @@ export default function VerifyPayment() {
 				},
 			}
 		);
-		console.log(response.data.state);
 		if (response.data.state === "COMPLETED") {
 			navigate("/");
 		}

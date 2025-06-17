@@ -142,79 +142,96 @@ function Defaulter() {
 								</div>
 							</div>
 							<div className="join rounded-none mb-3 flex lg:justify-start md:justify-start sm:justify-start justify-center">
-								<label
-									htmlFor="ledgerModal"
-									className="bg-gray-100 border-gray-300 btn btn-outline btn-sm lg:text-xs md:text-xs text-[10px] join-item"
-								>
-									View Ledger Statement
-								</label>
-								<input
-									type="checkbox"
-									id="ledgerModal"
-									className="modal-toggle"
-								/>
-								<div
-									className="modal"
-									role="dialog"
-								>
-									<div className="modal-box">
-										<div className="flex justify-between items-center">
-											<h3 className="text-lg font-bold">Ledger Statement</h3>
-											<div className="modal-action m-0">
-												<label
-													htmlFor="ledgerModal"
-													className="btn btn-ghost p-0"
-												>
-													<X className="w-5 h-5" />
-												</label>
+								{
+									defaulter?.bank_statement?.endsWith(".pdf") ? (
+										<Link className="bg-gray-100 border-gray-300 btn btn-outline btn-sm lg:text-xs md:text-xs text-[10px] join-item" to={`/view-resume?resume=${defaulter?.bank_statement}`}>View Ledger Statement</Link>
+									) : (<>
+										<label
+											htmlFor="ledgerModal"
+											className="bg-gray-100 border-gray-300 btn btn-outline btn-sm lg:text-xs md:text-xs text-[10px] join-item"
+										>
+											View Ledger Statement
+										</label>
+										<input
+											type="checkbox"
+											id="ledgerModal"
+											className="modal-toggle"
+										/>
+										<div
+											className="modal"
+											role="dialog"
+										>
+											<div className="modal-box">
+												<div className="flex justify-between items-center">
+													<h3 className="text-lg font-bold">Ledger Statement</h3>
+													<div className="modal-action m-0">
+														<label
+															htmlFor="ledgerModal"
+															className="btn btn-ghost p-0"
+														>
+															<X className="w-5 h-5" />
+														</label>
+													</div>
+												</div>
+												<div>
+													<img
+														src={defaulter?.bank_statement}
+														className="w-full object-contain"
+														alt=""
+													/>
+												</div>
 											</div>
 										</div>
-										<div>
-											<img
-												src={defaulter?.bank_statement}
-												className="w-full object-contain"
-												alt=""
+									</>
+									)
+								}
+
+								{
+									defaulter?.other_document?.endsWith(".pdf") ? (
+										<Link className="bg-gray-100 border-gray-300 btn btn-outline btn-sm lg:text-xs md:text-xs text-[10px] join-item" to={`/view-resume?resume=${defaulter?.other_document}`}>View Other Documents</Link>
+									) : (
+										<>
+											<label
+												htmlFor="otherModal"
+												className="bg-gray-100 border-gray-300 btn btn-outline btn-sm lg:text-xs md:text-xs text-[10px] join-item"
+												disabled={defaulter?.other_document == "upload/undefined"}
+											>
+												View Other Documents
+											</label>
+											<input
+												type="checkbox"
+												id="otherModal"
+												className="modal-toggle"
 											/>
-										</div>
-									</div>
-								</div>
-								<label
-									htmlFor="otherModal"
-									className="bg-gray-100 border-gray-300 btn btn-outline btn-sm lg:text-xs md:text-xs text-[10px] join-item"
-									disabled={defaulter?.otherDocument == "upload/undefined"}
-								>
-									View Other Documents
-								</label>
-								<input
-									type="checkbox"
-									id="otherModal"
-									className="modal-toggle"
-								/>
-								<div
-									className="modal"
-									role="dialog"
-								>
-									<div className="modal-box">
-										<div className="flex justify-between items-center">
-											<h3 className="text-lg font-bold">Other Documents</h3>
-											<div className="modal-action m-0">
-												<label
-													htmlFor="otherModal"
-													className="btn btn-ghost p-0"
-												>
-													<X className="w-5 h-5" />
-												</label>
+											<div
+												className="modal"
+												role="dialog"
+											>
+												<div className="modal-box">
+													<div className="flex justify-between items-center">
+														<h3 className="text-lg font-bold">Other Documents</h3>
+														<div className="modal-action m-0">
+															<label
+																htmlFor="otherModal"
+																className="btn btn-ghost p-0"
+															>
+																<X className="w-5 h-5" />
+															</label>
+														</div>
+													</div>
+													<div>
+														<img
+															src={defaulter?.other_document}
+															className="w-full object-contain"
+															alt=""
+														/>
+													</div>
+												</div>
 											</div>
-										</div>
-										<div>
-											<img
-												src={defaulter?.other_document}
-												className="w-full object-contain"
-												alt=""
-											/>
-										</div>
-									</div>
-								</div>
+										</>
+									)
+								}
+
 							</div>
 							<div className="lg:hidden md:hidden block border-b-2 pb-2">
 								<div className="text-lg font-semibold">Remark:</div>
@@ -269,7 +286,7 @@ function Defaulter() {
 						</div>
 					</div>
 				</div>
-			</main>
+			</main >
 		</>
 	);
 }

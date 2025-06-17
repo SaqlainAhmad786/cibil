@@ -24,9 +24,6 @@ function Overview() {
     useEffect(() => {
         document.title = "Vyapar Score"
     })
-    // useEffect(() => {
-    //     if (!userData.isSubscribed) navigate("/subscribe")
-    // }, [userData.isSubscribed])
 
     function handleSideBar() {
         document.getElementById("my-drawer-2").checked = false

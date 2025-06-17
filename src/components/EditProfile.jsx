@@ -8,7 +8,6 @@ import { toast, Toaster } from "sonner";
 
 function EditProfile() {
     const { userData, refreshUserData, userLoading } = useAuth();
-    console.log(userData);
     const [states, setStates] = useState([])
     const [cities, setCities] = useState([]);
     const [initialValues, setInitialValues] = useState({});
@@ -93,7 +92,6 @@ function EditProfile() {
                 }
             })
         } catch (error) {
-            console.log(formData)
             console.log(error)
             setLoading(false);
         }

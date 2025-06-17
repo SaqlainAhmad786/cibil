@@ -8,7 +8,6 @@ function DefaultersList() {
     const token = localStorage.getItem("token");
 
     async function handleClear(id) {
-        console.log(id);
         try {
             await axios
                 .post(
@@ -19,7 +18,6 @@ function DefaultersList() {
                     }
                 )
                 .then((res) => {
-                    console.log(res.data);
                     refreshDefaultersList();
                 });
         } catch (error) {

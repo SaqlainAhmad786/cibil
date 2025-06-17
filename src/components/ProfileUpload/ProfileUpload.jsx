@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
-import axios from "axios";
-import Cropper from "react-easy-crop";
-import { toast, Toaster } from "sonner";
 import { useAuth } from "../../contexts/authContext";
+import Cropper from "react-easy-crop";
+import axios from "axios";
+import { toast, Toaster } from "sonner";
 
 async function getCroppedImg(imageSrc, crop) {
     const image = new Image();
@@ -87,7 +87,7 @@ function ProfileUpload({ fileInputRef }) {
         } catch (e) {
             setLoading(false);
             setIsDialogOpen(false);
-            toast.error("Something went wrong", { description: "Please try again" }, { duration: 3000 });
+            toast.error("Something went wrong", { description: "Please try again later" }, { duration: 3000 });
             console.error('Error:', e);
         } finally {
             setLoading(false);
