@@ -13,14 +13,13 @@ function AlertModal() {
                             <IndianRupee className="inline-block me-1 h-5 w-5" />
                             Subscribe Now
                         </Link>
-                        <Link to="/" className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition">
-                            <Home className="inline-block me-1 h-5 w-5" />
+                        <Link to="/overview/home" className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition">
+                            <Home className="inline-b lock me-1 h-5 w-5" />
                             Back to Home
                         </Link>
                     </div>
                 </div>
             </div>
-
         </>
     )
 }
