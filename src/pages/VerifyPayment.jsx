@@ -1,8 +1,10 @@
-import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../contexts/authContext";
+import axios from "axios";
 
 export default function VerifyPayment() {
+	const { refreshUserData } = useAuth()
 	const { transactionId } = useParams();
 	const navigate = useNavigate();
 
@@ -17,13 +19,16 @@ export default function VerifyPayment() {
 			}
 		);
 		if (response.data.state === "COMPLETED") {
-			navigate("/");
+			refreshUserData()
+			navigate("/", { state: { paymentCompleted: true } });
 		}
 		if (response.data.state === "PENDING") {
-			navigate("/subscribe");
+			refreshUserData()
+			navigate("/subscribe", { state: { paymentPending: true } });
 		}
 		if (response.data.state === "FAILED") {
-			navigate("/subscribe");
+			refreshUserData()
+			navigate("/subscribe", { state: { paymentFailed: true } });
 		}
 	}
 

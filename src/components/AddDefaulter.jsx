@@ -35,8 +35,6 @@ function AddDefaulter() {
         }
     };
 
-    console.log(userData)
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);

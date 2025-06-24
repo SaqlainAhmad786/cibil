@@ -1,11 +1,20 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useAuth } from "../contexts/authContext"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import Loader from "./Loader/Loader"
 import AlertModal from "./AlertModal"
+import { toast, Toaster } from "sonner"
 
 function Home() {
     const { userData, defaultersList, defaultersLoading } = useAuth()
+    const location = useLocation()
+    const paymentSuccess = location?.state?.paymentCompleted
+
+    useEffect(() => {
+        if (paymentSuccess) {
+            toast.success("Payment successful!", { description: "You are now a subscribed user" }, { duration: 3000 })
+        }
+    }, [])
 
     const [popupShow, setPopupShow] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
@@ -41,6 +50,7 @@ function Home() {
     return (
         <>
             <main>
+                <Toaster richColors position="top-right" />
                 {popupShow && <AlertModal setPopupShow={setPopupShow} />}
                 {defaultersLoading && <Loader />}
                 <section className="my-4">

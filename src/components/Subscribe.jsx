@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react"
 import { useAuth } from "../contexts/authContext"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import axios from "axios"
 import Loader from "./Loader/Loader"
+import { toast, Toaster } from "sonner"
 
 function Subscribe() {
     const { userData, refreshUserData } = useAuth()
     const [plans, setPlans] = useState([])
     const [loading, setLoading] = useState(true)
+    const location = useLocation()
+    const paymentPending = location?.state?.paymentPending
+    const paymentFailed = location?.state?.paymentFailed
 
     const { user_name, mobile_no } = userData
 
@@ -30,6 +34,15 @@ function Subscribe() {
             }
         }
         fetchPlans()
+
+        if (paymentPending) {
+            toast.info("Your payment is pending!", { description: "If your Subscription is not active, the amount will be refunded within 7 days" }, { duration: 3000 })
+        }
+
+        if (paymentFailed) {
+            toast.error("Your payment failed!", { description: "Please try again later" }, { duration: 3000 })
+        }
+
     }, [userData])
 
     async function handleSubscription(plan) {
@@ -56,6 +69,7 @@ function Subscribe() {
     return (
         <>
             <section>
+                <Toaster position="top-right" richColors />
                 {loading && <Loader />}
                 <div className="min-h-[100dvh] py-8 px-4 h-full grid place-content-center gap-4">
                     <div>
