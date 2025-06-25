@@ -19,7 +19,7 @@ function Profile() {
         <>
             <section className="my-4">
                 {userLoading && <Loader />}
-                <div className="customContainer bg-white lg:p-5 md:p-5 p-3 rounded-lg mx-auto shadow-sm">
+                <div className="customContainer bg-white lg:p-5 md:p-5 p-3 pb-14 rounded-lg mx-auto shadow-sm">
                     <div className='flex justify-center'>
                         <div className="w-32 h-32 relative rounded-full grid">
                             <div className="grid place-items-center aspect-square h-32 border-4 border-blueClr rounded-[100vh] shadow-[1px_1px_8px_0px_rgba(0,0,0,0.5)]">
@@ -46,7 +46,7 @@ function Profile() {
                             </span>
                         </p>}
                     </div>
-                    <div className='bg-gradient-to-r from-gray-200 to-white p-3 rounded-lg lg:w-[60%] md:w-[70%] w-full mx-auto mt-4 space-y-2'>
+                    <div className='bg-gradient-to-r from-gray-200 to-white p-3 rounded-lg lg:w-[60%] md:w-[70%] w-full mx-auto mt-6 space-y-2'>
                         <div className='flex flex-col'>
                             <span className='font-semibold text-xs text-gray-600'>Full Name:</span>
                             <span className='text-lg text-neutral-800 capitalize'>{userData?.user_name}</span>
@@ -76,8 +76,8 @@ function Profile() {
                             <span className='text-lg text-neutral-800 uppercase'>{userData?.pan_no}</span>
                         </div>
                     </div>
-                    <div className='mt-5 mb-1 text-center'>
-                        <Link to={"/overview/editProfile"} className='bg-blueClr text-white py-2 px-4 rounded-lg font-semibold text-sm'><i className="fa-solid fa-pen mr-1"></i> Edit Profile</Link>
+                    <div className='mt-6 text-center'>
+                        <Link to={"/overview/editProfile"} className='bg-blueClr text-white py-3 px-5 rounded-lg font-semibold text-sm'><i className="fa-solid fa-pen mr-1"></i> Edit Profile</Link>
                     </div>
                 </div>
 

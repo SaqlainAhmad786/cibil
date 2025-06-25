@@ -41,12 +41,6 @@ function AddDefaulter() {
         const form = e.target;
         const formData = new FormData(form);
 
-        if (aadharNumber.length < 12) {
-            toast.error("Please enter a valid Aadhar number", { description: "Aadhar number must be 12 digits long" }, { duration: 3000 });
-            setLoading(false);
-            return
-        }
-
         if (mobNumber.length < 10) {
             toast.error("Please enter a valid mobile number", { description: "Mobile number must be 10 digits long" }, { duration: 3000 });
             setLoading(false);
@@ -109,15 +103,15 @@ function AddDefaulter() {
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Mobile</label>
-                                    <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="9876543210" name="mobile_no" value={mobNumber} onChange={handleMobNumber} maxLength="10" />
+                                    <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="9876543210" name="mobile_no" value={mobNumber} onChange={handleMobNumber} maxLength="10" required />
                                 </div>
                                 <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 lg:gap-3 md:gap-3 gap-0">
                                     <div className="flex flex-col gap-2">
-                                        <label className="font-semibold text-xs text-gray-500 ">PAN Card No.</label>
+                                        <label className="font-semibold text-xs text-gray-500 ">PAN Card No. <span className="text-xs font-normal">(optional)</span></label>
                                         <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100 uppercase" placeholder="" name="pan_no" />
                                     </div>
                                     <div className="flex flex-col gap-2">
-                                        <label className="font-semibold text-xs text-gray-500 ">Aadhar Card No.</label>
+                                        <label className="font-semibold text-xs text-gray-500 ">Aadhar Card No. <span className="text-xs font-normal">(optional)</span></label>
                                         <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="" name="aadhar_no" value={aadharNumber} onChange={handleAadharNumber} />
                                     </div>
                                 </div>
@@ -157,7 +151,7 @@ function AddDefaulter() {
                                     <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="Company" name="firm_name" />
                                 </div>
                                 <div className="flex flex-col gap-2">
-                                    <label className="font-semibold text-xs text-gray-500 ">GST No.</label>
+                                    <label className="font-semibold text-xs text-gray-500 ">GST No. <span className="text-xs font-normal">(optional)</span></label>
                                     <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100 uppercase" placeholder="" name="gst_no" />
                                 </div>
                                 <div className="flex flex-col gap-2">
@@ -168,14 +162,16 @@ function AddDefaulter() {
                                     <label className="font-semibold text-xs text-gray-500 ">Remark</label>
                                     <textarea rows={5} className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="Message" name="remark" />
                                 </div>
-                                <div className="mb-5 space-y-2">
+                                <div className="mb-5 space-y-4">
                                     <div className="grid w-full items-center gap-1.5">
                                         <label className="text-xs text-gray-500 font-semibold peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Upload Ledger Statement</label>
-                                        <input name="bank_statement" type="file" className="flex h-10 w-full rounded-md border border-gray-300 border-input bg-gray-100 px-3 py-2 text-sm text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium" />
+                                        <input name="bank_statement" type="file" className="flex h-10 w-full rounded-md border border-gray-300 border-input bg-gray-100 px-3 py-2 text-sm text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium" required accept="image/*,application/pdf" />
+                                        <span className="text-xs text-gray-600">*Images & PDFs only.</span>
                                     </div>
                                     <div className="grid w-full items-center gap-1.5">
                                         <label className="text-xs text-gray-500 font-semibold peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Upload Notice or other documents <span className="font-normal">(optional)</span></label>
-                                        <input name="other_document" type="file" className="flex h-10 w-full rounded-md border border-gray-300 border-input bg-gray-100 px-3 py-2 text-sm text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium" />
+                                        <input name="other_document" type="file" className="flex h-10 w-full rounded-md border border-gray-300 border-input bg-gray-100 px-3 py-2 text-sm text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium" accept="image/*,application/pdf" />
+                                        <span className="text-xs text-gray-600">*Images & PDFs only.</span>
                                     </div>
                                 </div>
                             </div>

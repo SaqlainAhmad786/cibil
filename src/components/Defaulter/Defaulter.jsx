@@ -144,7 +144,7 @@ function Defaulter() {
 							<div className="join rounded-none mb-3 flex lg:justify-start md:justify-start sm:justify-start justify-center">
 								{
 									defaulter?.bank_statement?.endsWith(".pdf") ? (
-										<Link className="bg-gray-100 border-gray-300 btn btn-outline btn-sm lg:text-xs md:text-xs text-[10px] join-item" to={`/view-resume?resume=${defaulter?.bank_statement}`}>View Ledger Statement</Link>
+										<Link className="bg-gray-100 border-gray-300 btn btn-outline btn-sm lg:text-xs md:text-xs text-[10px] join-item" to={`/view-resume?resume=${defaulter?.bank_statement}`} target="_blank">View Ledger Statement</Link>
 									) : (<>
 										<label
 											htmlFor="ledgerModal"
@@ -188,7 +188,7 @@ function Defaulter() {
 
 								{
 									defaulter?.other_document?.endsWith(".pdf") ? (
-										<Link className="bg-gray-100 border-gray-300 btn btn-outline btn-sm lg:text-xs md:text-xs text-[10px] join-item" to={`/view-resume?resume=${defaulter?.other_document}`}>View Other Documents</Link>
+										<Link className="bg-gray-100 border-gray-300 btn btn-outline btn-sm lg:text-xs md:text-xs text-[10px] join-item" to={`/view-resume?resume=${defaulter?.other_document}`} target="_blank">View Other Documents</Link>
 									) : (
 										<>
 											<label
@@ -237,8 +237,8 @@ function Defaulter() {
 								<div className="text-lg font-semibold">Remark:</div>
 								<p>{defaulter.remark}</p>
 							</div>
-							<div className="my-3">
-								<p className="text-sm mb-2">Other firms aslo listed as defaulter:</p>
+							{filteredDefaulter.length > 0 && <div className="my-3">
+								<p className="text-sm mb-2">Other firms also listed as defaulter:</p>
 								<div className="grid gap-1">
 									{filteredDefaulter.map((data, index) => {
 										return (
@@ -282,7 +282,7 @@ function Defaulter() {
 										);
 									})}
 								</div>
-							</div>
+							</div>}
 						</div>
 					</div>
 				</div>
