@@ -5,6 +5,7 @@ import { Search } from "lucide-react";
 import axios from "axios";
 import Loader from "./Loader/Loader";
 import AlertModal from "./AlertModal";
+import { toast, Toaster } from "sonner";
 
 function MoneyBlockerFinder() {
 	const [loading, setLoading] = useState(false);
@@ -34,6 +35,12 @@ function MoneyBlockerFinder() {
 			return
 		}
 
+		if (!searchValues.name && !searchValues.pan_no && !searchValues.aadhar_no && !searchValues.mobile_no && !searchValues.gst_no) {
+			setLoading(false);
+			toast.error("Please fill at least one field to search.", { duration: 3000 });
+			return;
+		}
+
 		try {
 			const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/defaulter/search`, searchValues, {
 				headers: {
@@ -55,6 +62,7 @@ function MoneyBlockerFinder() {
 	return (
 		<>
 			<main>
+				<Toaster position="top-right" richColors />
 				{loading && <Loader />}
 				{showModal && <AlertModal />}
 				<div className="customContainer bg-white p-3 lg:p-5 md:p-4 rounded-lg mx-auto shadow-sm">
