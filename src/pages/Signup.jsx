@@ -101,7 +101,6 @@ function Signup() {
                                     <input
                                         type="text"
                                         className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400"
-                                        placeholder="John Doe"
                                         name="user_name"
                                     />
                                 </div>
@@ -110,7 +109,6 @@ function Signup() {
                                     <input
                                         type="number"
                                         className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400"
-                                        placeholder="9876543210"
                                         name="mobile_no"
                                         value={number}
                                         onChange={handleNumber}
@@ -122,7 +120,6 @@ function Signup() {
                                     <input
                                         type="email"
                                         className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400"
-                                        placeholder="example@mail.com"
                                         name="email"
                                     />
                                 </div>
@@ -132,7 +129,6 @@ function Signup() {
                                         <input
                                             type={showPassword ? "text" : "password"}
                                             className="bg-transparent text-white text-sm outline-none flex-1"
-                                            placeholder="••••••••"
                                             name="password"
                                         />
                                         <button
@@ -155,7 +151,6 @@ function Signup() {
                                     <input
                                         type="password"
                                         className="border rounded-lg px-3 py-2 mb-4 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400"
-                                        placeholder="••••••••"
                                         onChange={(e) => setConfirmPassword(e.target.value)}
                                     />
                                 </div>

@@ -9,8 +9,8 @@ function AddDefaulter() {
     const [states, setStates] = useState([])
     const [cities, setCities] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [mobNumber, setMobNumber] = useState('');
-    const [aadharNumber, setAadharNumber] = useState('');
+    const [mobNumber, setMobNumber] = useState(sessionStorage.getItem('mobNumber') || '');
+    const [aadharNumber, setAadharNumber] = useState(sessionStorage.getItem('aadharNumber') || '');
     const [showModal, setShowModal] = useState(false);
     const { userData, refreshDefaultersList } = useAuth();
 
@@ -27,12 +27,14 @@ function AddDefaulter() {
         if (/^\d{0,10}$/.test(input)) {
             setMobNumber(input);
         }
+        sessionStorage.setItem('mobNumber', input);
     };
     const handleAadharNumber = (e) => {
         const input = e.target.value;
         if (/^\d{0,12}$/.test(input)) {
             setAadharNumber(input);
         }
+        sessionStorage.setItem('aadharNumber', input);
     };
 
     const handleSubmit = async (e) => {
@@ -62,6 +64,7 @@ function AddDefaulter() {
                     setLoading(false);
                     refreshDefaultersList();
                     e.target.reset();
+                    sessionStorage.clear();
                     toast.success("Defaulter added successfully", { duration: 3000 });
                 }
             })
@@ -84,6 +87,11 @@ function AddDefaulter() {
         setCities(citiesList);
     };
 
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        sessionStorage.setItem(name, value);
+    };
+
     return (
         <>
             <section className="customContainer bg-white p-5 rounded-lg mb-5 shadow-sm">
@@ -99,25 +107,25 @@ function AddDefaulter() {
                             <div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Name</label>
-                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="John Doe" name="name" />
+                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" name="name" onChange={handleInputChange} defaultValue={sessionStorage.getItem('name') || ''} />
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Mobile</label>
-                                    <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="9876543210" name="mobile_no" value={mobNumber} onChange={handleMobNumber} maxLength="10" required />
+                                    <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" name="mobile_no" value={mobNumber} onChange={handleMobNumber} maxLength="10" required />
                                 </div>
                                 <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 lg:gap-3 md:gap-3 gap-0">
                                     <div className="flex flex-col gap-2">
                                         <label className="font-semibold text-xs text-gray-500 ">PAN Card No. <span className="text-xs font-normal">(optional)</span></label>
-                                        <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100 uppercase" placeholder="" name="pan_no" />
+                                        <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100 uppercase" name="pan_no" onChange={handleInputChange} defaultValue={sessionStorage.getItem('pan_no') || ''} />
                                     </div>
                                     <div className="flex flex-col gap-2">
                                         <label className="font-semibold text-xs text-gray-500 ">Aadhar Card No. <span className="text-xs font-normal">(optional)</span></label>
-                                        <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="" name="aadhar_no" value={aadharNumber} onChange={handleAadharNumber} />
+                                        <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" name="aadhar_no" value={aadharNumber} onChange={handleAadharNumber} />
                                     </div>
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Address</label>
-                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="" name="address" />
+                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" name="address" onChange={handleInputChange} defaultValue={sessionStorage.getItem('address') || ''} />
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Country</label>
@@ -148,19 +156,52 @@ function AddDefaulter() {
                             <div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Firm Name</label>
-                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="Company" name="firm_name" />
+                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" name="firm_name" onChange={handleInputChange} defaultValue={sessionStorage.getItem('firm_name') || ''} />
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <label className="font-semibold text-xs text-gray-500 ">Select Industry</label>
+                                    <select id="industry" name="industry" className="border rounded-lg px-3 py-[10px] mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" required>
+                                        <option hidden>Select a sector</option>
+                                        <option value="agriculture">Agriculture</option>
+                                        <option value="automotive">Automotive</option>
+                                        <option value="banking_finance">Banking & Finance</option>
+                                        <option value="construction">Construction & Real Estate</option>
+                                        <option value="education">Education</option>
+                                        <option value="energy">Energy & Utilities</option>
+                                        <option value="fmcg">FMCG (Fast-Moving Consumer Goods)</option>
+                                        <option value="government">Government & Public Sector</option>
+                                        <option value="healthcare">Healthcare & Pharmaceuticals</option>
+                                        <option value="hospitality">Hospitality & Tourism</option>
+                                        <option value="information_technology">Information Technology (IT)</option>
+                                        <option value="insurance">Insurance</option>
+                                        <option value="legal">Legal Services</option>
+                                        <option value="logistics">Logistics & Transportation</option>
+                                        <option value="manufacturing">Manufacturing</option>
+                                        <option value="media">Media & Entertainment</option>
+                                        <option value="mining">Mining & Metals</option>
+                                        <option value="retail">Retail & E-commerce</option>
+                                        <option value="telecommunications">Telecommunications</option>
+                                        <option value="textile">Textile & Apparel</option>
+                                        <option value="other">Other</option>
+                                    </select>
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">GST No. <span className="text-xs font-normal">(optional)</span></label>
-                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100 uppercase" placeholder="" name="gst_no" />
+                                    <input type="text" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100 uppercase" name="gst_no" onChange={handleInputChange} defaultValue={sessionStorage.getItem('gst_no') || ''} />
                                 </div>
-                                <div className="flex flex-col gap-2">
-                                    <label className="font-semibold text-xs text-gray-500 ">Pending Amount</label>
-                                    <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="₹" name="pending_amount" />
+                                <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 lg:gap-3 md:gap-3 gap-0">
+                                    <div className="flex flex-col gap-2">
+                                        <label className="font-semibold text-xs text-gray-500 ">Pending Amount</label>
+                                        <input type="number" className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="₹" name="pending_amount" onChange={handleInputChange} defaultValue={sessionStorage.getItem('pending_amount') || ''} />
+                                    </div>
+                                    <div className="flex flex-col gap-2">
+                                        <label className="font-semibold text-xs text-gray-500 ">Amount Pending </label>
+                                        <input type="date" className="border rounded-lg px-3 py-[7px] mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" name="pending_amount_date" onChange={handleInputChange} defaultValue={sessionStorage.getItem('pending_amount_date') || ''} />
+                                    </div>
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="font-semibold text-xs text-gray-500 ">Remark</label>
-                                    <textarea rows={5} className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="Message" name="remark" />
+                                    <textarea rows={5} className="border rounded-lg px-3 py-2 mb-4 text-black text-sm w-full outline-none border-gray-300 bg-gray-100" placeholder="Message" name="remark" onChange={handleInputChange} defaultValue={sessionStorage.getItem('remark') || ''} />
                                 </div>
                                 <div className="mb-5 space-y-4">
                                     <div className="grid w-full items-center gap-1.5">
