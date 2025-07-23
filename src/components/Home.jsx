@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react"
-import { useAuth } from "../contexts/authContext"
-import { Link, useLocation } from "react-router-dom"
-import Loader from "./Loader/Loader"
-import AlertModal from "./AlertModal"
-import { toast, Toaster } from "sonner"
+import { useEffect, useState } from 'react'
+import { useAuth } from '../contexts/authContext'
+import { Link, useLocation } from 'react-router-dom'
+import Loader from './Loader/Loader'
+import AlertModal from './AlertModal'
+import { toast, Toaster } from 'sonner'
 
 function Home() {
     const { userData, defaultersList, defaultersLoading } = useAuth()
@@ -12,7 +12,11 @@ function Home() {
 
     useEffect(() => {
         if (paymentSuccess) {
-            toast.success("Payment successful!", { description: "You are now a subscribed user" }, { duration: 3000 })
+            toast.success(
+                'Payment successful!',
+                { description: 'You are now a subscribed user' },
+                { duration: 3000 },
+            )
         }
     }, [])
 
@@ -36,21 +40,24 @@ function Home() {
     const handleNextPage = () => {
         if (currentPage < totalPages) {
             setCurrentPage((prevPage) => prevPage + 1)
-            setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0)
+            setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 0)
         }
     }
 
     const handlePreviousPage = () => {
         if (currentPage > 1) {
             setCurrentPage((prevPage) => prevPage - 1)
-            setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0)
+            setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 0)
         }
     }
 
     return (
         <>
             <main>
-                <Toaster richColors position="top-right" />
+                <Toaster
+                    richColors
+                    position="top-right"
+                />
                 {popupShow && <AlertModal setPopupShow={setPopupShow} />}
                 {defaultersLoading && <Loader />}
                 <section className="my-4">
@@ -69,7 +76,7 @@ function Home() {
                             {sortedItems.map((item) => {
                                 return (
                                     <>
-                                        {userData.isSubscribed || userData.role === "admin" ? (
+                                        {userData.isSubscribed || userData.role === 'admin' ? (
                                             <Link
                                                 key={item._id}
                                                 to={`/overview/defaulter/${item._id}`}
@@ -77,13 +84,19 @@ function Home() {
                                             >
                                                 <div className="flex justify-between items-center border-b pb-1">
                                                     <div>
-                                                        <p className="text-xl font-semibold capitalize">{item.name}</p>
+                                                        <p className="text-xl font-semibold capitalize">
+                                                            {item.name}
+                                                        </p>
                                                         <p className="text-xs font-semibold text-gray-500 uppercase">
                                                             {item.firm_name}
                                                         </p>
                                                     </div>
                                                     <div>
-                                                        <img src="/img/fraud.png" className="h-16 w-16" alt="" />
+                                                        <img
+                                                            src="/img/fraud.png"
+                                                            className="h-16 w-16"
+                                                            alt=""
+                                                        />
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col gap-2 py-3 mb-2 border-b">
@@ -106,17 +119,26 @@ function Home() {
                                                             -₹
                                                         </p>
                                                         <p className="font-medium text-sm text-gray-700">
-                                                            ₹{" "}
-                                                            {new Intl.NumberFormat("en-IN").format(item.pending_amount)}
+                                                            ₹{' '}
+                                                            {new Intl.NumberFormat('en-IN').format(
+                                                                item.pending_amount,
+                                                            )}
                                                         </p>
                                                     </div>
                                                 </div>
                                                 <div className="flex items-center justify-between">
                                                     <p className="text-[10px] text-gray-700">
-                                                        <span className="font-medium">Posted by: </span>
-                                                        <span className="capitalize">{item.added_by.firm_name} </span>
+                                                        <span className="font-medium">
+                                                            Posted by:{' '}
+                                                        </span>
+                                                        <span className="capitalize">
+                                                            {item.added_by.firm_name}{' '}
+                                                        </span>
                                                         <span>
-                                                            on {new Date(item.createdAt).toLocaleDateString("en-IN")}
+                                                            on{' '}
+                                                            {new Date(
+                                                                item.createdAt,
+                                                            ).toLocaleDateString('en-IN')}
                                                         </span>
                                                     </p>
                                                     {item.is_cleared && (
@@ -130,18 +152,26 @@ function Home() {
                                             <div
                                                 role="button"
                                                 key={item._id}
-                                                onClick={() => { setPopupShow(!popupShow) }}
+                                                onClick={() => {
+                                                    setPopupShow(!popupShow)
+                                                }}
                                                 className="bg-gradient-to-br hover:bg-gradient-to-bl from-white to-blue-50 inline-block border rounded-lg p-3 shadow-md hover:scale-105 hover:shadow-xl duration-200"
                                             >
                                                 <div className="flex justify-between items-center border-b pb-1">
                                                     <div>
-                                                        <p className="text-xl font-semibold capitalize">{item.name}</p>
+                                                        <p className="text-xl font-semibold capitalize">
+                                                            {item.name}
+                                                        </p>
                                                         <p className="text-xs font-semibold text-gray-500 uppercase">
                                                             {item.firm_name}
                                                         </p>
                                                     </div>
                                                     <div>
-                                                        <img src="/img/fraud.png" className="h-16 w-16" alt="" />
+                                                        <img
+                                                            src="/img/fraud.png"
+                                                            className="h-16 w-16"
+                                                            alt=""
+                                                        />
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col gap-2 py-3 mb-2 border-b">
@@ -164,17 +194,26 @@ function Home() {
                                                             -₹
                                                         </p>
                                                         <p className="font-medium text-sm text-gray-700">
-                                                            ₹{" "}
-                                                            {new Intl.NumberFormat("en-IN").format(item.pending_amount)}
+                                                            ₹{' '}
+                                                            {new Intl.NumberFormat('en-IN').format(
+                                                                item.pending_amount,
+                                                            )}
                                                         </p>
                                                     </div>
                                                 </div>
                                                 <div className="flex items-center justify-between">
                                                     <p className="text-[10px] text-gray-700">
-                                                        <span className="font-medium">Posted by: </span>
-                                                        <span className="capitalize">{item.added_by.firm_name} </span>
+                                                        <span className="font-medium">
+                                                            Posted by:{' '}
+                                                        </span>
+                                                        <span className="capitalize">
+                                                            {item.added_by.firm_name}{' '}
+                                                        </span>
                                                         <span>
-                                                            on {new Date(item.createdAt).toLocaleDateString("en-IN")}
+                                                            on{' '}
+                                                            {new Date(
+                                                                item.createdAt,
+                                                            ).toLocaleDateString('en-IN')}
                                                         </span>
                                                     </p>
                                                     {item.is_cleared && (

@@ -1,14 +1,14 @@
-import { useEffect, useRef, useState } from "react"
-import { Link, useLocation, useNavigate } from "react-router-dom"
-import { toast, Toaster } from "sonner"
-import { useAuth } from "../contexts/authContext"
-import axios from "axios"
+import { useEffect, useRef, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { toast, Toaster } from 'sonner'
+import { useAuth } from '../contexts/authContext'
+import axios from 'axios'
 
 function Login() {
     const { refreshUserData, refreshDefaultersList } = useAuth()
     const [loading, setLoading] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
-    const [emailValue, setEmailValue] = useState("")
+    const [emailValue, setEmailValue] = useState('')
     const location = useLocation()
     const hasRun = useRef(false)
     const navigate = useNavigate()
@@ -18,14 +18,14 @@ function Login() {
     const newPassword = location?.state?.passwordChanged
 
     useEffect(() => {
-        document.title = "Login | Vyapar Score"
+        document.title = 'Login | Vyapar Score'
         if (hasRun.current) return
 
         if (newUserSignedUp) {
             toast.success(
-                "Account Created Successfully!",
-                { description: "Please Log in to continue" },
-                { duration: 3000 }
+                'Account Created Successfully!',
+                { description: 'Please Log in to continue' },
+                { duration: 3000 },
             )
             navigate(location.pathname, { state: null })
         }
@@ -37,10 +37,10 @@ function Login() {
 
         if (newPassword) {
             toast.success(
-                "Password Changed Successfully!",
-                { description: "Please Log in to continue" },
+                'Password Changed Successfully!',
+                { description: 'Please Log in to continue' },
                 { richColors: true },
-                { duration: 3000 }
+                { duration: 3000 },
             )
             navigate(location.pathname, { state: null })
         }
@@ -54,48 +54,47 @@ function Login() {
         const data = Object.fromEntries(formData)
         if (!data.email || !data.password) {
             setLoading(false)
-            toast.error("Please enter your credentials", { duration: 3000 })
+            toast.error('Please enter your credentials', { duration: 3000 })
             return
         }
         try {
             await axios.post(`${import.meta.env.VITE_BASE_URL}/user/login`, data).then((res) => {
-                localStorage.setItem("token", res.data.data.token)
+                localStorage.setItem('token', res.data.data.token)
                 setLoading(false)
                 refreshUserData()
                 refreshDefaultersList()
-                if (res.data.data.user.role == "admin") {
-                    navigate("/admin")
+                if (res.data.data.user.role == 'admin') {
+                    navigate('/admin')
                     return
                 }
-                navigate("/")
+                navigate('/')
             })
         } catch (error) {
             setLoading(false)
-            if (error.response.data.message === "Invalid email or password") {
-                toast.error("User not found", { description: "Please Sign up to continue" }, { duration: 3000 })
-                return
-            } else if (error.response.data.message === "Invalid Password") {
-                toast.error(
-                    "Password does not match",
-                    { description: "Please check your password" },
-                    { duration: 3000 }
-                )
-            }
+            toast.error(error.response.data.message, { duration: 3000 })
         }
     }
 
     return (
         <>
             <main className="h-[100dvh] flex items-center justify-center bg-[url('/img/login-cover.svg')] bg-cover bg-center px-4 sm:px-6 lg:px-8">
-                <Toaster position="top-center" richColors />
+                <Toaster
+                    position="top-center"
+                    richColors
+                />
                 <div className="w-[320px] min-h-96 px-8 py-6 text-left bg-gray-800 border border-gray-700 bg-opacity-70 backdrop-blur-lg rounded-xl shadow-lg">
                     <form onSubmit={handleSubmit}>
                         <div className="flex flex-col h-full select-none">
                             <div className="mb-5 flex justify-center">
-                                <img src="/img/vyapar-logo.png" className="w-20" />
+                                <img
+                                    src="/img/vyapar-logo.png"
+                                    className="w-20"
+                                />
                             </div>
                             <div className="w-full flex flex-col gap-2">
-                                <label className="font-semibold text-xs text-white tracking-wide">Email</label>
+                                <label className="font-semibold text-xs text-white tracking-wide">
+                                    Email
+                                </label>
                                 <input
                                     className="border rounded-lg px-3 py-2 mb-5 text-white text-sm w-full outline-none border-gray-600 bg-gray-600 bg-opacity-40 placeholder:text-gray-400"
                                     placeholder="example@mail.com"
@@ -107,10 +106,12 @@ function Login() {
                             </div>
                         </div>
                         <div className="w-full flex flex-col gap-2">
-                            <label className="font-semibold text-xs text-white tracking-wide">Password</label>
+                            <label className="font-semibold text-xs text-white tracking-wide">
+                                Password
+                            </label>
                             <div className="flex justify-between items-center border-gray-600 bg-gray-600 bg-opacity-40 border rounded-lg px-3 py-2 mb-3">
                                 <input
-                                    type={showPassword ? "text" : "password"}
+                                    type={showPassword ? 'text' : 'password'}
                                     className="bg-transparent text-white text-sm w-full outline-none placeholder:text-gray-400"
                                     placeholder="••••••••"
                                     name="password"
@@ -129,8 +130,15 @@ function Login() {
                             </div>
                         </div>
                         <div className="flex items-center gap-2 mb-2">
-                            <input type="checkbox" name="remember" id="remember" />
-                            <label htmlFor="remember" className="text-xs text-gray-200">
+                            <input
+                                type="checkbox"
+                                name="remember"
+                                id="remember"
+                            />
+                            <label
+                                htmlFor="remember"
+                                className="text-xs text-gray-200"
+                            >
                                 Remember me
                             </label>
                         </div>
@@ -140,19 +148,33 @@ function Login() {
                                 className="py-2 text-sm bg-blueClr focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 flex justify-center text-center font-semibold shadow-md focus:outline-none rounded-lg cursor-pointer select-none"
                                 disabled={loading}
                             >
-                                {loading ? <l-mirage size="80" speed="4" color="white"></l-mirage> : "LOGIN"}
+                                {loading ? (
+                                    <l-mirage
+                                        size="80"
+                                        speed="4"
+                                        color="white"
+                                    ></l-mirage>
+                                ) : (
+                                    'LOGIN'
+                                )}
                             </button>
                         </div>
                     </form>
                     <div className="mt-4">
                         <p className="text-xs mb-1 text-center text-gray-400">
-                            <Link to="/forgetPassword" className="font-semibold text-gray-300 hover:underline">
+                            <Link
+                                to="/forgetPassword"
+                                className="font-semibold text-gray-300 hover:underline"
+                            >
                                 Forget Password?
                             </Link>
                         </p>
                         <p className="text-xs text-center text-gray-100 font-extralight">
-                            {`Don't`} have an account?{" "}
-                            <Link to="/signup" className="font-semibold text-blueClr hover:underline">
+                            {`Don't`} have an account?{' '}
+                            <Link
+                                to="/signup"
+                                className="font-semibold text-blueClr hover:underline"
+                            >
                                 Sign up
                             </Link>
                         </p>

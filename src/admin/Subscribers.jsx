@@ -1,5 +1,5 @@
-import TableSkeleton from "../components/TableSkeleton"
-import useAllUsers from "../hooks/useAllUsers"
+import TableSkeleton from '../components/TableSkeleton'
+import useAllUsers from '../hooks/useAllUsers'
 
 export default function Subscribers() {
     const { subscribers, loading } = useAllUsers()
@@ -8,7 +8,11 @@ export default function Subscribers() {
         return <TableSkeleton />
     }
     if (!subscribers?.length) {
-        return <p className="h-full w-full flex items-center justify-center font-semibold text-xl">No Subscribers</p>
+        return (
+            <p className="h-full w-full flex items-center justify-center font-semibold text-xl">
+                No Subscribers
+            </p>
+        )
     }
 
     return (
@@ -37,8 +41,15 @@ export default function Subscribers() {
                                         >
                                             Plan detail
                                         </label>
-                                        <input type="checkbox" id={`plan_modal_${index}`} className="modal-toggle" />
-                                        <div className="modal" role="dialog">
+                                        <input
+                                            type="checkbox"
+                                            id={`plan_modal_${index}`}
+                                            className="modal-toggle"
+                                        />
+                                        <div
+                                            className="modal"
+                                            role="dialog"
+                                        >
                                             <div className="modal-box">
                                                 <h3 className="text-lg font-bold">Plan detail!</h3>
                                                 <div className="py-4 space-y-2 text-[16px]">
@@ -51,7 +62,10 @@ export default function Subscribers() {
                                                     <p>Plan price: ₹{user.plan.price}</p>
                                                 </div>
                                             </div>
-                                            <label className="modal-backdrop" htmlFor={`plan_modal_${index}`}>
+                                            <label
+                                                className="modal-backdrop"
+                                                htmlFor={`plan_modal_${index}`}
+                                            >
                                                 Close
                                             </label>
                                         </div>
@@ -68,29 +82,49 @@ export default function Subscribers() {
                                             id={`transaction_modal_${index}`}
                                             className="modal-toggle"
                                         />
-                                        <div className="modal" role="dialog">
+                                        <div
+                                            className="modal"
+                                            role="dialog"
+                                        >
                                             <div className="modal-box">
-                                                <h3 className="text-lg font-bold">Transaction detail!</h3>
+                                                <h3 className="text-lg font-bold">
+                                                    Transaction detail!
+                                                </h3>
                                                 <div className="py-4 space-y-2 text-[16px]">
                                                     <p>
-                                                        <span className="font-semibold">Merchant order ID:</span>{" "}
+                                                        <span className="font-semibold">
+                                                            Merchant order ID:
+                                                        </span>{' '}
                                                         {user.transactionDetail.merchant_order_id}
                                                     </p>
                                                     <p>
-                                                        <span className="font-semibold">Transaction amount:</span>{" "}
-                                                        {user.transactionDetail.response.amount / 100}
+                                                        <span className="font-semibold">
+                                                            Transaction amount:
+                                                        </span>{' '}
+                                                        {user.transactionDetail.response.amount /
+                                                            100}
                                                     </p>
                                                     <p>
-                                                        <span className="font-semibold">Status:</span>{" "}
+                                                        <span className="font-semibold">
+                                                            Status:
+                                                        </span>{' '}
                                                         {user.transactionDetail.response.state}
                                                     </p>
                                                     <p>
-                                                        <span className="font-semibold">Payment mode:</span>{" "}
-                                                        {user.transactionDetail.response.paymentDetails[0].paymentMode}
+                                                        <span className="font-semibold">
+                                                            Payment mode:
+                                                        </span>{' '}
+                                                        {
+                                                            user.transactionDetail.response
+                                                                .paymentDetails[0].paymentMode
+                                                        }
                                                     </p>
                                                 </div>
                                             </div>
-                                            <label className="modal-backdrop" htmlFor={`transaction_modal_${index}`}>
+                                            <label
+                                                className="modal-backdrop"
+                                                htmlFor={`transaction_modal_${index}`}
+                                            >
                                                 Close
                                             </label>
                                         </div>
@@ -102,25 +136,40 @@ export default function Subscribers() {
                                         >
                                             User detail
                                         </label>
-                                        <input type="checkbox" id={`user_modal_${index}`} className="modal-toggle" />
-                                        <div className="modal" role="dialog">
+                                        <input
+                                            type="checkbox"
+                                            id={`user_modal_${index}`}
+                                            className="modal-toggle"
+                                        />
+                                        <div
+                                            className="modal"
+                                            role="dialog"
+                                        >
                                             <div className="modal-box">
                                                 <h3 className="text-lg font-bold">Hello!</h3>
                                                 <div className="py-4 space-y-2 text-[16px]">
                                                     <p>
-                                                        <span className="font-semibold">Name:</span>{" "}
+                                                        <span className="font-semibold">Name:</span>{' '}
                                                         {user.user.user_name}
                                                     </p>
                                                     <p>
-                                                        <span className="font-semibold">Mobile:</span>{" "}
+                                                        <span className="font-semibold">
+                                                            Mobile:
+                                                        </span>{' '}
                                                         {user.user.mobile_no}
                                                     </p>
                                                     <p>
-                                                        <span className="font-semibold">Email:</span> {user.user.email}
+                                                        <span className="font-semibold">
+                                                            Email:
+                                                        </span>{' '}
+                                                        {user.user.email}
                                                     </p>
                                                 </div>
                                             </div>
-                                            <label className="modal-backdrop" htmlFor={`user_modal_${index}`}>
+                                            <label
+                                                className="modal-backdrop"
+                                                htmlFor={`user_modal_${index}`}
+                                            >
                                                 Close
                                             </label>
                                         </div>
