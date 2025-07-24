@@ -1,6 +1,12 @@
 import { LogOut } from "lucide-react"
+import { useEffect } from "react"
 
 function ProfileStatus() {
+
+    useEffect(() => {
+        document.title = 'Profile Status | Vyapar Score'
+    }, [])
+
     return (
         <>
             <main className="h-[100dvh] flex items-center justify-center bg-[url('/img/login-cover.svg')] bg-cover bg-center px-4 sm:px-6 lg:px-8">
