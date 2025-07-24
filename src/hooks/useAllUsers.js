@@ -7,6 +7,7 @@ export default function useAllUsers(id) {
     const [users, setUsers] = useState(null)
     const [singleUser, setSingleUser] = useState(null)
     const [subscribers, setSubscribers] = useState(null)
+    const [pendingUsers, setPendingUsers] = useState(null)
     const [loading, setLoading] = useState(true)
     const [usersTotalPages, setUsersTotalPages] = useState(1)
     const [userPage, setUserPage] = useState(1)
@@ -18,6 +19,7 @@ export default function useAllUsers(id) {
             fetchUser()
         }
         getAllSubscribers()
+        fetchPendingUsers()
         fetchUsers()
     }, [id, userPage])
 
@@ -59,6 +61,21 @@ export default function useAllUsers(id) {
         }
     }
 
+    async function fetchPendingUsers() {
+        try {
+            setLoading(true)
+            const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/user/pending-users`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            setPendingUsers(res.data.users)
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setLoading(false)
+        }
+    }
     async function getAllSubscribers() {
         try {
             setLoading(true)
@@ -83,5 +100,7 @@ export default function useAllUsers(id) {
         setUserPage,
         userPage,
         limit,
+        pendingUsers,
+        refetchPendingUsers: fetchPendingUsers,
     }
 }

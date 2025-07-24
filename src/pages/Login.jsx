@@ -63,6 +63,10 @@ function Login() {
                 setLoading(false)
                 refreshUserData()
                 refreshDefaultersList()
+                if (['pending', 'rejected'].includes(res.data.data.user.status)) {
+                    navigate('/profile-status')
+                    return
+                }
                 if (res.data.data.user.role == 'admin') {
                     navigate('/admin')
                     return

@@ -1,8 +1,9 @@
-import { LogOut } from "lucide-react"
-import { useEffect } from "react"
+import { LogOut } from 'lucide-react'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function ProfileStatus() {
-
+    const navigate = useNavigate()
     useEffect(() => {
         document.title = 'Profile Status | Vyapar Score'
     }, [])
@@ -23,10 +24,16 @@ function ProfileStatus() {
                         <div className="space-y-4">
                             <div className="text-sm text-yellow-200 text-center bg-yellow-900 bg-opacity-40 px-4 py-3 rounded-md border border-yellow-600 leading-relaxed">
                                 Your account is currently pending approval. <br />
-                                Once the verification process is complete and your profile is approved, a confirmation message will be sent to your registered email address.
+                                Once the verification process is complete and your profile is
+                                approved, a confirmation message will be sent to your registered
+                                email address.
                             </div>
                             <div>
                                 <button
+                                    onClick={() => {
+                                        localStorage.clear()
+                                        navigate('/')
+                                    }}
                                     type="submit"
                                     className="py-2 px-4 text-sm bg-blueClr focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 flex justify-center text-center font-semibold shadow-md focus:outline-none rounded-lg cursor-pointer select-none"
                                 >
