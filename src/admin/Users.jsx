@@ -104,26 +104,22 @@ export default function Users() {
                                 <td className="px-6 py-4">{user.email}</td>
                                 <td className="px-6 py-4">
                                     <span
-                                        className={`inline-block px-2 py-1 text-xs font-medium rounded-full ${
-                                            user.isSubscribed
-                                                ? 'bg-green-100 text-green-700'
-                                                : 'bg-red-100 text-red-700'
-                                        }`}
+                                        className={`inline-block px-2 py-1 text-xs font-medium rounded-full ${user.isSubscribed
+                                            ? 'bg-green-100 text-green-700'
+                                            : 'bg-red-100 text-red-700'
+                                            }`}
                                     >
                                         {user.isSubscribed ? 'Subscribed' : 'Not Subscribed'}
                                     </span>
                                 </td>
                                 <td className="px-6 py-4">
                                     <span
-                                        className={`capitalize inline-block px-2 py-1 text-xs font-medium rounded-full ${
-                                            user.status === 'active' &&
+                                        className={`capitalize inline-block px-2 py-1 text-xs font-medium rounded-full ${user.status === 'active' &&
                                             'bg-green-100 text-green-700'
-                                        } ${
-                                            user.status === 'inactive' && 'bg-red-100 text-red-700'
-                                        } ${
-                                            user.status === 'pending' &&
+                                            } ${user.status === 'inactive' && 'bg-red-100 text-red-700'
+                                            } ${user.status === 'pending' &&
                                             'bg-yellow-100 text-yellow-700'
-                                        }`}
+                                            }`}
                                     >
                                         {user.status}
                                     </span>

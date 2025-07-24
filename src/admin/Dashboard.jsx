@@ -1,7 +1,7 @@
+import { useAuth } from '../contexts/authContext'
 import useAllUsers from '../hooks/useAllUsers'
 import StatCard from '../components/StatCard'
 import TrafficStats from '../components/TrafficStats'
-import { useAuth } from '../contexts/authContext'
 
 export default function Dashboard() {
     const { users, subscribers } = useAllUsers()
@@ -35,18 +35,13 @@ export default function Dashboard() {
     ]
     return (
         <>
-            <section className="p-8 space-y-4">
-                <div>
-                    <h1 className="font-bold text-2xl bg-blueClr text-white px-4 py-2 rounded">
-                        Stats
-                    </h1>
-                </div>
+            <section className="sm:p-8 p-4 space-y-4">
                 <TrafficStats
                     users={users}
                     subscribers={subscribers}
                     defaultersList={defaultersList}
                 />
-                <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
+                <div className="border-t border-gray-400 pt-4 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
                     {statsList.map((stat) => (
                         <StatCard
                             key={stat.title}

@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { NavLink, Outlet, useNavigate } from "react-router-dom"
 import { useAuth } from "../contexts/authContext"
-import { IndianRupee, LayoutDashboard, LogOut, UserRoundCheck, UsersRound } from "lucide-react"
+import { IndianRupee, LayoutDashboard, LogOut, UserRoundCheck, UserRoundCog, UsersRound } from "lucide-react"
 
 function AdminPanel() {
     const { logout } = useAuth()
@@ -54,13 +54,18 @@ function AdminPanel() {
                                 </NavLink>
                             </li>
                             <li className="hover:translate-x-2 duration-200">
-                                <NavLink to={"subscribers"} onClick={handleSideBar}>
-                                    <UserRoundCheck className="w-5 h-5" />Subscribers
+                                <NavLink to={"users"} onClick={handleSideBar}>
+                                    <UsersRound className="w-5 h-5" />Users
                                 </NavLink>
                             </li>
                             <li className="hover:translate-x-2 duration-200">
-                                <NavLink to={"users"} onClick={handleSideBar}>
-                                    <UsersRound className="w-5 h-5" />Users
+                                <NavLink to={"subscribers"} onClick={handleSideBar}>
+                                    <UserRoundCheck className="w-5 h-5" />Subscribed Users
+                                </NavLink>
+                            </li>
+                            <li className="hover:translate-x-2 duration-200">
+                                <NavLink to={"pending-users"} onClick={handleSideBar}>
+                                    <UserRoundCog className="w-5 h-5" />Pending Users requests
                                 </NavLink>
                             </li>
                             <li className="hover:translate-x-2 duration-200">

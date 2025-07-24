@@ -128,9 +128,8 @@ export default function TrafficStats({ users, defaultersList, subscribers }) {
     }, [selectedRange, subs])
 
     return (
-        <div className="bg-white shadow rounded-xl p-6">
-            <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold">User Registrations</h2>
+        <div>
+            <div className="flex items-center justify-end mb-4">
                 <select
                     value={selectedRange}
                     onChange={(e) => setSelectedRange(e.target.value)}
@@ -142,14 +141,13 @@ export default function TrafficStats({ users, defaultersList, subscribers }) {
                     <option value="yearly">This Year</option>
                 </select>
             </div>
-
-            <div className="grid grid-cols-3 gap-4 ">
+            <div className="grid sm:grid-cols-3 gap-4 ">
                 <StatCard
                     title="User registered"
                     value={selectedCount}
                 />
                 <StatCard
-                    title="Defaulter added"
+                    title="Defaulters added"
                     value={selectedDefaulters}
                 />
                 <StatCard
