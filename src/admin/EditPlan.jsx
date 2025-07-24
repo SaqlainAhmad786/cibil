@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useAuth } from "../contexts/authContext";
 import axios from "axios";
+import { toast } from "sonner";
 
-export default function EditPlan({ plan, toast }) {
+export default function EditPlan({ plan }) {
 	const { loadPlans } = useAuth();
 	const [price, editPrice] = useState(plan.price);
+	const tokenRef = useRef(localStorage.getItem("token"));
 
 	const handleForm = async (e) => {
 		e.preventDefault();
@@ -13,7 +15,7 @@ export default function EditPlan({ plan, toast }) {
 				`${import.meta.env.VITE_BASE_URL}/admin/plan/${plan._id}`,
 				{ price },
 				{
-					headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+					headers: { Authorization: `Bearer ${tokenRef.current}` },
 				}
 			)
 			.then((res) => {

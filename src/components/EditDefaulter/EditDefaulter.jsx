@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom"
 import { toast, Toaster } from "sonner"
 import { useAuth } from "../../contexts/authContext"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { City, State } from "country-state-city"
 import axios from "axios"
 
@@ -27,6 +27,7 @@ function EditDefaulter() {
     })
     const navigate = useNavigate()
     const defaulterData = defaultersList.find((defaulter) => defaulter._id === id)
+    const tokenRef = useRef(localStorage.getItem("token"));
 
     useEffect(() => {
         const fetchStates = async () => {
@@ -109,7 +110,7 @@ function EditDefaulter() {
         }
         try {
             await axios
-                .put(`${import.meta.env.VITE_BASE_URL}/defaulter/update/${id}`, finalData, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })
+                .put(`${import.meta.env.VITE_BASE_URL}/defaulter/update/${id}`, finalData, { headers: { Authorization: `Bearer ${tokenRef.current}` } })
                 .then((res) => {
                     if (res.data.status) {
                         toast.success("Defaulter updated successfully", { duration: 3000 })

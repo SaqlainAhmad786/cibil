@@ -1,20 +1,20 @@
 import { useAuth } from '../../contexts/authContext'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 function NotLoggedIn({ Component }) {
     const { userData } = useAuth()
-    const token = localStorage.getItem('token')
+    const tokenRef = useRef(localStorage.getItem("token"));
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (!token) {
+        if (!tokenRef.current) {
             navigate('/login')
         }
-        if (token && !['active', 'inactive'].includes(userData.status)) {
+        if (tokenRef.current && !['active', 'inactive'].includes(userData.status)) {
             navigate('/profile-status')
         }
-    }, [token, navigate])
+    }, [])
 
     return <Component />
 }

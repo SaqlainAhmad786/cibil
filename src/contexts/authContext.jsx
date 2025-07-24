@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react"
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react"
 import axios from "axios"
 
 const AuthContext = createContext()
@@ -8,18 +8,16 @@ export const AuthProvider = ({ children }) => {
     const [defaultersList, setDefaultersList] = useState([])
     const [userDefaultersList, setUserDefaultersList] = useState([])
     const [userLoading, setUserLoading] = useState(false)
-    const [plans, setPlans] = useState([])
     const [defaultersLoading, setDefaultersLoading] = useState(false)
-    const token = localStorage.getItem("token")
+    const tokenRef = useRef(localStorage.getItem("token"))
 
     useEffect(() => {
-        if (token) {
+        if (tokenRef.current) {
             refreshUserData()
             getDefaultersList()
             getUserDefaultersList()
-            loadPlans()
         }
-    }, [token])
+    }, [])
 
     const userDataContext = useMemo(() => ({ userData, setUserData }), [userData])
 
@@ -28,7 +26,7 @@ export const AuthProvider = ({ children }) => {
         try {
             await axios
                 .get(`${import.meta.env.VITE_BASE_URL}/defaulter`, {
-                    headers: { Authorization: `Bearer ${token}` },
+                    headers: { Authorization: `Bearer ${tokenRef.current}` },
                 })
                 .then((res) => {
                     setDefaultersList(res.data.allDefaulter)
@@ -40,7 +38,7 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
-    async function getUserData(token) {
+    async function getUserData() {
         setUserLoading(true)
         try {
             await axios
@@ -48,7 +46,7 @@ export const AuthProvider = ({ children }) => {
                     `${import.meta.env.VITE_BASE_URL}/user/current-user`,
                     {},
                     {
-                        headers: { Authorization: `Bearer ${token}` },
+                        headers: { Authorization: `Bearer ${tokenRef.current}` },
                     }
                 )
                 .then((res) => {
@@ -65,7 +63,7 @@ export const AuthProvider = ({ children }) => {
         try {
             await axios
                 .get(`${import.meta.env.VITE_BASE_URL}/defaulter/defaulter-by-current-user`, {
-                    headers: { Authorization: `Bearer ${token}` },
+                    headers: { Authorization: `Bearer ${tokenRef.current}` },
                 })
                 .then((res) => {
                     setUserDefaultersList(res.data.defaulters)
@@ -75,23 +73,23 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
-    async function loadPlans() {
-        try {
-            await axios
-                .get(`${import.meta.env.VITE_BASE_URL}/admin/plan`, {
-                    headers: { Authorization: `Bearer ${token}` },
-                })
-                .then((res) => {
-                    setPlans(res.data.plans)
-                })
-        } catch (error) {
-            console.error("Error fetching plans: ", error)
-        }
-    }
+    // async function loadPlans() {
+    //     try {
+    //         await axios
+    //             .get(`${import.meta.env.VITE_BASE_URL}/admin/plan`, {
+    //                 headers: { Authorization: `Bearer ${tokenRef.current}` },
+    //             })
+    //             .then((res) => {
+    //                 setPlans(res.data.plans)
+    //             })
+    //     } catch (error) {
+    //         console.error("Error fetching plans: ", error)
+    //     }
+    // }
 
     const refreshUserData = () => {
-        if (!token) return
-        getUserData(token)
+        if (!tokenRef.current) return
+        getUserData(tokenRef.current)
     }
 
     const refreshDefaultersList = () => {
@@ -109,10 +107,8 @@ export const AuthProvider = ({ children }) => {
     return (
         <AuthContext.Provider
             value={{
-                plans,
                 refreshUserData,
                 refreshDefaultersList,
-                loadPlans,
                 logout,
                 userDefaultersList,
                 userData,

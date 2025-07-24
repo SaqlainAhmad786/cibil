@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useAuth } from "../contexts/authContext"
 import { Link, useLocation } from "react-router-dom"
 import axios from "axios"
@@ -14,6 +14,7 @@ function Subscribe() {
     const paymentFailed = location?.state?.paymentFailed
 
     const { user_name, mobile_no } = userData
+    const tokenRef = useRef(localStorage.getItem("token"));
 
     useEffect(() => {
         const fetchPlans = async () => {
@@ -22,7 +23,7 @@ function Subscribe() {
                     `${import.meta.env.VITE_BASE_URL}/admin/plan/${userData.business_type}`,
                     {
                         headers: {
-                            Authorization: `Bearer ${localStorage.getItem("token")}`,
+                            Authorization: `Bearer ${tokenRef.current}`,
                         },
                     }
                 )
@@ -56,7 +57,7 @@ function Subscribe() {
             },
             {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    Authorization: `Bearer ${tokenRef.current}`,
                 },
             }
         )

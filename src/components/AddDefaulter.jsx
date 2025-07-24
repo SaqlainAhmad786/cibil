@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { City, State } from "country-state-city"
 import { useAuth } from "../contexts/authContext"
 import axios from "axios"
@@ -13,6 +13,8 @@ function AddDefaulter() {
     const [aadharNumber, setAadharNumber] = useState(sessionStorage.getItem("aadharNumber") || "")
     const [showModal, setShowModal] = useState(false)
     const { userData, refreshDefaultersList } = useAuth()
+    const tokenRef = useRef(localStorage.getItem("token"));
+
 
     useEffect(() => {
         const fetchStates = () => {
@@ -57,7 +59,7 @@ function AddDefaulter() {
 
         try {
             await axios
-                .post(`${import.meta.env.VITE_BASE_URL}/defaulter/add-defaulter`, formData, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })
+                .post(`${import.meta.env.VITE_BASE_URL}/defaulter/add-defaulter`, formData, { headers: { Authorization: `Bearer ${tokenRef.current}` } })
                 .then((res) => {
                     if (res.data.status == 200) {
                         toast.success("Defaulter added successfully", { duration: 3000 })

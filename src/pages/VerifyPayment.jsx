@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
 import axios from "axios";
@@ -7,6 +7,7 @@ export default function VerifyPayment() {
 	const { refreshUserData } = useAuth()
 	const { transactionId } = useParams();
 	const navigate = useNavigate();
+	const tokenRef = useRef(localStorage.getItem("token"));
 
 	async function verifyPayment() {
 		const response = await axios.post(
@@ -14,7 +15,7 @@ export default function VerifyPayment() {
 			{},
 			{
 				headers: {
-					Authorization: `Bearer ${localStorage.getItem("token")}`,
+					Authorization: `Bearer ${tokenRef.current}`,
 				},
 			}
 		);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
 import { Search } from "lucide-react";
@@ -8,6 +8,7 @@ import AlertModal from "./AlertModal";
 import { toast, Toaster } from "sonner";
 
 function MoneyBlockerFinder() {
+	const { userData } = useAuth();
 	const [loading, setLoading] = useState(false);
 	const [filteredList, setFilteredList] = useState([]);
 	const [showModal, setShowModal] = useState(false);
@@ -18,7 +19,7 @@ function MoneyBlockerFinder() {
 		mobile_no: "",
 		gst_no: "",
 	});
-	const { userData } = useAuth();
+	const tokenRef = useRef(localStorage.getItem("token"));
 
 	const handleChange = (e) => {
 		setFilteredList([]);
@@ -44,7 +45,7 @@ function MoneyBlockerFinder() {
 		try {
 			const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/defaulter/search`, searchValues, {
 				headers: {
-					Authorization: `Bearer ${localStorage.getItem("token")}`,
+					Authorization: `Bearer ${tokenRef.current}`,
 				},
 			});
 			if (response.data.defaulter) {

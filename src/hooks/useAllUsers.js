@@ -1,9 +1,8 @@
+import { useEffect, useState, useRef } from 'react'
 import axios from 'axios'
-import { useMemo } from 'react'
-import { useEffect, useState } from 'react'
 
 export default function useAllUsers(id) {
-    const token = localStorage.getItem('token')
+    const tokenRef = useRef(localStorage.getItem('token'))
     const [users, setUsers] = useState(null)
     const [singleUser, setSingleUser] = useState(null)
     const [subscribers, setSubscribers] = useState(null)
@@ -12,50 +11,51 @@ export default function useAllUsers(id) {
     const [usersTotalPages, setUsersTotalPages] = useState(1)
     const [userPage, setUserPage] = useState(1)
     const limit = 10
-    const memoizedUsers = useMemo(() => users, [users])
 
     useEffect(() => {
-        if (id) {
-            fetchUser()
-        }
+        if (id) fetchUser(id)
+    }, [id])
+
+    useEffect(() => {
+        fetchUsers()
+    }, [userPage])
+
+    useEffect(() => {
         getAllSubscribers()
         fetchPendingUsers()
-        fetchUsers()
-    }, [id, userPage])
+    }, [])
 
     async function fetchUsers() {
         try {
-            if (userPage < 1) setUserPage(1)
-            if (userPage > usersTotalPages) setUserPage(usersTotalPages)
             setLoading(true)
+            const page = Math.max(1, Math.min(userPage, usersTotalPages))
             const response = await axios.get(
-                `${import.meta.env.VITE_BASE_URL}/user?limit=${limit}&page=${userPage}`,
+                `${import.meta.env.VITE_BASE_URL}/user?limit=${limit}&page=${page}`,
                 {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                },
+                    headers: { Authorization: `Bearer ${tokenRef.current}` },
+                }
             )
             setUsers(response.data.users)
             setUsersTotalPages(response.data.totalPages)
         } catch (error) {
-            console.log(error)
+            console.error(error)
         } finally {
             setLoading(false)
         }
     }
 
-    async function fetchUser() {
+    async function fetchUser(userId) {
         try {
             setLoading(true)
-            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/user/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
+            const response = await axios.get(
+                `${import.meta.env.VITE_BASE_URL}/user/${userId}`,
+                {
+                    headers: { Authorization: `Bearer ${tokenRef.current}` },
+                }
+            )
             setSingleUser(response.data.user)
         } catch (error) {
-            console.log(error)
+            console.error(error)
         } finally {
             setLoading(false)
         }
@@ -64,35 +64,39 @@ export default function useAllUsers(id) {
     async function fetchPendingUsers() {
         try {
             setLoading(true)
-            const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/user/pending-users`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
+            const res = await axios.get(
+                `${import.meta.env.VITE_BASE_URL}/user/pending-users`,
+                {
+                    headers: { Authorization: `Bearer ${tokenRef.current}` },
+                }
+            )
             setPendingUsers(res.data.users)
         } catch (error) {
-            console.log(error)
+            console.error(error)
         } finally {
             setLoading(false)
         }
     }
+
     async function getAllSubscribers() {
         try {
             setLoading(true)
-            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/admin/subscribers`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
+            const response = await axios.get(
+                `${import.meta.env.VITE_BASE_URL}/admin/subscribers`,
+                {
+                    headers: { Authorization: `Bearer ${tokenRef.current}` },
+                }
+            )
             setSubscribers(response.data.subscriptions)
         } catch (error) {
-            console.log(error)
+            console.error(error)
         } finally {
             setLoading(false)
         }
     }
+
     return {
-        users: memoizedUsers,
+        users,
         singleUser,
         loading,
         subscribers,

@@ -3,10 +3,11 @@ import { useAuth } from "../../contexts/authContext";
 import { Pencil } from "lucide-react";
 import axios from "axios";
 import SubscriptionGuard from "../SubscriptionGuard";
+import { useRef } from "react";
 
 function DefaultersList() {
     const { userDefaultersList, refreshDefaultersList } = useAuth();
-    const token = localStorage.getItem("token");
+    const tokenRef = useRef(localStorage.getItem("token"));
 
     async function handleClear(id) {
         try {
@@ -15,7 +16,7 @@ function DefaultersList() {
                     `${import.meta.env.VITE_BASE_URL}/defaulter/clear-score/${id}`,
                     {},
                     {
-                        headers: { Authorization: `Bearer ${token}` },
+                        headers: { Authorization: `Bearer ${tokenRef.current}` },
                     }
                 )
                 .then((res) => {

@@ -1,18 +1,18 @@
 import { useAuth } from '../../contexts/authContext'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 function LoggedIn({ Component }) {
     const { userData } = useAuth()
-    const token = localStorage.getItem('token')
+    const tokenRef = useRef(localStorage.getItem("token"));
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (token) {
+        if (tokenRef.current) {
             navigate('/')
             return
         }
-    }, [token, navigate, userData])
+    }, [])
 
     return <Component />
 }
