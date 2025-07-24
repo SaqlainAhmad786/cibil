@@ -74,7 +74,7 @@ function PendingUsers() {
                         </tbody>
                     </table>
                     {!pendingUsers?.length && (
-                        <h1 className="text-center bg-white">No Pending Users</h1>
+                        <h1 className="text-center bg-white py-4">No Pending Users requests</h1>
                     )}
                 </div>
             </section>

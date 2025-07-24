@@ -75,7 +75,7 @@ function Login() {
             })
         } catch (error) {
             setLoading(false)
-            toast.error(error.response.data.message, { duration: 3000 })
+            toast.error(error?.response?.data?.message, { description: 'Please review the information submitted and contact support if you believe this decision was made in error.', duration: 5000 })
         }
     }
 

@@ -1,8 +1,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { AuthProvider } from './contexts/authContext'
-import NotAdmin from './components/NotAdmin/NotAdmin'
-import LoggedIn from './components/LoggedIn/LoggedIn'
-import NotLoggedIn from './components/NotLoggedIn/NotLoggedIn'
+import NotAdmin from './components/ProtectedRoutes/NotAdmin'
+import LoggedIn from './components/ProtectedRoutes/LoggedIn'
+import NotLoggedIn from './components/ProtectedRoutes/NotLoggedIn'
 
 import Login from './pages/Login'
 import Signup from './pages/Signup'
@@ -31,6 +31,7 @@ import Users from './admin/Users'
 import PendingUsers from './admin/PendingUsers'
 
 import PageNotFound from './pages/PageNotFound'
+import NotApproved from './components/ProtectedRoutes/NotApproved'
 
 function App() {
     return (
@@ -38,120 +39,36 @@ function App() {
             <AuthProvider>
                 <BrowserRouter>
                     <Routes>
-                        <Route
-                            path="/subscribe"
-                            element={<Subscribe />}
-                        />
-                        <Route
-                            path="/verify-payment/:transactionId"
-                            element={<VerifyPayment />}
-                        />
-                        <Route
-                            index
-                            element={<Navigate to="overview" />}
-                        />
-                        <Route
-                            path="login"
-                            element={<LoggedIn Component={Login} />}
-                        />
-                        <Route
-                            path="signup"
-                            element={<LoggedIn Component={Signup} />}
-                        />
-                        <Route
-                            path="forgetPassword"
-                            element={<LoggedIn Component={ForgetPassword} />}
-                        />
-                        <Route
-                            path="profile-status"
-                            element={<ProfileStatus />}
-                        />
-                        <Route
-                            path="/view-resume"
-                            element={<ViewResume />}
-                        />
-                        <Route
-                            path="overview"
-                            element={<NotLoggedIn Component={Overview} />}
-                        >
-                            <Route
-                                index
-                                element={<Navigate to="home" />}
-                            />
-                            <Route
-                                path="home"
-                                element={<Home />}
-                            />
-                            <Route
-                                path="addDefaulter"
-                                element={<AddDefaulter />}
-                            />
-                            <Route
-                                path="editDefaulter/:id"
-                                element={<EditDefaulter />}
-                            />
-                            <Route
-                                path="defaulter/:id"
-                                element={<Defaulter />}
-                            />
-                            <Route
-                                path="defaultersList"
-                                element={<DefaultersList />}
-                            />
-                            <Route
-                                path="profile"
-                                element={<Profile />}
-                            />
-                            <Route
-                                path="editProfile"
-                                element={<EditProfile />}
-                            />
-                            <Route
-                                path="searchDefaulter"
-                                element={<MoneyBlockerFinder />}
-                            />
-                            <Route
-                                path="help"
-                                element={<Help />}
-                            />
+                        <Route index element={<Navigate to="overview" />} />
+                        <Route path="/subscribe" element={<Subscribe />} />
+                        <Route path="/verify-payment/:transactionId" element={<VerifyPayment />} />
+                        <Route path="login" element={<LoggedIn Component={Login} />} />
+                        <Route path="signup" element={<LoggedIn Component={Signup} />} />
+                        <Route path="forgetPassword" element={<LoggedIn Component={ForgetPassword} />} />
+                        <Route path="profile-status" element={<NotApproved Component={ProfileStatus} />} />
+                        <Route path="/view-resume" element={<NotLoggedIn Component={ViewResume} />} />
+                        <Route path="overview" element={<NotLoggedIn Component={Overview} />}>
+                            <Route index element={<Navigate to="home" />} />
+                            <Route path="home" element={<Home />} />
+                            <Route path="addDefaulter" element={<AddDefaulter />} />
+                            <Route path="editDefaulter/:id" element={<EditDefaulter />} />
+                            <Route path="defaulter/:id" element={<Defaulter />} />
+                            <Route path="defaultersList" element={<DefaultersList />} />
+                            <Route path="profile" element={<Profile />} />
+                            <Route path="editProfile" element={<EditProfile />} />
+                            <Route path="searchDefaulter" element={<MoneyBlockerFinder />} />
+                            <Route path="help" element={<Help />} />
                         </Route>
-                        <Route
-                            path="print"
-                            element={<PrintDetails />}
-                        />
-                        <Route
-                            path="admin"
-                            element={<NotAdmin Component={AdminPanel} />}
-                        >
-                            <Route
-                                index
-                                element={<Navigate to="dashboard" />}
-                            />
-                            <Route
-                                path="dashboard"
-                                element={<Dashboard />}
-                            />
-                            <Route
-                                path="subscribers"
-                                element={<Subscribers />}
-                            />
-                            <Route
-                                path="users"
-                                element={<Users />}
-                            />
-                            <Route
-                                path="plans"
-                                element={<Plans />}
-                            />
-                            <Route
-                                path="pending-users"
-                                element={<PendingUsers />}
-                            />
+                        <Route path="print" element={<NotLoggedIn Component={PrintDetails} />} />
+                        <Route path="admin" element={<NotAdmin Component={AdminPanel} />}>
+                            <Route index element={<Navigate to="dashboard" />} />
+                            <Route path="dashboard" element={<Dashboard />} />
+                            <Route path="subscribers" element={<Subscribers />} />
+                            <Route path="users" element={<Users />} />
+                            <Route path="plans" element={<Plans />} />
+                            <Route path="pending-users" element={<PendingUsers />} />
                         </Route>
-                        <Route
-                            path="*"
-                            element={<PageNotFound />}
-                        />
+                        <Route path="*" element={<PageNotFound />} />
                     </Routes>
                 </BrowserRouter>
             </AuthProvider>

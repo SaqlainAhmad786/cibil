@@ -1,9 +1,11 @@
+import useAllUsers from "../hooks/useAllUsers"
+import { useAuth } from "../contexts/authContext"
 import { useEffect } from "react"
 import { NavLink, Outlet, useNavigate } from "react-router-dom"
-import { useAuth } from "../contexts/authContext"
 import { IndianRupee, LayoutDashboard, LogOut, UserRoundCheck, UserRoundCog, UsersRound } from "lucide-react"
 
 function AdminPanel() {
+    const { pendingUsers } = useAllUsers()
     const { logout } = useAuth()
     const navigate = useNavigate()
 
@@ -66,6 +68,7 @@ function AdminPanel() {
                             <li className="hover:translate-x-2 duration-200">
                                 <NavLink to={"pending-users"} onClick={handleSideBar}>
                                     <UserRoundCog className="w-5 h-5" />Pending Users requests
+                                    <span className="text-sm text-red-500">{pendingUsers?.length ? pendingUsers?.length : 0}</span>
                                 </NavLink>
                             </li>
                             <li className="hover:translate-x-2 duration-200">

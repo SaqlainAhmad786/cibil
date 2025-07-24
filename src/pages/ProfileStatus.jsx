@@ -1,12 +1,16 @@
-import { LogOut } from 'lucide-react'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { LogOut } from 'lucide-react'
+import { useAuth } from '../contexts/authContext'
 
 function ProfileStatus() {
+    const { userData } = useAuth()
     const navigate = useNavigate()
+
     useEffect(() => {
         document.title = 'Profile Status | Vyapar Score'
-    }, [])
+        if (userData.status === 'active') navigate('/')
+    }, [userData, navigate])
 
     return (
         <>
@@ -22,17 +26,22 @@ function ProfileStatus() {
                         </div>
 
                         <div className="space-y-4">
-                            <div className="text-sm text-yellow-200 text-center bg-yellow-900 bg-opacity-40 px-4 py-3 rounded-md border border-yellow-600 leading-relaxed">
-                                Your account is currently pending approval. <br />
-                                Once the verification process is complete and your profile is
-                                approved, a confirmation message will be sent to your registered
-                                email address.
-                            </div>
+                            {userData?.status === 'pending'
+                                ? <div className="text-sm text-yellow-200 text-center bg-yellow-900 bg-opacity-40 px-4 py-3 rounded-md border border-yellow-600 leading-relaxed">
+                                    Your account is currently pending approval. <br />
+                                    Once the verification process is complete and your profile is
+                                    approved, a confirmation message will be sent to your registered
+                                    email address.
+                                </div>
+                                : <div className="text-sm text-red-200 text-center bg-red-900 bg-opacity-40 px-4 py-3 rounded-md border border-red-600 leading-relaxed">
+                                    We regret to inform you that your account has not been approved. <br />
+                                    Please review the information submitted and contact support if you believe this decision was made in error.
+                                </div>}
                             <div>
                                 <button
                                     onClick={() => {
                                         localStorage.clear()
-                                        navigate('/')
+                                        navigate('/login')
                                     }}
                                     type="submit"
                                     className="py-2 px-4 text-sm bg-blueClr focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 flex justify-center text-center font-semibold shadow-md focus:outline-none rounded-lg cursor-pointer select-none"
